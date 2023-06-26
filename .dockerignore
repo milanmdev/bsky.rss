@@ -1,0 +1,5 @@
+.env
+data
+examples
+node_modules
+docker-compose.example.yml

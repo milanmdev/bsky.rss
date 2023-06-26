@@ -1,0 +1,12 @@
+version: "3"
+services:
+  bsky-rss:
+    restart: always
+    image: ghcr.io/milanmdev/bsky.rss
+    environment:
+      - APP_PASSWORD=
+      - INSTANCE_URL=
+      - FETCH_URL=
+      - IDENTIFIER=
+    volumes:
+      - /your/data/directory:/build/data
