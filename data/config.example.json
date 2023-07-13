@@ -1,5 +1,6 @@
 {
   "string": "$title - $link",
   "publishEmbed": true,
-  "languages": ["en"]
+  "languages": ["en"],
+  "truncate": true
 }

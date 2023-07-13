@@ -8,12 +8,14 @@ interface Config {
   string: string;
   publishEmbed?: boolean;
   languages?: string[];
+  truncate?: boolean;
 }
 
 let config: Config = {
   string: "",
   publishEmbed: false,
   languages: ["en"],
+  truncate: true,
 };
 
 interface Item {
@@ -115,31 +117,6 @@ function parseString(string: string, item: Item) {
 
   if (string.includes("$link") || config.publishEmbed) {
     if (!item.link) throw new Error("No link provided from RSS reader.");
-    /*if (!config.stringFields.link) throw new Error("No link field provided.");
-
-    if (config.stringFields.link.includes(".")) {
-      parsedString = parsedString.replace(
-        "$link",
-        // @ts-ignore
-        joinDotField(config.stringFields.link, item)
-      );
-
-      if (config.publishEmbed && result.embed) {
-        // @ts-ignore
-        result.embed.uri = joinDotField(config.stringFields.link, item);
-      }
-    } else {
-      parsedString = parsedString.replace(
-        "$link",
-        // @ts-ignore
-        item[config.stringFields.link]
-      );
-
-      if (config.publishEmbed && result.embed) {
-        // @ts-ignore
-        result.embed.uri = item[config.stringFields.link];
-      }
-    }*/
     if (typeof item.link === "object") {
       parsedString = parsedString.replace("$link", item.link.href);
 
@@ -169,16 +146,9 @@ function parseString(string: string, item: Item) {
     }
   }
 
+  if (parsedString.length > 300 && config.truncate === true) {
+    parsedString = parsedString.slice(0, 277) + "...";
+  }
   result.text = parsedString;
   return result;
 }
-
-/* function joinDotField(field: string, item: Item) {
-  let joinedField = item;
-  let fields = field.split(".");
-  for (let i = 0; i < fields.length; i++) {
-    // @ts-ignore
-    joinedField = joinedField[fields[i]];
-  }
-  return joinedField;
-} */
