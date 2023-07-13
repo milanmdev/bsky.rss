@@ -7,11 +7,13 @@ let lastDate: string = "";
 interface Config {
   string: string;
   publishEmbed?: boolean;
+  languages?: string[];
 }
 
 let config: Config = {
   string: "",
   publishEmbed: false,
+  languages: ["en"],
 };
 
 interface Item {
@@ -57,6 +59,7 @@ async function start() {
     await bsky.post({
       content: parsed.text,
       embed: config.publishEmbed ? parsed.embed : undefined,
+      languages: config.languages ? config.languages : undefined,
     });
   });
 }
