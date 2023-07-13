@@ -23,7 +23,15 @@ async function login({
   return loginData;
 }
 
-async function post({ content, embed }: { content: string; embed?: any }) {
+async function post({
+  content,
+  embed,
+  languages,
+}: {
+  content: string;
+  embed?: any;
+  languages?: string[];
+}) {
   if (!bskyAgent) throw new Error("Bluesky agent not initialized.");
 
   const bskyText = new RichText({ text: content });
@@ -42,6 +50,7 @@ async function post({ content, embed }: { content: string; embed?: any }) {
           },
         }
       : undefined,
+    langs: languages,
     createdAt: new Date().toISOString(),
   };
 
