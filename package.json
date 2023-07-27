@@ -22,7 +22,7 @@
   "devDependencies": {
     "@types/feedsub": "^0.7.5",
     "@types/node": "^20.3.2",
-    "gts": "^3.1.1",
+    "gts": "^5.0.0",
     "ts-node": "^10.9.1",
     "tsx": "^3.12.7",
     "typescript": "^5.1.3"
