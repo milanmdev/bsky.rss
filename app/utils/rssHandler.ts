@@ -2,7 +2,6 @@ import FeedSub from "feedsub";
 import sharp from "sharp";
 import axios from "axios";
 import bsky from "./bskyHandler";
-import db from "./dbHandler";
 let reader: any = null;
 let lastDate: string = "";
 
@@ -11,6 +10,7 @@ interface Config {
   publishEmbed?: boolean;
   languages?: string[];
   truncate?: boolean;
+  useQueue?: boolean;
 }
 
 let config: Config = {
@@ -52,9 +52,7 @@ async function start() {
     if (new Date(useDate) <= new Date(lastDate)) return;
 
     console.log(
-      `[${new Date().toUTCString()}] - [bsky.rss] Posting new item (${
-        item.title
-      })`
+      `[${new Date().toUTCString()}] - [bsky.rss] Queuing item (${item.title})`
     );
 
     // @ts-ignore
