@@ -3,6 +3,6 @@
   "publishEmbed": true,
   "languages": ["en"],
   "truncate": true,
-  "dateField": ""
   "useQueue": false
+  "dateField": ""
 }
