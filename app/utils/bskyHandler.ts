@@ -31,10 +31,12 @@ async function post({
   content,
   embed,
   languages,
+  link,
 }: {
   content: string;
   embed?: any;
   languages?: string[];
+  link?: string
 }) {
   if (!bskyAgent) throw new Error("Bluesky agent not initialized.");
 
@@ -57,47 +59,44 @@ async function post({
     image_url = image_url_.attr("content");
   }
 
-  const buffer = await fetch(image_url)
-    .then((response) => response.arrayBuffer())
-    .then((buffer) => sharp(buffer))
-    .then((s) =>
-      s.resize(
-        s
-          .resize(800, null, {
-            fit: "inside",
-            withoutEnlargement: true,
-          })
-          .jpeg({
-            quality: 80,
-            progressive: true,
-          })
-          .toBuffer()
-      )
-    );
+  if (image_url) {
+    const response = await fetch(image_url);
+    const buffer = await response.arrayBuffer();
+    const imageBuffer = await sharp(buffer)
+      .resize(800, null, {
+        fit: "inside",
+        withoutEnlargement: true,
+      })
+      .jpeg({
+        quality: 80,
+        progressive: true,
+      })
+      .toBuffer();
 
-  const image = await bskyAgent.uploadBlob(buffer, { encoding: "image/jpeg" });
+    const image = await bskyAgent.uploadBlob(imageBuffer, { encoding: "image/jpeg" });
 
-  const record = {
-    $type: "app.bsky.feed.post",
-    text: bskyText.text,
-    facets: bskyText.facets,
-    embed: embed
-      ? {
-          $type: "app.bsky.embed.external",
-          external: {
-            uri: embed.uri,
-            title: embed.title,
-            description: description ? description : "",
-            thumb: image.data.blob,
-          },
-        }
-      : undefined,
-    langs: languages,
-    createdAt: new Date().toISOString(),
-  };
+    const record = {
+      $type: "app.bsky.feed.post",
+      text: bskyText.text,
+      facets: bskyText.facets,
+      embed: embed
+        ? {
+            $type: "app.bsky.embed.external",
+            external: {
+              uri: embed.uri,
+              title: embed.title,
+              description: description ? description : "",
+              thumb: image.data.blob,
+            },
+          }
+        : undefined,
+      langs: languages,
+      createdAt: new Date().toISOString(),
+    };
 
-  let post = await bskyAgent.post(record);
-  return post;
+    let post = await bskyAgent.post(record);
+    return post;
+  }
 }
 
 export default {

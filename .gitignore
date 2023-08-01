@@ -131,3 +131,7 @@ dist
 
 data/last.txt
 data/config.json
+
+# docker
+.yml
+docker-compose.yml
