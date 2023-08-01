@@ -36,7 +36,7 @@ async function post({
   content: string;
   embed?: any;
   languages?: string[];
-  link?: string
+  link?: string;
 }) {
   if (!bskyAgent) throw new Error("Bluesky agent not initialized.");
 
