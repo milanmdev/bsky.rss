@@ -1,6 +1,7 @@
 import FeedSub from "feedsub";
-import bsky from "./bskyHandler";
 import db from "./dbHandler";
+import queue from "./queueHandler";
+import bsky from "./bskyHandler";
 let reader: any = null;
 let lastDate: string = "";
 
@@ -9,6 +10,7 @@ interface Config {
   publishEmbed?: boolean;
   languages?: string[];
   truncate?: boolean;
+  useQueue?: boolean;
 }
 
 let config: Config = {
@@ -50,19 +52,26 @@ async function start() {
     if (new Date(useDate) <= new Date(lastDate)) return;
 
     console.log(
-      `[${new Date().toUTCString()}] - [bsky.rss] Posting new item (${
-        item.title
-      })`
+      `[${new Date().toUTCString()}] - [bsky.rss] Queuing item (${item.title})`
     );
 
     // @ts-ignore
     db.writeDate(new Date(useDate));
     let parsed = parseString(config.string, item);
-    await bsky.post({
-      content: parsed.text,
-      embed: config.publishEmbed ? parsed.embed : undefined,
-      languages: config.languages ? config.languages : undefined,
-    });
+    if (config.useQueue) {
+      await queue.writeQueue({
+        content: parsed.text,
+        title: item.title,
+        embed: config.publishEmbed ? parsed.embed : undefined,
+        languages: config.languages ? config.languages : undefined,
+      });
+    } else {
+      await bsky.post({
+        content: parsed.text,
+        embed: config.publishEmbed ? parsed.embed : undefined,
+        languages: config.languages ? config.languages : undefined,
+      });
+    }
   });
 }
 
