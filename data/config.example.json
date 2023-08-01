@@ -4,4 +4,5 @@
   "languages": ["en"],
   "truncate": true,
   "dateField": ""
+  "useQueue": false
 }

@@ -1,6 +1,7 @@
 import FeedSub from "feedsub";
 import sharp from "sharp";
 import axios from "axios";
+import queue from "./queueHandler";
 import bsky from "./bskyHandler";
 import db from "./dbHandler";
 import og from "open-graph-scraper";
@@ -12,6 +13,7 @@ interface Config {
   publishEmbed?: boolean;
   languages?: string[];
   truncate?: boolean;
+  useQueue?: boolean;
   dateField?: string;
 }
 
@@ -59,9 +61,7 @@ async function start() {
     if (new Date(useDate) <= new Date(lastDate)) return;
 
     console.log(
-      `[${new Date().toUTCString()}] - [bsky.rss] Posting new item (${
-        item.title
-      })`
+      `[${new Date().toUTCString()}] - [bsky.rss] Queuing item (${item.title})`
     );
 
     // @ts-ignore
