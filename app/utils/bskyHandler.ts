@@ -1,5 +1,9 @@
 let bskyAgent: any = null;
 import { BskyAgent, RichText } from "@atproto/api";
+import fetch from 'node-fetch';
+import cheerio from 'cheerio';
+import sharp from 'sharp';
+
 
 async function init(service: string) {
   if (bskyAgent) throw new Error("Bluesky agent already initialized.");
@@ -36,6 +40,43 @@ async function post({
 
   const bskyText = new RichText({ text: content });
   await bskyText.detectFacets(bskyAgent);
+
+  const dom = await fetch(link)
+    .then((response) => response.text())
+    .then((html) => cheerio.load(html));
+
+  let description = null;
+  const description_ = dom('head > meta[property="og:description"]');
+  if (description_) {
+    description = description_.attr("content");
+  }
+
+  let image_url = null;
+  const image_url_ = dom('head > meta[property="og:image"]');
+  if (image_url_) {
+    image_url = image_url_.attr("content");
+  }
+
+  const buffer = await fetch(image_url)
+    .then((response) => response.arrayBuffer())
+    .then((buffer) => sharp(buffer))
+    .then((s) =>
+      s.resize(
+        s
+          .resize(800, null, {
+            fit: "inside",
+            withoutEnlargement: true,
+          })
+          .jpeg({
+            quality: 80,
+            progressive: true,
+          })
+          .toBuffer()
+      )
+    );
+
+  const image = await bskyAgent.uploadBlob(buffer, { encoding: "image/jpeg" });
+
   const record = {
     $type: "app.bsky.feed.post",
     text: bskyText.text,
@@ -46,7 +87,8 @@ async function post({
           external: {
             uri: embed.uri,
             title: embed.title,
-            description: embed.description ? embed.description : "",
+            description: description ? description : "",
+            thumb: image.data.blob,
           },
         }
       : undefined,
