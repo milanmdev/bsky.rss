@@ -8,9 +8,9 @@
   integrity sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==
 
 "@atproto/api@^0.4.0":
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/@atproto/api/-/api-0.4.3.tgz#d7e478bf7009df2adaf1ac6051eb3e3fea185c90"
-  integrity sha512-8LdREwmoA58YQDrLS0rohd7cHokhoiXfyYEeNtNlkdO0w/2QpkUCQ1PgPBP2kIRM9PhOEkKp7W3Sn8Te9Qq8jg==
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/@atproto/api/-/api-0.4.4.tgz#24870e10d05a4193b2d1e9d05f5af995ea11ff12"
+  integrity sha512-U/6LiCzXioldGvuHauen9q7uUFn7b2agHkYsKCmdvGHB1CvIUmo+jTA8nynC5/XXJH8rAeZCg9gKcpAKV8noZA==
   dependencies:
     "@atproto/common-web" "*"
     "@atproto/uri" "*"
