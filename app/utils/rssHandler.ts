@@ -132,17 +132,19 @@ function parseString(string: string, item: Item) {
     }
   }
 
-  if (
+if (
     string.includes("$description") ||
     config.publishEmbed ||
     item.description
   ) {
     if (string.includes("$description")) {
-      parsedString = parsedString.replace("$description", item.description);
+      let cleanDescription = item.description.replace(/<\/?[^>]+(>|$)/g, "");
+      parsedString = parsedString.replace("$description", cleanDescription);
     }
 
     if (config.publishEmbed && result.embed) {
-      result.embed.description = item.description;
+      let cleanDescription = item.description.replace(/<\/?[^>]+(>|$)/g, "");
+      result.embed.description = cleanDescription;
     }
   }
 
