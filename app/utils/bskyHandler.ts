@@ -36,6 +36,14 @@ async function post({
 
   const bskyText = new RichText({ text: content });
   await bskyText.detectFacets(bskyAgent);
+
+  let embedImage: any = null;
+  if (embed && embed.image) {
+    embedImage = await bskyAgent.uploadBlob(embed.image, {
+      encoding: "image/jpeg",
+    });
+  }
+
   const record = {
     $type: "app.bsky.feed.post",
     text: bskyText.text,
@@ -47,6 +55,7 @@ async function post({
             uri: embed.uri,
             title: embed.title,
             description: embed.description ? embed.description : "",
+            thumb: embed.image ? embedImage.data.blob : undefined,
           },
         }
       : undefined,

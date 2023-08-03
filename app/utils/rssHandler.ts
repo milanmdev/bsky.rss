@@ -1,4 +1,6 @@
 import FeedSub from "feedsub";
+import sharp from "sharp";
+import axios from "axios";
 import bsky from "./bskyHandler";
 import db from "./dbHandler";
 let reader: any = null;
@@ -30,13 +32,13 @@ interface Item {
 
 interface ParseResult {
   text: string;
-  embed?: Embed;
 }
 
 interface Embed {
   uri: string;
   title: string;
   description?: string;
+  image?: Buffer;
 }
 
 async function start() {
@@ -58,9 +60,52 @@ async function start() {
     // @ts-ignore
     db.writeDate(new Date(useDate));
     let parsed = parseString(config.string, item);
+    let embed: Embed = {
+      uri: "",
+      title: "",
+    };
+    if (config.publishEmbed) {
+      if (!item.link)
+        throw new Error(
+          "No link provided from RSS reader to fetch Open Graph data."
+        );
+      let url = "";
+      if (typeof item.link === "object") url = item.link.href;
+      else url = item.link;
+
+      let openGraphData: any = await axios.get(
+        `https://cardyb.bsky.app/v1/extract?url=${encodeURIComponent(url)}`
+      );
+      if (!openGraphData.data.error) {
+        let image: Buffer | undefined = undefined;
+        if (openGraphData.data.image) {
+          let fetchBuffer = await axios.get(openGraphData.data.image, {
+            responseType: "arraybuffer",
+          });
+          image = await sharp(fetchBuffer.data)
+            .resize(800, null, {
+              fit: "inside",
+              withoutEnlargement: true,
+            })
+            .jpeg({
+              quality: 80,
+              progressive: true,
+            })
+            .toBuffer();
+        }
+
+        embed = {
+          uri: openGraphData.data.url,
+          title: openGraphData.data.title,
+          description: openGraphData.data.description,
+          image,
+        };
+      }
+    }
+
     await bsky.post({
       content: parsed.text,
-      embed: config.publishEmbed ? parsed.embed : undefined,
+      embed: config.publishEmbed ? embed : undefined,
       languages: config.languages ? config.languages : undefined,
     });
   });
@@ -100,49 +145,26 @@ export default {
 function parseString(string: string, item: Item) {
   let result: ParseResult = {
     text: "",
-    embed: {
-      title: "",
-      uri: "",
-    },
   };
 
   let parsedString = string;
-  if (string.includes("$title") || config.publishEmbed) {
+  if (string.includes("$title")) {
     if (!item.title) throw new Error("No title provided from RSS reader.");
     parsedString = parsedString.replace("$title", item.title);
-    if (config.publishEmbed && result.embed) {
-      result.embed.title = item.title;
-    }
   }
 
-  if (string.includes("$link") || config.publishEmbed) {
+  if (string.includes("$link")) {
     if (!item.link) throw new Error("No link provided from RSS reader.");
     if (typeof item.link === "object") {
       parsedString = parsedString.replace("$link", item.link.href);
-
-      if (config.publishEmbed && result.embed) {
-        result.embed.uri = item.link.href;
-      }
     } else {
       parsedString = parsedString.replace("$link", item.link);
-
-      if (config.publishEmbed && result.embed) {
-        result.embed.uri = item.link;
-      }
     }
   }
 
-  if (
-    string.includes("$description") ||
-    config.publishEmbed ||
-    item.description
-  ) {
+  if (string.includes("$description") || item.description) {
     if (string.includes("$description")) {
       parsedString = parsedString.replace("$description", item.description);
-    }
-
-    if (config.publishEmbed && result.embed) {
-      result.embed.description = item.description;
     }
   }
 

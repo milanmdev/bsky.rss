@@ -70,7 +70,9 @@ Here's an example of the `config.json` file:
 ```json
 {
   "string": "$title - $link",
-  "publishEmbed": true
+  "publishEmbed": true,
+  "languages": ["en"],
+  "truncate": true
 }
 ```
 
