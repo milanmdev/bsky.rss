@@ -2,6 +2,8 @@ import FeedSub from "feedsub";
 import sharp from "sharp";
 import axios from "axios";
 import bsky from "./bskyHandler";
+import db from "./dbHandler";
+import queue from "./queueHandler";
 let reader: any = null;
 let lastDate: string = "";
 
@@ -101,11 +103,20 @@ async function start() {
       }
     }
 
-    await bsky.post({
-      content: parsed.text,
-      embed: config.publishEmbed ? embed : undefined,
-      languages: config.languages ? config.languages : undefined,
-    });
+    if (config.useQueue) {
+      await queue.writeQueue({
+        content: parsed.text,
+        title: item.title,
+        embed: config.publishEmbed ? embed : undefined,
+        languages: config.languages ? config.languages : undefined,
+      });
+    } else {
+      await bsky.post({
+        content: parsed.text,
+        embed: config.publishEmbed ? embed : undefined,
+        languages: config.languages ? config.languages : undefined,
+      });
+    }
   });
 }
 
