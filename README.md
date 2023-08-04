@@ -72,7 +72,8 @@ Here's an example of the `config.json` file:
   "string": "$title - $link",
   "publishEmbed": true,
   "languages": ["en"],
-  "truncate": true
+  "truncate": true,
+  "useQueue": true
 }
 ```
 
