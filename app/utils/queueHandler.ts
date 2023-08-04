@@ -15,6 +15,7 @@ interface Embed {
   uri: string;
   title: string;
   description?: string;
+  image?: Buffer;
 }
 
 async function start() {
