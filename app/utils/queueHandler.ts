@@ -1,27 +1,30 @@
 import bsky from "./bskyHandler";
+import db from "./dbHandler";
 
 let queue: QueueItems[] = [];
 let rateLimited: boolean = false;
 let queueRunning: boolean = false;
+let queueSnapshot: QueueItems[] = [];
 
-interface QueueItems {
-  content: string;
-  embed: Embed | undefined;
-  languages: string[] | undefined;
-  title: string;
-}
-
-interface Embed {
-  uri: string;
-  title: string;
-  description?: string;
-  image?: Buffer;
-}
+let config: Config = {
+  string: "",
+  publishEmbed: false,
+  languages: ["en"],
+  truncate: true,
+  runInterval: 60,
+  dateField: "",
+};
 
 async function start() {
+  config = await db.initConfig();
+  console.log(
+    `[${new Date().toUTCString()}] - [bsky.rss QUEUE] Starting queue handler. Running every ${
+      config.runInterval
+    } seconds`
+  );
   setInterval(function () {
     runQueue();
-  }, 60000);
+  }, config.runInterval * 1000);
 }
 
 async function createLimitTimer() {
@@ -31,41 +34,56 @@ async function createLimitTimer() {
     rateLimited = false;
     runQueue();
     console.log(
-      `[${new Date().toUTCString()}] - [bsky.rss] Post rate limit expired - resuming queue`
+      `[${new Date().toUTCString()}] - [bsky.rss QUEUE] Post rate limit expired - resuming queue`
     );
   }, 30000);
   return "";
 }
 
 async function runQueue() {
+  if (queueRunning) return;
+  queueSnapshot = [...queue];
+  console.log(
+    `[${new Date().toUTCString()}] - [bsky.rss QUEUE] Running queue with ${
+      queueSnapshot.length
+    } items`
+  );
   if (rateLimited) return { ratelimit: true };
-  if (queue.length > 0) {
+  if (queueSnapshot.length > 0) {
     queueRunning = true;
-    for (let i = 0; i < queue.length; i++) {
-      let item = queue[i] as QueueItems;
-      queue.splice(i, 1);
+    for (let i = 0; i < queueSnapshot.length; i++) {
+      let item = queueSnapshot[i] as QueueItems;
+      queueSnapshot.splice(i, 1);
       i--;
       let post = await bsky.post({
         content: item.content,
         embed: item.embed,
         languages: item.languages,
       });
-      console.log(post.ratelimit);
       // @ts-ignore
       if (post.ratelimit) {
         await createLimitTimer();
         queueRunning = false;
         console.log(
-          `[${new Date().toUTCString()}] - [bsky.rss] Post rate limit exceeded - process will resume after 30 seconds`
+          `[${new Date().toUTCString()}] - [bsky.rss POST] Post rate limit exceeded - process will resume after 30 seconds`
         );
         break;
       } else {
-        if (i === queue.length - 1) queueRunning = false;
         console.log(
-          `[${new Date().toUTCString()}] - [bsky.rss] Posting new item (${
+          `[${new Date().toUTCString()}] - [bsky.rss POST] Posting new item (${
             item.title
           })`
         );
+        db.writeDate(new Date(item.date));
+        if (i === queueSnapshot.length - 1) {
+          queueRunning = false;
+          queueSnapshot = [];
+          console.log(
+            `[${new Date().toUTCString()}] - [bsky.rss QUEUE] Finished running queue. Next run in ${
+              config.runInterval
+            } seconds`
+          );
+        }
       }
     }
     return queue;
@@ -74,8 +92,17 @@ async function runQueue() {
   }
 }
 
-async function writeQueue({ content, embed, languages, title }: QueueItems) {
-  queue.push({ content, embed, languages, title });
+async function writeQueue({
+  content,
+  embed,
+  languages,
+  title,
+  date,
+}: QueueItems) {
+  console.log(
+    `[${new Date().toUTCString()}] - [bsky.rss QUEUE] Queuing item (${title})`
+  );
+  queue.push({ content, embed, languages, title, date });
   return queue;
 }
 

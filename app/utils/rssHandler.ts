@@ -2,49 +2,19 @@ import FeedSub from "feedsub";
 import sharp from "sharp";
 import axios from "axios";
 import queue from "./queueHandler";
-import bsky from "./bskyHandler";
 import db from "./dbHandler";
 import og from "open-graph-scraper";
-import queue from "./queueHandler";
 let reader: any = null;
 let lastDate: string = "";
-
-interface Config {
-  string: string;
-  publishEmbed?: boolean;
-  languages?: string[];
-  truncate?: boolean;
-  useQueue?: boolean;
-  dateField?: string;
-}
 
 let config: Config = {
   string: "",
   publishEmbed: false,
   languages: ["en"],
   truncate: true,
+  runInterval: 60,
+  dateField: "",
 };
-
-interface Item {
-  title: string;
-  link: {
-    href: string;
-  };
-  published?: string;
-  pubdate?: string;
-  description: string;
-}
-
-interface ParseResult {
-  text: string;
-}
-
-interface Embed {
-  uri: string;
-  title: string;
-  description?: string;
-  image?: Buffer;
-}
 
 async function start() {
   reader.read();
@@ -61,12 +31,7 @@ async function start() {
 
     if (new Date(useDate) <= new Date(lastDate)) return;
 
-    console.log(
-      `[${new Date().toUTCString()}] - [bsky.rss] Queuing item (${item.title})`
-    );
-
     // @ts-ignore
-    db.writeDate(new Date(useDate));
     let parsed = parseString(config.string, item);
     let embed: Embed | undefined = undefined;
     if (config.publishEmbed) {
@@ -128,20 +93,13 @@ async function start() {
       }
     }
 
-    if (config.useQueue) {
-      await queue.writeQueue({
-        content: parsed.text,
-        title: item.title,
-        embed: config.publishEmbed ? embed : undefined,
-        languages: config.languages ? config.languages : undefined,
-      });
-    } else {
-      await bsky.post({
-        content: parsed.text,
-        embed: config.publishEmbed ? embed : undefined,
-        languages: config.languages ? config.languages : undefined,
-      });
-    }
+    await queue.writeQueue({
+      content: parsed.text,
+      title: item.title,
+      embed: config.publishEmbed ? embed : undefined,
+      languages: config.languages ? config.languages : undefined,
+      date: useDate,
+    });
   });
 }
 

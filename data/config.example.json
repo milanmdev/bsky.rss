@@ -3,6 +3,6 @@
   "publishEmbed": true,
   "languages": ["en"],
   "truncate": true,
-  "useQueue": false
+  "runInterval": 60,
   "dateField": ""
 }

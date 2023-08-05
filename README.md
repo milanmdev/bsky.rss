@@ -73,6 +73,7 @@ Here's an example of the `config.json` file:
   "publishEmbed": true,
   "languages": ["en"],
   "truncate": true,
+  "runInterval": 60,
   "dateField": ""
 }
 ```
@@ -84,6 +85,8 @@ Here's an example of the `config.json` file:
 - `publishEmbed`: Whether to publish the post as an embed or not. If set to `true`, the post will be published as an embed with the title, description (if available), and link to the RSS post.
 - `languages`: The languages to set the posts to. This can be an array of `ISO 639-1` language codes. If not set, it will default to `en`.
 - `truncate`: Whether or not to truncate the body of the post if it is over 300 characters. By default, this is set to `true`.
+- `runInterval`: The interval (in seconds) to run the RSS poster. By default (and reccomended), this is set to `60` seconds.
+- `dateField`: The field to use for the date of the RSS post. This can be any field that is available in the RSS feed. If not set, it will default to pubDate and/or date.
 
 More examples of the `config.json` and environment variables can be found in the `examples` directory. The `examples` directory also contains a `docker-compose.yml` file that you can use to setup the RSS poster using Docker.
 

@@ -8,6 +8,7 @@ config.json
   "publishEmbed": true,
   "languages": ["en"],
   "truncate": true,
+  "runInterval": 60,
   "dateField": ""
 }
 ```
