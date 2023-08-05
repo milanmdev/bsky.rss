@@ -53,6 +53,7 @@ async function runQueue() {
     queueRunning = true;
     for (let i = 0; i < queueSnapshot.length; i++) {
       let item = queueSnapshot[i] as QueueItems;
+      queue.splice(i, 1);
       queueSnapshot.splice(i, 1);
       i--;
       let post = await bsky.post({
