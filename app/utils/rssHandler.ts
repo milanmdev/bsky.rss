@@ -3,6 +3,7 @@ import sharp from "sharp";
 import axios from "axios";
 import bsky from "./bskyHandler";
 import db from "./dbHandler";
+import og from "open-graph-scraper";
 let reader: any = null;
 let lastDate: string = "";
 
@@ -11,6 +12,7 @@ interface Config {
   publishEmbed?: boolean;
   languages?: string[];
   truncate?: boolean;
+  dateField?: string;
 }
 
 let config: Config = {
@@ -45,7 +47,12 @@ async function start() {
   reader.read();
 
   reader.on("item", async (item: Item) => {
-    let useDate = item.pubdate ? item.pubdate : item.published;
+    let useDate = config.dateField
+      ? // @ts-ignore
+        item[config.dateField]
+      : item.pubdate
+      ? item.pubdate
+      : item.published;
     if (!useDate)
       return console.log("No date provided by RSS reader for post.");
 
@@ -60,10 +67,7 @@ async function start() {
     // @ts-ignore
     db.writeDate(new Date(useDate));
     let parsed = parseString(config.string, item);
-    let embed: Embed = {
-      uri: "",
-      title: "",
-    };
+    let embed: Embed | undefined = undefined;
     if (config.publishEmbed) {
       if (!item.link)
         throw new Error(
@@ -73,13 +77,23 @@ async function start() {
       if (typeof item.link === "object") url = item.link.href;
       else url = item.link;
 
-      let openGraphData: any = await axios.get(
-        `https://cardyb.bsky.app/v1/extract?url=${encodeURIComponent(url)}`
-      );
-      if (!openGraphData.data.error) {
+      let openGraphData: any = await og({
+        url,
+        fetchOptions: {
+          headers: {
+            "user-agent":
+              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
+          },
+        },
+      })
+        .then((res) => (res.error ? { error: true } : res.result))
+        .catch(() => ({
+          error: true,
+        }));
+      if (!openGraphData.error) {
         let image: Buffer | undefined = undefined;
-        if (openGraphData.data.image) {
-          let fetchBuffer = await axios.get(openGraphData.data.image, {
+        if (openGraphData.ogImage && openGraphData.ogImage[0]) {
+          let fetchBuffer = await axios.get(openGraphData.ogImage[0].url, {
             responseType: "arraybuffer",
           });
           image = await sharp(fetchBuffer.data)
@@ -94,12 +108,22 @@ async function start() {
             .toBuffer();
         }
 
-        embed = {
-          uri: openGraphData.data.url,
-          title: openGraphData.data.title,
-          description: openGraphData.data.description,
-          image,
-        };
+        if (
+          (!openGraphData.ogUrl && !url) ||
+          (!openGraphData.ogTitle && !item.title) ||
+          (!openGraphData.ogDescription && !item.description)
+        ) {
+          embed = undefined;
+        } else {
+          embed = {
+            uri: openGraphData.ogUrl ? openGraphData.ogUrl : url,
+            title: openGraphData.ogTitle ? openGraphData.ogTitle : item.title,
+            description: openGraphData.ogDescription
+              ? openGraphData.ogDescription
+              : item.description,
+            image,
+          };
+        }
       }
     }
 

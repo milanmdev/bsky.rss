@@ -4,7 +4,11 @@
 config.json
 
 {
-  "string": "$title - $link"
+  "string": "$title - $link",
+  "publishEmbed": true,
+  "languages": ["en"],
+  "truncate": true,
+  "dateField": ""
 }
 ```
 
