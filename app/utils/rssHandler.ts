@@ -90,6 +90,12 @@ async function start() {
             image,
           };
         }
+      } else {
+        embed = {
+          uri: url,
+          title: item.title,
+          description: item.description,
+        };
       }
     }
 
