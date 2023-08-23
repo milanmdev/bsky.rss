@@ -10,6 +10,7 @@ let lastDate: string = "";
 interface Config {
   string: string;
   publishEmbed?: boolean;
+  imageEmbed?: string;
   languages?: string[];
   truncate?: boolean;
   dateField?: string;
@@ -18,6 +19,7 @@ interface Config {
 let config: Config = {
   string: "",
   publishEmbed: false,
+  imageEmbed: "",
   languages: ["en"],
   truncate: true,
 };
@@ -30,6 +32,7 @@ interface Item {
   published?: string;
   pubdate?: string;
   description: string;
+  [key: string]: any;
 }
 
 interface ParseResult {
@@ -44,7 +47,7 @@ interface Embed {
 }
 
 async function start() {
-  reader.read();
+  reader.read();  
 
   reader.on("item", async (item: Item) => {
     let useDate = config.dateField
@@ -92,8 +95,21 @@ async function start() {
         }));
       if (!openGraphData.error) {
         let image: Buffer | undefined = undefined;
-        if (openGraphData.ogImage && openGraphData.ogImage[0]) {
-          let fetchBuffer = await axios.get(openGraphData.ogImage[0].url, {
+
+        let imageUrl: string = ""
+
+        let imageEmbedKey: string | undefined = config.imageEmbed
+        if (imageEmbedKey != "" && imageEmbedKey != undefined) {
+          imageUrl = item[imageEmbedKey]['url']
+        }
+
+        else if (openGraphData.ogImage && openGraphData.ogImage[0]) {
+          imageUrl = openGraphData.ogImage[0].url;
+        }
+
+        if (imageUrl != "")
+        {         
+          let fetchBuffer = await axios.get(imageUrl, {
             responseType: "arraybuffer",
           });
           image = await sharp(fetchBuffer.data)

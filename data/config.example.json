@@ -1,6 +1,7 @@
 {
   "string": "$title - $link",
   "publishEmbed": true,
+  "imageEmbed": "",
   "languages": ["en"],
   "truncate": true,
   "dateField": ""

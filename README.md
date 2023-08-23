@@ -71,6 +71,7 @@ Here's an example of the `config.json` file:
 {
   "string": "$title - $link",
   "publishEmbed": true,
+  "imageEmbed": "",
   "languages": ["en"],
   "truncate": true,
   "dateField": ""
@@ -82,6 +83,7 @@ Here's an example of the `config.json` file:
   - `$link`: The link of the RSS post
   - `$description`: The description of the RSS post
 - `publishEmbed`: Whether to publish the post as an embed or not. If set to `true`, the post will be published as an embed with the title, description (if available), and link to the RSS post.
+- `imageEmbed`: Bypass the image in the embed with this tag (URL).
 - `languages`: The languages to set the posts to. This can be an array of `ISO 639-1` language codes. If not set, it will default to `en`.
 - `truncate`: Whether or not to truncate the body of the post if it is over 300 characters. By default, this is set to `true`.
 
