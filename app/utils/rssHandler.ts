@@ -47,7 +47,7 @@ interface Embed {
 }
 
 async function start() {
-  reader.read();  
+  reader.read();
 
   reader.on("item", async (item: Item) => {
     let useDate = config.dateField
@@ -100,10 +100,29 @@ async function start() {
 
         let imageEmbedKey: string | undefined = config.imageEmbed
         if (imageEmbedKey != "" && imageEmbedKey != undefined) {
-          imageUrl = item[imageEmbedKey]['url']
+
+          if (Object.keys(item).includes(imageEmbedKey)) {
+            if (Object.keys(item[imageEmbedKey]).includes('url')) {
+              imageUrl = item[imageEmbedKey]['url'];
+            }
+            else {
+              console.log(
+                `[${new Date().toUTCString()}] - [bsky.rss Warning] "url" not found in tag ${imageEmbedKey} for item (${
+                  item.title
+                })`
+              );
+            }
+          }
+          else {
+            console.log(
+              `[${new Date().toUTCString()}] - [bsky.rss Warning] Warning: tag ${imageEmbedKey} not found for item (${
+                item.title
+              })`
+             );
+          }            
         }
 
-        else if (openGraphData.ogImage && openGraphData.ogImage[0]) {
+        else if (openGraphData.ogImage && openGraphData.ogImage[0] && imageUrl != "") {
           imageUrl = openGraphData.ogImage[0].url;
         }
 
