@@ -4,5 +4,6 @@
   "languages": ["en"],
   "truncate": true,
   "runInterval": 60,
-  "dateField": ""
+  "dateField": "",
+  "imageField": ""
 }
