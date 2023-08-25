@@ -14,6 +14,7 @@ let config: Config = {
   truncate: true,
   runInterval: 60,
   dateField: "",
+  imageField: "",
 };
 
 async function start() {
@@ -58,20 +59,40 @@ async function start() {
         }));
       if (!openGraphData.error) {
         let image: Buffer | undefined = undefined;
-        if (openGraphData.ogImage && openGraphData.ogImage[0]) {
-          let fetchBuffer = await axios.get(openGraphData.ogImage[0].url, {
-            responseType: "arraybuffer",
-          });
-          image = await sharp(fetchBuffer.data)
-            .resize(800, null, {
-              fit: "inside",
-              withoutEnlargement: true,
-            })
-            .jpeg({
-              quality: 80,
-              progressive: true,
-            })
-            .toBuffer();
+        let imageUrl: string = "";
+        let imageKey: string | undefined = config.imageField;
+        if (imageKey != "" && imageKey != undefined) {
+          if (Object.keys(item).includes(imageKey)) {
+            if (Object.keys(item[imageKey]).includes("url")) {
+              imageUrl = item[imageKey]["url"];
+            }
+          }
+        } else if (openGraphData.ogImage && openGraphData.ogImage[0]) {
+          imageUrl = openGraphData.ogImage[0].url;
+        }
+
+        if (imageUrl != "") {
+          try {
+            let fetchBuffer = await axios.get(imageUrl, {
+              responseType: "arraybuffer",
+            });
+            image = await sharp(fetchBuffer.data)
+              .resize(800, null, {
+                fit: "inside",
+                withoutEnlargement: true,
+              })
+              .jpeg({
+                quality: 80,
+                progressive: true,
+              })
+              .toBuffer();
+          } catch (e) {
+            console.log(
+              `[${new Date().toUTCString()}] - [bsky.rss FETCH] Error fetching image for ${
+                item.title
+              } (${imageUrl})`
+            );
+          }
         }
 
         if (

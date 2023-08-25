@@ -5,6 +5,7 @@ interface Config {
   truncate?: boolean;
   runInterval: number;
   dateField?: string;
+  imageField?: string;
 }
 
 interface Item {
@@ -15,6 +16,7 @@ interface Item {
   published?: string;
   pubdate?: string;
   description: string;
+  [key: string]: any;
 }
 
 interface ParseResult {
