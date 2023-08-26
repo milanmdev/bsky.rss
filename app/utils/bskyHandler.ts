@@ -39,10 +39,15 @@ async function post({
 
   let embedImage: any = null;
   if (embed && embed.image) {
-    embedImage = await bskyAgent.uploadBlob(embed.image, {
-      encoding: "image/jpeg",
-    });
+    try {
+      embedImage = await bskyAgent.uploadBlob(embed.image, {
+        encoding: "image/jpeg",
+      });
+    } catch (e: any) {
+      embedImage = { ratelimit: true };
+    }
   }
+  if (embedImage && embedImage.ratelimit) return { ratelimit: true };
 
   const record = {
     $type: "app.bsky.feed.post",
