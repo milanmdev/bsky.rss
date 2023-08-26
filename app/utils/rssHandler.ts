@@ -15,6 +15,7 @@ let config: Config = {
   runInterval: 60,
   dateField: "",
   imageField: "",
+  ogUserAgent: "bsky.rss/1.0 (Open Graph Scraper)",
 };
 
 async function start() {
@@ -64,6 +65,9 @@ async function start() {
         if (imageUrl != "" && config.imageField == "") {
           try {
             let fetchBuffer = await axios.get(imageUrl, {
+              headers: {
+                "User-Agent": config.ogUserAgent,
+              },
               responseType: "arraybuffer",
             });
             image = await sharp(fetchBuffer.data)
@@ -124,6 +128,9 @@ async function start() {
       if (imageUrl != "" && embed != undefined) {
         try {
           let fetchBuffer = await axios.get(imageUrl, {
+            headers: {
+              "User-Agent": config.ogUserAgent,
+            },
             responseType: "arraybuffer",
           });
           embed.image = await sharp(fetchBuffer.data)
