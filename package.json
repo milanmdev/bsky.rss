@@ -8,6 +8,7 @@
   "license": "MIT",
   "scripts": {
     "build:dev": "docker rmi -f bsky.rss && docker build . -t bsky.rss",
+    "release": "sh release.sh",
     "start": "tsx ./app/index.ts",
     "dev": "tsx --watch ./app/index.ts"
   },

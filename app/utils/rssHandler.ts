@@ -60,7 +60,7 @@ async function start() {
       if (!openGraphData.error) {
         let image: Buffer | undefined = undefined;
 
-        if (config.imageField == "") {
+        if (config.imageField == "" || config.imageField == undefined) {
           let imageUrl: string = openGraphData.ogImage[0].url;
 
           if (imageUrl != "" && imageUrl != undefined) {
