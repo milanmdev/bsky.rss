@@ -40,7 +40,7 @@ async function main() {
   } catch (e) {
     if (e == "Error: Rate Limit Exceeded") {
       console.log(
-        `[${new Date().toUTCString()}] - [bsky.rss APP] Authuntication rate limit exceeded`
+        `[${new Date().toUTCString()}] - [bsky.rss APP] Authentication rate limit exceeded`
       );
       return;
     }
