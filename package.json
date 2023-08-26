@@ -7,10 +7,7 @@
   "author": "Milan Mehra <milan@milanm.org>",
   "license": "MIT",
   "scripts": {
-    "push": "docker push ghcr.io/milanmdev/bsky.rss:latest",
     "build:dev": "docker rmi -f bsky.rss && docker build . -t bsky.rss",
-    "build:prod": "docker rmi -f ghcr.io/milanmdev/bsky.rss && docker build . --platform linux/x86_64 -t ghcr.io/milanmdev/bsky.rss",
-    "release": "yarn build:prod && yarn push",
     "start": "tsx ./app/index.ts",
     "dev": "tsx --watch ./app/index.ts"
   },
@@ -27,7 +24,8 @@
     "@types/node": "^20.3.2",
     "gts": "^5.0.0",
     "tsx": "^3.12.7",
-    "typescript": "^5.1.3"
+    "typescript": "^5.1.3",
+    "underscore-cli": "^0.2.19"
   },
   "typeRoots": [
     "./node_modules/@types",
