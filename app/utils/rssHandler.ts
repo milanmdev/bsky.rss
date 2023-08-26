@@ -59,32 +59,35 @@ async function start() {
         }));
       if (!openGraphData.error) {
         let image: Buffer | undefined = undefined;
-        let imageUrl: string = openGraphData.ogImage[0].url;
 
-        if (imageUrl != "" && config.imageField == "") {
-          try {
-            let fetchBuffer = await axios.get(imageUrl, {
-              headers: {
-                "User-Agent": config.ogUserAgent,
-              },
-              responseType: "arraybuffer",
-            });
-            image = await sharp(fetchBuffer.data)
-              .resize(800, null, {
-                fit: "inside",
-                withoutEnlargement: true,
-              })
-              .jpeg({
-                quality: 80,
-                progressive: true,
-              })
-              .toBuffer();
-          } catch (e) {
-            console.log(
-              `[${new Date().toUTCString()}] - [bsky.rss FETCH] Error fetching image for ${
-                item.title
-              } (${imageUrl})`
-            );
+        if (config.imageField == "") {
+          let imageUrl: string = openGraphData.ogImage[0].url;
+
+          if (imageUrl != "" && imageUrl != undefined) {
+            try {
+              let fetchBuffer = await axios.get(imageUrl, {
+                headers: {
+                  "User-Agent": config.ogUserAgent,
+                },
+                responseType: "arraybuffer",
+              });
+              image = await sharp(fetchBuffer.data)
+                .resize(800, null, {
+                  fit: "inside",
+                  withoutEnlargement: true,
+                })
+                .jpeg({
+                  quality: 80,
+                  progressive: true,
+                })
+                .toBuffer();
+            } catch (e) {
+              console.log(
+                `[${new Date().toUTCString()}] - [bsky.rss FETCH] Error fetching image for ${
+                  item.title
+                } (${imageUrl})`
+              );
+            }
           }
         }
 
