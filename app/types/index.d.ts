@@ -6,7 +6,7 @@ interface Config {
   runInterval: number;
   dateField?: string;
   imageField?: string;
-  ogUserAgent?: string;
+  ogUserAgent: string;
 }
 
 interface Item {
