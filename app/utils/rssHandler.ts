@@ -44,7 +44,36 @@ async function start() {
       let url = "";
       if (typeof item.link === "object") url = item.link.href;
       else url = item.link;
+      
+      let image: Buffer | undefined = undefined;
 
+      // bypass open graph      
+      if (config.imageField != "" && config.imageField != undefined) {
+        let imageUrl: string = "";
+        let imageKey: string | undefined = config.imageField;
+        if (imageKey != "" && imageKey != undefined) {
+          if (Object.keys(item).includes(imageKey)) {
+            if (Object.keys(item[imageKey]).includes("url")) {
+              imageUrl = item[imageKey]["url"];
+            }
+          }
+        }
+
+        // bypass image
+        if (imageUrl != "") {
+          image = await fetchImage(imageUrl);
+
+          if (image == undefined) {
+            console.log(
+              `[${new Date().toUTCString()}] - [bsky.rss FETCH] Error fetching image for ${
+                item.title
+              } (${imageUrl})`
+            );
+          }
+        }
+      }
+
+      // open graph related
       let openGraphData: any = await og({
         url,
         fetchOptions: {
@@ -57,31 +86,17 @@ async function start() {
         .catch(() => ({
           error: true,
         }));
-      if (!openGraphData.error) {
-        let image: Buffer | undefined = undefined;
 
-        if (config.imageField == "" || config.imageField == undefined) {
+      if (!openGraphData.error) {
+
+        if (image == undefined && openGraphData.ogImage) {
           let imageUrl: string = openGraphData.ogImage[0].url;
 
           if (imageUrl != "" && imageUrl != undefined) {
-            try {
-              let fetchBuffer = await axios.get(imageUrl, {
-                headers: {
-                  "User-Agent": config.ogUserAgent,
-                },
-                responseType: "arraybuffer",
-              });
-              image = await sharp(fetchBuffer.data)
-                .resize(800, null, {
-                  fit: "inside",
-                  withoutEnlargement: true,
-                })
-                .jpeg({
-                  quality: 80,
-                  progressive: true,
-                })
-                .toBuffer();
-            } catch (e) {
+
+            image = await fetchImage(imageUrl);
+
+            if (image == undefined) {
               console.log(
                 `[${new Date().toUTCString()}] - [bsky.rss FETCH] Error fetching image for ${
                   item.title
@@ -104,7 +119,7 @@ async function start() {
             description: openGraphData.ogDescription
               ? openGraphData.ogDescription
               : item.description,
-            image,
+            image: image
           };
         }
       } else {
@@ -112,46 +127,8 @@ async function start() {
           uri: url,
           title: item.title,
           description: item.description,
+          image: image,
         };
-      }
-    }
-
-    if (config.imageField != "" && config.imageField != undefined) {
-      let imageUrl: string = "";
-      let imageKey: string | undefined = config.imageField;
-      if (imageKey != "" && imageKey != undefined) {
-        if (Object.keys(item).includes(imageKey)) {
-          if (Object.keys(item[imageKey]).includes("url")) {
-            imageUrl = item[imageKey]["url"];
-          }
-        }
-      }
-
-      if (imageUrl != "" && embed != undefined) {
-        try {
-          let fetchBuffer = await axios.get(imageUrl, {
-            headers: {
-              "User-Agent": config.ogUserAgent,
-            },
-            responseType: "arraybuffer",
-          });
-          embed.image = await sharp(fetchBuffer.data)
-            .resize(800, null, {
-              fit: "inside",
-              withoutEnlargement: true,
-            })
-            .jpeg({
-              quality: 80,
-              progressive: true,
-            })
-            .toBuffer();
-        } catch (e) {
-          console.log(
-            `[${new Date().toUTCString()}] - [bsky.rss FETCH] Error fetching image for ${
-              item.title
-            } (${imageUrl})`
-          );
-        }
       }
     }
 
@@ -227,4 +204,30 @@ function parseString(string: string, item: Item) {
   }
   result.text = parsedString;
   return result;
+}
+
+async function fetchImage(imageUrl: string) {
+
+  let image: Buffer | undefined  = undefined;
+
+  try {
+    let fetchBuffer = await axios.get(imageUrl, {
+      headers: {
+        "User-Agent": config.ogUserAgent,
+      },
+      responseType: "arraybuffer",
+    });
+   image = await sharp(fetchBuffer.data)
+      .resize(800, null, {
+        fit: "inside",
+        withoutEnlargement: true,
+      })
+      .jpeg({
+        quality: 80,
+        progressive: true,
+      })
+      .toBuffer();
+  } catch (e) {}
+
+  return image;
 }
