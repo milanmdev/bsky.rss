@@ -64,8 +64,9 @@ async function start() {
           let imageKey: string | undefined = config.imageField;
           if (imageKey != "" && imageKey != undefined) {
             if (Object.keys(item).includes(imageKey)) {
-              if (Object.keys(item[imageKey]).includes("url")) {
-                imageUrl = item[imageKey]["url"];
+              if (Object.keys(item[imageKey]).includes("url") 
+                && !(Object.keys(item[imageKey]).includes('type')) && !item[imageKey]["type"].startsWith('image')) {
+                  imageUrl = item[imageKey]["url"];
               }
             }
           }
