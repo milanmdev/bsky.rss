@@ -68,14 +68,17 @@ async function post({
     createdAt: new Date().toISOString(),
   };
 
-  let post: any;
-  try {
-    post = await bskyAgent.post(record);
-  } catch (e: any) {
-    post = { ratelimit: true };
-  } finally {
-    return post;
-  }
+  // let post: any;
+  // try {
+  // post = await bskyAgent.post(record);
+  // } catch (e: any) {
+  //   post = { ratelimit: true };
+  // } finally {
+  //   return post;
+  // }
+
+  console.log("post", record);
+  return { ratelimit: true }
 }
 
 export default {

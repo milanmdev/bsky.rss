@@ -75,7 +75,7 @@ async function runQueue() {
             item.title
           })`
         );
-        db.writeDate(new Date(item.date));
+        // db.writeDate(new Date(item.date));
         if (i === queueSnapshot.length - 1) {
           queueRunning = false;
           queueSnapshot = [];
