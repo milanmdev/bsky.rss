@@ -77,7 +77,7 @@ Here's an example of the `config.json` file:
   "dateField": "",
   "imageField": "",
   "forceDescriptionEmbed": false,
-  "descriptionClearHTML": true,
+  "descriptionClearHTML": false,
   "ogUserAgent": ""
 }
 ```

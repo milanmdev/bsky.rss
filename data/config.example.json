@@ -7,6 +7,6 @@
   "dateField": "",
   "imageField": "",
   "forceDescriptionEmbed": false,
-  "descriptionClearHTML": true,
+  "descriptionClearHTML": false,
   "ogUserAgent": ""
 }
