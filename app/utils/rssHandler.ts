@@ -1,7 +1,6 @@
 import FeedSub from "feedsub";
 import sharp from "sharp";
 import axios from "axios";
-import parse from 'node-html-parser';
 import queue from "./queueHandler";
 import db from "./dbHandler";
 import og from "open-graph-scraper";
@@ -38,7 +37,7 @@ async function start() {
 
     // clean HTML tag from description
     if (config.descriptionClearHTML) {
-      item.description = parse(item.description).text;
+      item.description = removeHTMLTags(item.description);
     }
 
     // @ts-ignore
@@ -251,4 +250,9 @@ async function fetchImage(imageUrl: string) {
   } catch (e) {}
 
   return image;
+}
+
+function removeHTMLTags(htmlString: string) {
+
+  return htmlString.replace(/<\/?[^>]+(>|$)/g, " ").replaceAll('&nbsp;', ' ').trim().replace(/  +/g, ' ');
 }
