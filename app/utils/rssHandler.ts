@@ -88,6 +88,10 @@ async function start() {
           : item.content
           ? item.content
           : undefined;
+
+          if (description && config.descriptionClearHTML) {
+            description = removeHTMLTags(description);
+          }
       }
 
       let openGraphData: any = await og({
