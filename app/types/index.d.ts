@@ -7,6 +7,8 @@ interface Config {
   dateField?: string;
   imageField?: string;
   ogUserAgent: string;
+  descriptionClearHTML?: boolean;
+  forceDescriptionEmbed?: boolean;
 }
 
 interface Item {

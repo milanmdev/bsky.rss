@@ -16,6 +16,8 @@ let config: Config = {
   dateField: "",
   imageField: "",
   ogUserAgent: "bsky.rss/1.0 (Open Graph Scraper)",
+  descriptionClearHTML: true,
+  forceDescriptionEmbed: false,
 };
 
 async function start() {
@@ -33,9 +35,13 @@ async function start() {
 
     if (new Date(useDate) <= new Date(lastDate)) return;
 
-    // @ts-ignore
-    let parsed = parseString(config.string, item);
+    let parsed = parseString(
+      config.string,
+      item,
+      item.description ? item.description : item.content
+    );
     let embed: Embed | undefined = undefined;
+
     if (config.publishEmbed) {
       if (!item.link)
         throw new Error(
@@ -44,6 +50,45 @@ async function start() {
       let url = "";
       if (typeof item.link === "object") url = item.link.href;
       else url = item.link;
+
+      let image: Buffer | undefined = undefined;
+      let description: string | undefined = undefined;
+
+      if (config.imageField != "" && config.imageField != undefined) {
+        let imageUrl: string = "";
+        let imageKey: string | undefined = config.imageField;
+        if (imageKey != "" && imageKey != undefined) {
+          if (Object.keys(item).includes(imageKey)) {
+            if (
+              Object.keys(item[imageKey]).includes("url") &&
+              !Object.keys(item[imageKey]).includes("type") &&
+              !item[imageKey]["type"].startsWith("image")
+            ) {
+              imageUrl = item[imageKey]["url"];
+            }
+          }
+        }
+
+        if (imageUrl != "") {
+          image = await fetchImage(imageUrl);
+
+          if (image == undefined) {
+            console.log(
+              `[${new Date().toUTCString()}] - [bsky.rss FETCH] Error fetching image for ${
+                item.title
+              } (${imageUrl})`
+            );
+          }
+        }
+      }
+
+      if (config.forceDescriptionEmbed) {
+        description = item.description
+          ? item.description
+          : item.content
+          ? item.content
+          : undefined;
+      }
 
       let openGraphData: any = await og({
         url,
@@ -57,31 +102,15 @@ async function start() {
         .catch(() => ({
           error: true,
         }));
-      if (!openGraphData.error) {
-        let image: Buffer | undefined = undefined;
 
-        if (config.imageField == "" || config.imageField == undefined) {
+      if (!openGraphData.error) {
+        if (image == undefined && openGraphData.ogImage) {
           let imageUrl: string = openGraphData.ogImage[0].url;
 
           if (imageUrl != "" && imageUrl != undefined) {
-            try {
-              let fetchBuffer = await axios.get(imageUrl, {
-                headers: {
-                  "User-Agent": config.ogUserAgent,
-                },
-                responseType: "arraybuffer",
-              });
-              image = await sharp(fetchBuffer.data)
-                .resize(800, null, {
-                  fit: "inside",
-                  withoutEnlargement: true,
-                })
-                .jpeg({
-                  quality: 80,
-                  progressive: true,
-                })
-                .toBuffer();
-            } catch (e) {
+            image = await fetchImage(imageUrl);
+
+            if (image == undefined) {
               console.log(
                 `[${new Date().toUTCString()}] - [bsky.rss FETCH] Error fetching image for ${
                   item.title
@@ -89,69 +118,39 @@ async function start() {
               );
             }
           }
+
+          if (description == undefined) {
+            description = openGraphData.ogDescription
+              ? openGraphData.ogDescription
+              : config.forceDescriptionEmbed == true && undefined;
+          }
+        }
+
+        if (description !== undefined && config.descriptionClearHTML) {
+          description = removeHTMLTags(description);
         }
 
         if (
           (!openGraphData.ogUrl && !url) ||
           (!openGraphData.ogTitle && !item.title) ||
-          (!openGraphData.ogDescription && !item.description)
+          !description
         ) {
           embed = undefined;
         } else {
           embed = {
             uri: openGraphData.ogUrl ? openGraphData.ogUrl : url,
             title: openGraphData.ogTitle ? openGraphData.ogTitle : item.title,
-            description: openGraphData.ogDescription
-              ? openGraphData.ogDescription
-              : item.description,
-            image,
+            description: description,
+            image: image,
           };
         }
       } else {
         embed = {
           uri: url,
           title: item.title,
-          description: item.description,
+          description: item.description || item.content,
+          image: image,
         };
-      }
-    }
-
-    if (config.imageField != "" && config.imageField != undefined) {
-      let imageUrl: string = "";
-      let imageKey: string | undefined = config.imageField;
-      if (imageKey != "" && imageKey != undefined) {
-        if (Object.keys(item).includes(imageKey)) {
-          if (Object.keys(item[imageKey]).includes("url")) {
-            imageUrl = item[imageKey]["url"];
-          }
-        }
-      }
-
-      if (imageUrl != "" && embed != undefined) {
-        try {
-          let fetchBuffer = await axios.get(imageUrl, {
-            headers: {
-              "User-Agent": config.ogUserAgent,
-            },
-            responseType: "arraybuffer",
-          });
-          embed.image = await sharp(fetchBuffer.data)
-            .resize(800, null, {
-              fit: "inside",
-              withoutEnlargement: true,
-            })
-            .jpeg({
-              quality: 80,
-              progressive: true,
-            })
-            .toBuffer();
-        } catch (e) {
-          console.log(
-            `[${new Date().toUTCString()}] - [bsky.rss FETCH] Error fetching image for ${
-              item.title
-            } (${imageUrl})`
-          );
-        }
       }
     }
 
@@ -196,7 +195,7 @@ export default {
   launch,
 };
 
-function parseString(string: string, item: Item) {
+function parseString(string: string, item: Item, description: string) {
   let result: ParseResult = {
     text: "",
   };
@@ -216,9 +215,11 @@ function parseString(string: string, item: Item) {
     }
   }
 
-  if (string.includes("$description") || item.description) {
+  if (string.includes("$description") || description) {
     if (string.includes("$description")) {
-      parsedString = parsedString.replace("$description", item.description);
+      if (config.descriptionClearHTML)
+        description = removeHTMLTags(description);
+      parsedString = parsedString.replace("$description", description);
     }
   }
 
@@ -227,4 +228,37 @@ function parseString(string: string, item: Item) {
   }
   result.text = parsedString;
   return result;
+}
+
+async function fetchImage(imageUrl: string) {
+  let image: Buffer | undefined = undefined;
+
+  try {
+    let fetchBuffer = await axios.get(imageUrl, {
+      headers: {
+        "User-Agent": config.ogUserAgent,
+      },
+      responseType: "arraybuffer",
+    });
+    image = await sharp(fetchBuffer.data)
+      .resize(800, null, {
+        fit: "inside",
+        withoutEnlargement: true,
+      })
+      .jpeg({
+        quality: 80,
+        progressive: true,
+      })
+      .toBuffer();
+  } catch (e) {}
+
+  return image;
+}
+
+function removeHTMLTags(htmlString: string) {
+  return htmlString
+    .replace(/<\/?[^>]+(>|$)/g, " ")
+    .replaceAll("&nbsp;", " ")
+    .trim()
+    .replace(/  +/g, " ");
 }
