@@ -215,12 +215,10 @@ function parseString(string: string, item: Item, description: string) {
     }
   }
 
-  if (string.includes("$description") || description) {
-    if (string.includes("$description")) {
-      if (config.descriptionClearHTML)
-        description = removeHTMLTags(description);
-      parsedString = parsedString.replace("$description", description);
-    }
+  if (string.includes("$description") && description) {
+    if (config.descriptionClearHTML)
+      description = removeHTMLTags(description);
+    parsedString = parsedString.replace("$description", description);
   }
 
   if (parsedString.length > 300 && config.truncate === true) {
@@ -257,7 +255,7 @@ async function fetchImage(imageUrl: string) {
 
 function removeHTMLTags(htmlString: string) {
   return htmlString
-    .replace(/<\/?[^>]+(>|$)/g, " ")
+    ?.replace(/<\/?[^>]+(>|$)/g, " ")
     .replaceAll("&nbsp;", " ")
     .trim()
     .replace(/  +/g, " ");
