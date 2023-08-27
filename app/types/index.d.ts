@@ -8,6 +8,7 @@ interface Config {
   imageField?: string;
   ogUserAgent: string;
   descriptionClearHTML?: boolean;
+  forceDescriptionEmbed?: boolean;
 }
 
 interface Item {

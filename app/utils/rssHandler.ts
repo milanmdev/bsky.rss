@@ -18,6 +18,7 @@ let config: Config = {
   imageField: "",
   ogUserAgent: "bsky.rss/1.0 (Open Graph Scraper)",
   descriptionClearHTML: true,
+  forceDescriptionEmbed: false
 };
 
 async function start() {
@@ -35,9 +36,15 @@ async function start() {
 
     if (new Date(useDate) <= new Date(lastDate)) return;
 
+    // clean HTML tag from description
+    if (config.descriptionClearHTML) {
+      item.description = parse(item.description).text;
+    }
+
     // @ts-ignore
     let parsed = parseString(config.string, item);
     let embed: Embed | undefined = undefined;
+
     if (config.publishEmbed) {
       if (!item.link)
         throw new Error(
@@ -46,38 +53,41 @@ async function start() {
       let url = "";
       if (typeof item.link === "object") url = item.link.href;
       else url = item.link;
-      
+
       let image: Buffer | undefined = undefined;
+      let description: string | undefined = undefined;
 
       // bypass open graph
-      if (config.imageField != "" && config.imageField != undefined) {
-        let imageUrl: string = "";
-        let imageKey: string | undefined = config.imageField;
-        if (imageKey != "" && imageKey != undefined) {
-          if (Object.keys(item).includes(imageKey)) {
-            if (Object.keys(item[imageKey]).includes("url")) {
-              imageUrl = item[imageKey]["url"];
+      {
+        // bypass image
+        if (config.imageField != "" && config.imageField != undefined) {
+          let imageUrl: string = "";
+          let imageKey: string | undefined = config.imageField;
+          if (imageKey != "" && imageKey != undefined) {
+            if (Object.keys(item).includes(imageKey)) {
+              if (Object.keys(item[imageKey]).includes("url")) {
+                imageUrl = item[imageKey]["url"];
+              }
+            }
+          }
+
+          if (imageUrl != "") {
+            image = await fetchImage(imageUrl);
+
+            if (image == undefined) {
+              console.log(
+                `[${new Date().toUTCString()}] - [bsky.rss FETCH] Error fetching image for ${
+                  item.title
+                } (${imageUrl})`
+              );
             }
           }
         }
 
-        // bypass image
-        if (imageUrl != "") {
-          image = await fetchImage(imageUrl);
-
-          if (image == undefined) {
-            console.log(
-              `[${new Date().toUTCString()}] - [bsky.rss FETCH] Error fetching image for ${
-                item.title
-              } (${imageUrl})`
-            );
-          }
+        // bypass description
+        if (config.forceDescriptionEmbed) {
+          description = item.description;
         }
-      }
-
-      // clean HTML tag from description
-      if (config.descriptionClearHTML) {
-        item.description = parse(item.description).text;        
       }
 
       // open graph related
@@ -96,6 +106,7 @@ async function start() {
 
       if (!openGraphData.error) {
 
+        // image openGraph
         if (image == undefined && openGraphData.ogImage) {
           let imageUrl: string = openGraphData.ogImage[0].url;
 
@@ -111,21 +122,24 @@ async function start() {
               );
             }
           }
+
+          // description openGraph
+          if (description == undefined) {
+            description = openGraphData.ogDescription ? openGraphData.ogDescription : item.description;
+          }
         }
 
         if (
           (!openGraphData.ogUrl && !url) ||
           (!openGraphData.ogTitle && !item.title) ||
-          (!openGraphData.ogDescription && !item.description)
+          (!description)
         ) {
           embed = undefined;
         } else {
           embed = {
             uri: openGraphData.ogUrl ? openGraphData.ogUrl : url,
             title: openGraphData.ogTitle ? openGraphData.ogTitle : item.title,
-            description: openGraphData.ogDescription
-              ? openGraphData.ogDescription
-              : item.description,
+            description: description,
             image: image
           };
         }
