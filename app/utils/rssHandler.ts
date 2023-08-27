@@ -1,6 +1,7 @@
 import FeedSub from "feedsub";
 import sharp from "sharp";
 import axios from "axios";
+import parse from 'node-html-parser';
 import queue from "./queueHandler";
 import db from "./dbHandler";
 import og from "open-graph-scraper";
@@ -16,6 +17,7 @@ let config: Config = {
   dateField: "",
   imageField: "",
   ogUserAgent: "bsky.rss/1.0 (Open Graph Scraper)",
+  descriptionClearHTML: true,
 };
 
 async function start() {
@@ -47,7 +49,7 @@ async function start() {
       
       let image: Buffer | undefined = undefined;
 
-      // bypass open graph      
+      // bypass open graph
       if (config.imageField != "" && config.imageField != undefined) {
         let imageUrl: string = "";
         let imageKey: string | undefined = config.imageField;
@@ -71,6 +73,11 @@ async function start() {
             );
           }
         }
+      }
+
+      // clean HTML tag from description
+      if (config.descriptionClearHTML) {
+        item.description = parse(item.description).text;        
       }
 
       // open graph related

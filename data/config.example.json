@@ -6,5 +6,6 @@
   "runInterval": 60,
   "dateField": "",
   "imageField": "",
+  "descriptionClearHTML": true,
   "ogUserAgent": ""
 }

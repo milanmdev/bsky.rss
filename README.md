@@ -76,6 +76,7 @@ Here's an example of the `config.json` file:
   "runInterval": 60,
   "dateField": "",
   "imageField": "",
+  "descriptionClearHTML": true,
   "ogUserAgent": ""
 }
 ```
@@ -90,6 +91,7 @@ Here's an example of the `config.json` file:
 - `runInterval`: The interval (in seconds) to run the RSS poster. By default (and reccomended), this is set to `60` seconds.
 - `dateField`: The field to use for the date of the RSS post. This can be any field that is available in the RSS feed. If not set, it will default to pubDate and/or date.
 - `imageField`: The field to use for the fetching the image of the RSS post. This can be any field that is available in the RSS feed. If not set, the poster will fetch the Open Graph data of the URL provided by the RSS post and use the image from there.
+- `descriptionClearHTML`: Parse HTML from the description of the RSS post and transform it into plain text.
 - `ogUserAgent`: The user agent to use when fetching the Open Graph data of the URL provided by the RSS post. By default, this is set to `bsky.rss/1.0 (Open Graph Scraper)`.
 
 More examples of the `config.json` and environment variables can be found in the `examples` directory. The `examples` directory also contains a `docker-compose.yml` file that you can use to setup the RSS poster using Docker.
