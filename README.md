@@ -87,6 +87,9 @@ Here's an example of the `config.json` file:
 
 More examples of the `config.json` and environment variables can be found in the `examples` directory. The `examples` directory also contains a `docker-compose.yml` file that you can use to setup the RSS poster using Docker.
 
+# Helpers
+a few scripts to manage bots and apply changes to a fleet of bots [bsky.rss-helper](https://github.com/rmdes/bsky-rss-helper)
+
 # License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
