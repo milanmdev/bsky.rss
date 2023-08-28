@@ -61,8 +61,8 @@ async function start() {
           if (Object.keys(item).includes(imageKey)) {
             if (
               Object.keys(item[imageKey]).includes("url") &&
-              !Object.keys(item[imageKey]).includes("type") &&
-              !item[imageKey]["type"].startsWith("image")
+              !(Object.keys(item[imageKey]).includes("type") &&
+              !item[imageKey]["type"].startsWith("image"))
             ) {
               imageUrl = item[imageKey]["url"];
             }
