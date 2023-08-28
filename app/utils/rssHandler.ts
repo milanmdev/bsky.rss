@@ -126,7 +126,11 @@ async function start() {
           if (description == undefined) {
             description = openGraphData.ogDescription
               ? openGraphData.ogDescription
-              : config.forceDescriptionEmbed == true && undefined;
+              : item.description
+              ? item.description
+              : item.content
+              ? item.content
+              : "";
           }
         }
 
