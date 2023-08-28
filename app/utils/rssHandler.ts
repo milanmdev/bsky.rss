@@ -89,9 +89,9 @@ async function start() {
           ? item.content
           : undefined;
 
-          if (description && config.descriptionClearHTML) {
-            description = removeHTMLTags(description);
-          }
+        if (description && config.descriptionClearHTML) {
+          description = removeHTMLTags(description);
+        }
       }
 
       let openGraphData: any = await og({
@@ -149,6 +149,12 @@ async function start() {
           };
         }
       } else {
+        console.log(
+          `[${new Date().toUTCString()}] - [bsky.rss FETCH] Error fetching Open Graph data for ${
+            item.title
+          } (${url})]: ${openGraphData.error}`
+        );
+
         embed = {
           uri: url,
           title: item.title,
@@ -220,8 +226,7 @@ function parseString(string: string, item: Item, description: string) {
   }
 
   if (string.includes("$description") && description) {
-    if (config.descriptionClearHTML)
-      description = removeHTMLTags(description);
+    if (config.descriptionClearHTML) description = removeHTMLTags(description);
     parsedString = parsedString.replace("$description", description);
   }
 
