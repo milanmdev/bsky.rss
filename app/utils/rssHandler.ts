@@ -158,10 +158,15 @@ async function start() {
           } (${url})]: ${openGraphData.error}`
         );
 
+        description = item.description || item.content,
+        if (description && config.descriptionClearHTML) {
+          description = removeHTMLTags(description);
+        }
+
         embed = {
           uri: url,
           title: item.title,
-          description: item.description || item.content,
+          description: description,
           image: image,
         };
       }
