@@ -134,7 +134,7 @@ async function start() {
           }
         }
 
-        if (description !== undefined && config.descriptionClearHTML) {
+        if (description != undefined && config.descriptionClearHTML) {
           description = removeHTMLTags(description);
         }
 
