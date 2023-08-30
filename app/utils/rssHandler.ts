@@ -158,7 +158,7 @@ async function start() {
           } (${url})]: ${openGraphData.error}`
         );
 
-        description = item.description || item.content,
+        description = item.description || item.content;
         if (description && config.descriptionClearHTML) {
           description = removeHTMLTags(description);
         }
