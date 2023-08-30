@@ -130,7 +130,7 @@ async function start() {
               ? item.description
               : item.content
               ? item.content
-              : "";
+              : undefined;
           }
         }
 
@@ -140,8 +140,7 @@ async function start() {
 
         if (
           (!openGraphData.ogUrl && !url) ||
-          (!openGraphData.ogTitle && !item.title) ||
-          !description
+          (!openGraphData.ogTitle && !item.title)
         ) {
           embed = undefined;
         } else {
