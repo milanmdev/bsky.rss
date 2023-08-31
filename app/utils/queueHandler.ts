@@ -13,6 +13,10 @@ let config: Config = {
   truncate: true,
   runInterval: 60,
   dateField: "",
+  imageField: "",
+  ogUserAgent: "bsky.rss/1.0 (Open Graph Scraper)",
+  descriptionClearHTML: true,
+  forceDescriptionEmbed: false,
 };
 
 async function start() {
