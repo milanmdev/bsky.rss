@@ -63,6 +63,7 @@ async function runQueue() {
       });
       // @ts-ignore
       if (post.ratelimit) {
+        queue.unshift(item);
         await createLimitTimer();
         queueRunning = false;
         console.log(

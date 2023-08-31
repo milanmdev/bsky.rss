@@ -130,18 +130,17 @@ async function start() {
               ? item.description
               : item.content
               ? item.content
-              : "";
+              : undefined;
           }
         }
 
-        if (description !== undefined && config.descriptionClearHTML) {
+        if (description != undefined && config.descriptionClearHTML) {
           description = removeHTMLTags(description);
         }
 
         if (
           (!openGraphData.ogUrl && !url) ||
-          (!openGraphData.ogTitle && !item.title) ||
-          !description
+          (!openGraphData.ogTitle && !item.title)
         ) {
           embed = undefined;
         } else {
@@ -159,10 +158,15 @@ async function start() {
           } (${url})]: ${openGraphData.error}`
         );
 
+        description = item.description || item.content;
+        if (description && config.descriptionClearHTML) {
+          description = removeHTMLTags(description);
+        }
+
         embed = {
           uri: url,
           title: item.title,
-          description: item.description || item.content,
+          description: description,
           image: image,
         };
       }
