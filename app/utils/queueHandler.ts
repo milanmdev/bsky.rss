@@ -31,7 +31,7 @@ async function start() {
   }, config.runInterval * 1000);
 }
 
-async function createLimitTimer() {
+async function createLimitTimer(timeoutSeconds: number = 30) {
   if (!rateLimited) return;
   rateLimited = true;
   setTimeout(() => {
@@ -40,7 +40,7 @@ async function createLimitTimer() {
     console.log(
       `[${new Date().toUTCString()}] - [bsky.rss QUEUE] Post rate limit expired - resuming queue`
     );
-  }, 30000);
+  }, timeoutSeconds * 1000);
   return "";
 }
 
@@ -68,10 +68,12 @@ async function runQueue() {
       // @ts-ignore
       if (post.ratelimit) {
         queue.unshift(item);
-        await createLimitTimer();
+
+        let timeoutSeconds: number = post.retryAfter;
+        await createLimitTimer(timeoutSeconds);
         queueRunning = false;
         console.log(
-          `[${new Date().toUTCString()}] - [bsky.rss POST] Post rate limit exceeded - process will resume after 30 seconds`
+          `[${new Date().toUTCString()}] - [bsky.rss POST] Post rate limit exceeded - process will resume after ${timeoutSeconds} seconds`
         );
         break;
       } else {

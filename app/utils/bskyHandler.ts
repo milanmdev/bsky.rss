@@ -1,5 +1,6 @@
 let bskyAgent: any = null;
 import { BskyAgent, RichText } from "@atproto/api";
+import { XRPCError, ResponseType } from "@atproto/xrpc";
 
 async function init(service: string) {
   if (bskyAgent) throw new Error("Bluesky agent already initialized.");
@@ -71,8 +72,27 @@ async function post({
   let post: any;
   try {
     post = await bskyAgent.post(record);
-  } catch (e: any) {
-    post = { ratelimit: true };
+  } catch (error: any) {
+    // IDK it does not work ?
+    // if (error instanceof XRPCError) {
+    if (error.constructor.name == XRPCError.name) {
+
+      let xrpc_error: XRPCError = error;
+      
+      if (xrpc_error.status == ResponseType.UpstreamTimeout) {
+
+        let headers = xrpc_error.headers;
+
+        if (headers && headers.hasOwnProperty("Retry-After") && headers["Retry-After"]) {
+          
+          let retryAfter: number = +headers["Retry-After"];
+          post = { ratelimit: true, retryAfter: retryAfter };
+        }
+      }
+    }
+    
+    if (!post) 
+      post = { ratelimit: true, retryAfter: 30 };
   } finally {
     return post;
   }

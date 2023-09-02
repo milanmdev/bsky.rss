@@ -22,7 +22,7 @@ let config: Config = {
 
 async function start() {
   reader.read();
-
+  
   reader.on("item", async (item: Item) => {
     let useDate = config.dateField
       ? // @ts-ignore

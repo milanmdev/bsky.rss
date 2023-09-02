@@ -76,6 +76,14 @@
     "@atproto/lexicon" "*"
     zod "^3.21.4"
 
+"@atproto/xrpc@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@atproto/xrpc/-/xrpc-0.3.0.tgz#32dd3a15fedad401b94fdf38313aebff1c0b9d0d"
+  integrity sha512-PYE/4GT/sS4s/FxR5QO2YBaLU6GdhraYVfMOtfj+AN8YgZw1QoMHXkAv4v+BVH4T5HWU2XwZEBZvwfsr7YcewA==
+  dependencies:
+    "@atproto/lexicon" "*"
+    zod "^3.21.4"
+
 "@babel/code-frame@^7.0.0":
   version "7.22.10"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.22.10.tgz#1c20e612b768fefa75f6e90d6ecb86329247f0a3"
