@@ -50,21 +50,40 @@ async function post({
   }
   if (embedImage && embedImage.ratelimit) return { ratelimit: true };
 
+  let embed_data = undefined;
+
+  console.log('embed.imageAlt', embed.imageAlt)
+
+  if (embed) {
+    if (embed.type == "image") {    
+      embed_data = {
+        $type: "app.bsky.embed.images",
+        images: [
+          {
+            "image": embed.image ? embedImage.data.blob : undefined,
+            "alt": embed.imageAlt ? embed.imageAlt : "",
+          }
+        ],
+      }
+    }
+    else {
+      embed_data = {
+        $type: "app.bsky.embed.external",
+        external: {
+          uri: embed.uri,
+          title: embed.title,
+          description: embed.description ? embed.description : "",
+          thumb: embed.image ? embedImage.data.blob : undefined,
+        },
+      }
+    }
+  }
+
   const record = {
     $type: "app.bsky.feed.post",
     text: bskyText.text,
     facets: bskyText.facets,
-    embed: embed
-      ? {
-          $type: "app.bsky.embed.external",
-          external: {
-            uri: embed.uri,
-            title: embed.title,
-            description: embed.description ? embed.description : "",
-            thumb: embed.image ? embedImage.data.blob : undefined,
-          },
-        }
-      : undefined,
+    embed: embed_data,
     langs: languages,
     createdAt: new Date().toISOString(),
   };
@@ -78,19 +97,19 @@ async function post({
     if (error.constructor.name == XRPCError.name) {
 
       let xrpc_error: XRPCError = error;
-      
+
       if (xrpc_error.status == ResponseType.UpstreamTimeout) {
-
-        let headers = xrpc_error.headers;
-
-        if (headers && headers.hasOwnProperty("Retry-After") && headers["Retry-After"]) {
           
+        let headers = xrpc_error.headers;
+    
+        if (headers && headers.hasOwnProperty("Retry-After") && headers["Retry-After"]) {
+
           let retryAfter: number = +headers["Retry-After"];
           post = { ratelimit: true, retryAfter: retryAfter };
         }
       }
     }
-    
+
     if (!post) 
       post = { ratelimit: true, retryAfter: 30 };
   } finally {

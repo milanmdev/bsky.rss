@@ -71,6 +71,7 @@ Here's an example of the `config.json` file:
 {
   "string": "$title - $link",
   "publishEmbed": true,
+  "embedType": "card",
   "languages": ["en"],
   "truncate": true,
   "runInterval": 60,
@@ -78,7 +79,8 @@ Here's an example of the `config.json` file:
   "imageField": "",
   "forceDescriptionEmbed": false,
   "descriptionClearHTML": false,
-  "ogUserAgent": ""
+  "ogUserAgent": "",
+  "imageAlt": "$title"
 }
 ```
 
@@ -87,6 +89,7 @@ Here's an example of the `config.json` file:
   - `$link`: The link of the RSS post
   - `$description`: The description of the RSS post
 - `publishEmbed`: Whether to publish the post as an embed or not. If set to `true`, the post will be published as an embed with the title, description (if available), and link to the RSS post.
+- `embedType`: Type of embed. If set to `card`, the post will be published with a link-card. If set to `image` an image will be uploaded.
 - `languages`: The languages to set the posts to. This can be an array of `ISO 639-1` language codes. If not set, it will default to `en`.
 - `truncate`: Whether or not to truncate the body of the post if it is over 300 characters. By default, this is set to `true`.
 - `runInterval`: The interval (in seconds) to run the RSS poster. By default (and reccomended), this is set to `60` seconds.
@@ -95,6 +98,7 @@ Here's an example of the `config.json` file:
 - `forceDescriptionEmbed`: Force the description of the embed to be the description of the RSS post.
 - `descriptionClearHTML`: Remove HTML from the description of the Open Graph description and RSS-provided description (to make it more readable).
 - `ogUserAgent`: The user agent to use when fetching the Open Graph data of the URL provided by the RSS post. By default, this is set to `bsky.rss/1.0 (Open Graph Scraper)`.
+- `imageAlt`: Alt for the uploaded image if the `embedType` is set to `image`.
 
 More examples of the `config.json` and environment variables can be found in the `examples` directory. The `examples` directory also contains a `docker-compose.yml` file that you can use to setup the RSS poster using Docker.
 

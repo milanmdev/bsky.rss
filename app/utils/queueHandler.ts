@@ -9,6 +9,7 @@ let queueSnapshot: QueueItems[] = [];
 let config: Config = {
   string: "",
   publishEmbed: false,
+  embedType: "card",
   languages: ["en"],
   truncate: true,
   runInterval: 60,
@@ -17,6 +18,7 @@ let config: Config = {
   ogUserAgent: "bsky.rss/1.0 (Open Graph Scraper)",
   descriptionClearHTML: true,
   forceDescriptionEmbed: false,
+  imageAlt: "",
 };
 
 async function start() {
@@ -68,8 +70,7 @@ async function runQueue() {
       // @ts-ignore
       if (post.ratelimit) {
         queue.unshift(item);
-
-        let timeoutSeconds: number = post.retryAfter;
+        let timeoutSeconds: number = post.retryAfter ? post.retryAfter : 30;
         await createLimitTimer(timeoutSeconds);
         queueRunning = false;
         console.log(
