@@ -1,6 +1,7 @@
 interface Config {
   string: string;
   publishEmbed?: boolean;
+  embedType?: string;
   languages: string[];
   truncate?: boolean;
   runInterval: number;
@@ -9,6 +10,7 @@ interface Config {
   ogUserAgent: string;
   descriptionClearHTML?: boolean;
   forceDescriptionEmbed?: boolean;
+  imageAlt?: string;
 }
 
 interface Item {
@@ -31,6 +33,8 @@ interface Embed {
   title: string;
   description?: string;
   image?: Buffer;
+  imageAlt?: string;
+  type?: string;
 }
 
 interface QueueItems {

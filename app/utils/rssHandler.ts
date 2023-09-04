@@ -22,7 +22,7 @@ let config: Config = {
 
 async function start() {
   reader.read();
-
+  
   reader.on("item", async (item: Item) => {
     let useDate = config.dateField
       ? // @ts-ignore
@@ -38,7 +38,7 @@ async function start() {
     let parsed = parseString(
       config.string,
       item,
-      item.description ? item.description : item.content
+      config.truncate == true,
     );
     let embed: Embed | undefined = undefined;
 
@@ -53,6 +53,7 @@ async function start() {
 
       let image: Buffer | undefined = undefined;
       let description: string | undefined = undefined;
+      let imageAlt: string | undefined = undefined;
 
       if (config.imageField != "" && config.imageField != undefined) {
         let imageUrl: string = "";
@@ -92,6 +93,10 @@ async function start() {
         if (description && config.descriptionClearHTML) {
           description = removeHTMLTags(description);
         }
+      }
+
+      if (config.embedType == "image" && config.imageAlt) {        
+        imageAlt = parseString(config.imageAlt, item, false).text;
       }
 
       let openGraphData: any = await og({
@@ -149,6 +154,8 @@ async function start() {
             title: openGraphData.ogTitle ? openGraphData.ogTitle : item.title,
             description: description,
             image: image,
+            imageAlt: imageAlt,
+            type: config.embedType,
           };
         }
       } else {
@@ -168,6 +175,8 @@ async function start() {
           title: item.title,
           description: description,
           image: image,
+          imageAlt: imageAlt,
+          type: config.embedType,
         };
       }
     }
@@ -213,7 +222,7 @@ export default {
   launch,
 };
 
-function parseString(string: string, item: Item, description: string) {
+function parseString(string: string, item: Item, truncate: boolean) {
   let result: ParseResult = {
     text: "",
   };
@@ -233,12 +242,14 @@ function parseString(string: string, item: Item, description: string) {
     }
   }
 
+  let description = item.description ? item.description : item.content;
+
   if (string.includes("$description") && description) {
     if (config.descriptionClearHTML) description = removeHTMLTags(description);
     parsedString = parsedString.replace("$description", description);
   }
 
-  if (parsedString.length > 300 && config.truncate === true) {
+  if (parsedString.length > 300 && truncate) {
     parsedString = parsedString.slice(0, 277) + "...";
   }
   result.text = parsedString;
