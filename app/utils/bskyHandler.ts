@@ -53,18 +53,17 @@ async function post({
   let embed_data = undefined;
 
   if (embed) {
-    if (embed.type == "image") {    
+    if (embed.type == "image") {
       embed_data = {
         $type: "app.bsky.embed.images",
         images: [
           {
-            "image": embed.image ? embedImage.data.blob : undefined,
-            "alt": embed.imageAlt ? embed.imageAlt : "",
-          }
+            image: embed.image ? embedImage.data.blob : undefined,
+            alt: embed.imageAlt ? embed.imageAlt : "",
+          },
         ],
-      }
-    }
-    else {
+      };
+    } else {
       embed_data = {
         $type: "app.bsky.embed.external",
         external: {
@@ -73,7 +72,7 @@ async function post({
           description: embed.description ? embed.description : "",
           thumb: embed.image ? embedImage.data.blob : undefined,
         },
-      }
+      };
     }
   }
 
@@ -92,23 +91,24 @@ async function post({
   } catch (error: any) {
     // if (error instanceof XRPCError) {
     if (error.constructor.name == XRPCError.name) {
-
       let xrpc_error: XRPCError = error;
 
       if (xrpc_error.status == ResponseType.UpstreamTimeout) {
-          
+        // @ts-ignore
         let headers = xrpc_error.headers;
-    
-        if (headers && headers.hasOwnProperty("Retry-After") && headers["Retry-After"]) {
 
+        if (
+          headers &&
+          headers.hasOwnProperty("Retry-After") &&
+          headers["Retry-After"]
+        ) {
           let retryAfter: number = +headers["Retry-After"];
           post = { ratelimit: true, retryAfter: retryAfter };
         }
       }
     }
 
-    if (!post) 
-      post = { ratelimit: true, retryAfter: 30 };
+    if (!post) post = { ratelimit: true, retryAfter: 30 };
   } finally {
     return post;
   }
