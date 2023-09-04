@@ -52,8 +52,6 @@ async function post({
 
   let embed_data = undefined;
 
-  console.log('embed.imageAlt', embed.imageAlt)
-
   if (embed) {
     if (embed.type == "image") {    
       embed_data = {
@@ -92,7 +90,6 @@ async function post({
   try {
     post = await bskyAgent.post(record);
   } catch (error: any) {
-    // IDK it does not work ?
     // if (error instanceof XRPCError) {
     if (error.constructor.name == XRPCError.name) {
 
