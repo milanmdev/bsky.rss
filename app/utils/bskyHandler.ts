@@ -54,15 +54,17 @@ async function post({
 
   if (embed) {
     if (embed.type == "image") {
-      embed_data = {
-        $type: "app.bsky.embed.images",
-        images: [
-          {
-            image: embed.image ? embedImage.data.blob : undefined,
-            alt: embed.imageAlt ? embed.imageAlt : "",
-          },
-        ],
-      };
+      if (embed.image) {
+        embed_data = {
+          $type: "app.bsky.embed.images",
+          images: [
+            {
+              image: embed.image ? embedImage.data.blob : undefined,
+              alt: embed.imageAlt ? embed.imageAlt : "",
+            },
+          ],
+        };
+       }
     } else {
       embed_data = {
         $type: "app.bsky.embed.external",
@@ -105,8 +107,8 @@ async function post({
           let retryAfter: number = +headers["Retry-After"];
           post = { ratelimit: true, retryAfter: retryAfter };
         }
+        }
       }
-    }
 
     if (!post) post = { ratelimit: true, retryAfter: 30 };
   } finally {
