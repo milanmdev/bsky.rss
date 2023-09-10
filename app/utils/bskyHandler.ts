@@ -107,8 +107,8 @@ async function post({
           let retryAfter: number = +headers["Retry-After"];
           post = { ratelimit: true, retryAfter: retryAfter };
         }
-        }
       }
+    }
 
     if (!post) post = { ratelimit: true, retryAfter: 30 };
   } finally {
