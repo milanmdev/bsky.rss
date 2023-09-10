@@ -54,15 +54,17 @@ async function post({
 
   if (embed) {
     if (embed.type == "image") {
-      embed_data = {
-        $type: "app.bsky.embed.images",
-        images: [
-          {
-            image: embed.image ? embedImage.data.blob : undefined,
-            alt: embed.imageAlt ? embed.imageAlt : "",
-          },
-        ],
-      };
+      if (embed.image) {
+        embed_data = {
+          $type: "app.bsky.embed.images",
+          images: [
+            {
+              image: embed.image ? embedImage.data.blob : undefined,
+              alt: embed.imageAlt ? embed.imageAlt : "",
+            },
+          ],
+        };
+       }
     } else {
       embed_data = {
         $type: "app.bsky.embed.external",

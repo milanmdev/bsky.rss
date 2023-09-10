@@ -244,8 +244,8 @@ function parseString(string: string, item: Item, truncate: boolean) {
 
   let description = item.description ? item.description : item.content;
 
-  if (string.includes("$description") && description) {
-    if (config.descriptionClearHTML) description = removeHTMLTags(description);
+  if (string.includes("$description")) {
+    if (config.descriptionClearHTML && description) description = removeHTMLTags(description);
     parsedString = parsedString.replace("$description", description);
   }
 
