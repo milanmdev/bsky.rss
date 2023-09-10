@@ -64,7 +64,7 @@ async function post({
             },
           ],
         };
-       }
+      }
     } else {
       embed_data = {
         $type: "app.bsky.embed.external",
