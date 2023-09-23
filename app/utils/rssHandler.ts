@@ -143,14 +143,22 @@ async function start() {
           description = removeHTMLTags(description);
         }
 
+        let uri = openGraphData.ogUrl ? openGraphData.ogUrl : url;
+
+        if (openGraphData.ogUrl) {
+          let regexURL = new RegExp(`(?:(h|H)(t|T)(t|T)(p|P)(s|):\\/\\/|)[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)`)
+
+          if (!regexURL.test(openGraphData.ogUrl)) uri = url;
+        }
+
         if (
-          (!openGraphData.ogUrl && !url) ||
+          !uri ||
           (!openGraphData.ogTitle && !item.title)
         ) {
           embed = undefined;
         } else {
           embed = {
-            uri: openGraphData.ogUrl ? openGraphData.ogUrl : url,
+            uri: uri,
             title: openGraphData.ogTitle ? openGraphData.ogTitle : item.title,
             description: description,
             image: image,
