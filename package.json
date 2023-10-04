@@ -13,7 +13,7 @@
     "dev": "tsx --watch ./app/index.ts"
   },
   "dependencies": {
-    "@atproto/api": "0.6.19",
+    "@atproto/api": "0.6.20",
     "@atproto/xrpc": "^0.3.0",
     "axios": "1.5.1",
     "dotenv": "^16.3.1",
@@ -22,7 +22,7 @@
     "sharp": "^0.32.4"
   },
   "devDependencies": {
-    "@types/node": "20.7.0",
+    "@types/node": "20.8.2",
     "gts": "^5.0.1",
     "tsx": "3.13.0",
     "typescript": "^5.2.2",
