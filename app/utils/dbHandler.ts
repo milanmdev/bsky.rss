@@ -20,6 +20,29 @@ async function writeDate(date: Date) {
   return date;
 }
 
+async function readPersistData() {
+  if (!fs.existsSync(__dirname + "/../../data/persist.json")) {
+    fs.writeFileSync(
+      __dirname + "/../../data/persist.json",
+      JSON.stringify({}),
+      "utf8"
+    );
+    return {};
+  } else {
+    let data = fs.readFileSync(__dirname + "/../../data/persist.json", "utf8");
+    return JSON.parse(data);
+  }
+}
+
+async function writePersistDate(persistData: any) {
+  fs.writeFileSync(
+    __dirname + "/../../data/persist.json",
+    JSON.stringify(persistData),
+    "utf8"
+  );
+  return persistData;
+}
+
 async function initConfig() {
   try {
     let data = fs.readFileSync(__dirname + "/../../data/config.json", "utf8");
@@ -39,4 +62,11 @@ async function readConfig() {
   return JSON.parse(appConfig);
 }
 
-export default { readLast, writeDate, readConfig, initConfig };
+export default {
+  readLast,
+  writeDate,
+  readConfig,
+  initConfig,
+  writePersistDate,
+  readPersistData,
+};

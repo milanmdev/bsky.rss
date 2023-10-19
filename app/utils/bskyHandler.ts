@@ -1,11 +1,24 @@
-let bskyAgent: any = null;
-import { BskyAgent, RichText } from "@atproto/api";
+import {
+  BskyAgent,
+  RichText,
+  AtpSessionEvent,
+  AtpSessionData,
+} from "@atproto/api";
+let bskyAgent: BskyAgent | null;
 import { XRPCError, ResponseType } from "@atproto/xrpc";
+import db from "./dbHandler";
 
 async function init(service: string) {
   if (bskyAgent) throw new Error("Bluesky agent already initialized.");
 
-  bskyAgent = new BskyAgent({ service });
+  bskyAgent = new BskyAgent({
+    service,
+    // @ts-ignore
+    persistSession: (evt: AtpSessionEvent, sess?: AtpSessionData) => {
+      if (!sess) return;
+      db.writePersistDate(sess);
+    },
+  });
   return bskyAgent;
 }
 
@@ -17,11 +30,27 @@ async function login({
   password: string;
 }) {
   if (!bskyAgent) throw new Error("Bluesky agent not initialized.");
+  let persistedSessionData: any = await db.readPersistData();
 
-  let loginData = await bskyAgent.login({ identifier, password });
-  if (!loginData.success)
-    throw new Error("Login failed with error: " + loginData.error);
-  return loginData;
+  try {
+    if (!persistedSessionData && !persistedSessionData.accessJwt)
+      throw new Error("No persisted session data found.");
+    let sessionData: AtpSessionData = persistedSessionData;
+    let session = await bskyAgent.resumeSession(sessionData);
+    if (session.success) {
+      console.log(
+        `[${new Date().toUTCString()}] - [bsky.rss LOGIN] Resumed session for ${
+          session.data.handle
+        }`
+      );
+      return session;
+    }
+  } catch (e: any) {
+    let loginData = await bskyAgent.login({ identifier, password });
+    if (!loginData.success)
+      throw new Error("Login failed (auth via login/password)");
+    return loginData;
+  }
 }
 
 async function post({
