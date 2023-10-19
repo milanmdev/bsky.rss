@@ -34,7 +34,7 @@ async function login({
 
   try {
     if (!persistedSessionData && !persistedSessionData.accessJwt)
-      throw new Error("No persisted session data found.");
+      throw new Error("No persisted session data found. Using login/password.");
     let sessionData: AtpSessionData = persistedSessionData;
     let session = await bskyAgent.resumeSession(sessionData);
     if (session.success) {
@@ -44,6 +44,8 @@ async function login({
         }`
       );
       return session;
+    } else {
+      throw new Error("Login failed (auth via persisted session)");
     }
   } catch (e: any) {
     let loginData = await bskyAgent.login({ identifier, password });
