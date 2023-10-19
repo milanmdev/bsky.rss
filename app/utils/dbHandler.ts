@@ -1,4 +1,5 @@
 import fs from "fs";
+
 let appConfig: any = null;
 
 async function readLast() {
@@ -39,4 +40,56 @@ async function readConfig() {
   return JSON.parse(appConfig);
 }
 
-export default { readLast, writeDate, readConfig, initConfig };
+async function valueExists(value: string) {
+  if (!fs.existsSync(__dirname + "/../../data/db.txt")) {
+    fs.writeFileSync(__dirname + "/../../data/db.txt", "", "utf8");
+    return false;
+  } else {
+    let fileContent = fs.readFileSync(__dirname + "/../../data/db.txt", "utf8");
+    return (fileContent.includes(value));
+  }
+}
+
+async function writeValue(value: string) {
+  let currentDate =  new Date();
+  fs.appendFileSync(
+    __dirname + "/../../data/db.txt",
+    currentDate.toISOString() + "|" + value + "\n",
+    "utf8"
+  );
+  return value;
+}
+
+// Automatically cleanup old values from the file after 96 hours
+async function cleanupOldValues() {
+  let currentDate =  new Date();
+  let oldFileContent = fs.readFileSync(__dirname + "/../../data/db.txt", "utf8");
+  let newFileContent = "";
+
+  let fcLines: string[] = oldFileContent.split("\n")
+  if (fcLines != undefined) {
+    for (var i in fcLines) {
+      let lineItems: string[] = (fcLines[i] || "").split("|");
+      if (lineItems != undefined) {
+        let lineDate = new Date((lineItems[0] || "").toString());
+        let diffHours = getHoursDiffBetweenDates(lineDate, currentDate);
+
+        if (diffHours <= 96) {
+          newFileContent = newFileContent + (fcLines[i] || "") + "\n";
+        }
+      }
+    }
+  }
+
+  fs.writeFileSync(
+    __dirname + "/../../data/db.txt",
+    newFileContent,
+    "utf8"
+  );
+  return true;
+}
+
+const getHoursDiffBetweenDates = (dateInitial: Date, dateFinal: Date) =>
+  (dateFinal.getTime() - dateInitial.getTime()) / (1000 * 3600);
+
+export default { readLast, writeDate, readConfig, initConfig, valueExists, writeValue, cleanupOldValues };

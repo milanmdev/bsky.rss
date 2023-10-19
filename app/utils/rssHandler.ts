@@ -4,6 +4,7 @@ import axios from "axios";
 import queue from "./queueHandler";
 import db from "./dbHandler";
 import og from "open-graph-scraper";
+
 let reader: any = null;
 let lastDate: string = "";
 
@@ -18,6 +19,8 @@ let config: Config = {
   ogUserAgent: "bsky.rss/1.0 (Open Graph Scraper)",
   descriptionClearHTML: true,
   forceDescriptionEmbed: false,
+  removeDuplicate: false,
+  titleClearHTML: false
 };
 
 async function start() {
@@ -32,8 +35,6 @@ async function start() {
       : item.published;
     if (!useDate)
       return console.log("No date provided by RSS reader for post.");
-
-    if (new Date(useDate) <= new Date(lastDate)) return;
 
     let parsed = parseString(
       config.string,
@@ -51,6 +52,13 @@ async function start() {
       if (typeof item.link === "object") url = item.link.href;
       else url = item.link;
 
+      if (config.removeDuplicate){
+        if (await db.valueExists(url)) return;
+        else await db.writeValue(url);
+      } else {
+        if (new Date(useDate) <= new Date(lastDate)) return;
+      }
+  
       let image: Buffer | undefined = undefined;
       let description: string | undefined = undefined;
       let imageAlt: string | undefined = undefined;
@@ -165,6 +173,7 @@ async function start() {
             imageAlt: imageAlt,
             type: config.embedType,
           };
+          if (embed.title && config.titleClearHTML) embed.title = removeHTMLTags(embed.title);
         }
       } else {
         console.log(
@@ -186,8 +195,14 @@ async function start() {
           imageAlt: imageAlt,
           type: config.embedType,
         };
+
+        if (embed.title && config.titleClearHTML) embed.title = removeHTMLTags(embed.title);
       }
     }
+
+    if (new Date(useDate) <= new Date(lastDate)) return;
+
+    if (item.title && config.titleClearHTML) item.title = removeHTMLTags(item.title);
 
     await queue.writeQueue({
       content: parsed.text,

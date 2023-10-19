@@ -80,7 +80,8 @@ Here's an example of the `config.json` file:
   "forceDescriptionEmbed": false,
   "descriptionClearHTML": false,
   "ogUserAgent": "",
-  "imageAlt": "$title"
+  "imageAlt": "$title",
+  "removeDuplicate": false
 }
 ```
 
@@ -99,6 +100,7 @@ Here's an example of the `config.json` file:
 - `descriptionClearHTML`: Remove HTML from the description of the Open Graph description and RSS-provided description (to make it more readable).
 - `ogUserAgent`: The user agent to use when fetching the Open Graph data of the URL provided by the RSS post. By default, this is set to `bsky.rss/1.0 (Open Graph Scraper)`.
 - `imageAlt`: Alt text for the uploaded image if the `embedType` is set to `image`. Can be any variable (+ string) used in the `string` configuration (e.g. `$title`).
+- `removeDuplicate`: Instead of using the last date to track which items needs to be published, it uses a small DB to tracks duplicates.
 
 More examples of the `config.json` and environment variables can be found in the `examples` directory. The `examples` directory also contains a `docker-compose.yml` file that you can use to set up the RSS poster using Docker.
 

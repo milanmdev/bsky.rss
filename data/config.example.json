@@ -10,5 +10,7 @@
   "forceDescriptionEmbed": false,
   "descriptionClearHTML": false,
   "ogUserAgent": "",
-  "imageAlt": "$title"
+  "imageAlt": "$title",
+  "removeDuplicate": false,
+  "titleClearHTML": false
 }
