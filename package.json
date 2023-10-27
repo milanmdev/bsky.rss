@@ -15,14 +15,14 @@
   "dependencies": {
     "@atproto/api": "0.6.20",
     "@atproto/xrpc": "^0.3.0",
-    "axios": "1.5.1",
+    "axios": "1.6.0",
     "dotenv": "^16.3.1",
     "feedsub": "^0.7.8",
-    "open-graph-scraper": "6.3.0",
+    "open-graph-scraper": "6.3.2",
     "sharp": "^0.32.4"
   },
   "devDependencies": {
-    "@types/node": "20.8.7",
+    "@types/node": "20.8.9",
     "gts": "5.2.0",
     "tsx": "3.14.0",
     "typescript": "^5.2.2",
