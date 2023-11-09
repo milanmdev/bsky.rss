@@ -1,7 +1,14 @@
 {
   "string": "$title - $link",
   "publishEmbed": true,
+  "embedType": "card",
   "languages": ["en"],
   "truncate": true,
-  "dateField": ""
+  "runInterval": 60,
+  "dateField": "",
+  "imageField": "",
+  "forceDescriptionEmbed": false,
+  "descriptionClearHTML": false,
+  "ogUserAgent": "",
+  "imageAlt": "$title"
 }

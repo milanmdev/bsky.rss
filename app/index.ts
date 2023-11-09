@@ -1,6 +1,7 @@
 import process from "process";
 import bsky from "./utils/bskyHandler";
 import reader from "./utils/rssHandler";
+import queue from "./utils/queueHandler";
 
 require("dotenv").config();
 
@@ -25,7 +26,7 @@ async function main() {
 
     /* Initialize RSS reader */
     console.log(
-      `[${new Date().toUTCString()}] - [bsky.rss] Started RSS reader. Fetching from ${
+      `[${new Date().toUTCString()}] - [bsky.rss APP] Started RSS reader. Fetching from ${
         process.env.FETCH_URL
       } every ${fetch_interval} minutes.`
     );
@@ -35,7 +36,14 @@ async function main() {
     });
     await reader.start();
     await reader.launch();
+    await queue.start();
   } catch (e) {
-    console.log(`[${new Date().toUTCString()}] - [bsky.rss] ${e}`);
+    if (e == "Error: Rate Limit Exceeded") {
+      console.log(
+        `[${new Date().toUTCString()}] - [bsky.rss APP] Authentication rate limit exceeded`
+      );
+      return;
+    }
+    console.log(`[${new Date().toUTCString()}] - [bsky.rss APP] ${e}`);
   }
 }
