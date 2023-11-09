@@ -7,53 +7,54 @@
   resolved "https://registry.yarnpkg.com/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz#bd9154aec9983f77b3a034ecaa015c2e4201f6cf"
   integrity sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==
 
-"@atproto/api@0.6.20":
-  version "0.6.20"
-  resolved "https://registry.yarnpkg.com/@atproto/api/-/api-0.6.20.tgz#3a7eda60d73a5d5b6938e2dd016c24a7ba180c83"
-  integrity sha512-+peoKgkaxbglXQg9qEZcZIvyWm39yj0+syV3TBDrz5cWK4OIsdOyYBg2iISy+jvB5RzEUMe2WvOojP6Nq34mOg==
+"@atproto/api@0.6.23":
+  version "0.6.23"
+  resolved "https://registry.yarnpkg.com/@atproto/api/-/api-0.6.23.tgz#1c475ce505a7029733bdcb4a0f77e8000a735f67"
+  integrity sha512-DUaoMv3Uu/WUNIoLk1OGYmsXNXnu8fKJmma7wbftiWmCiXqE5wiO3GHg3V8Zq6TXSiaQ9C+xcwx5/eMBnz1BsA==
   dependencies:
-    "@atproto/common-web" "^0.2.1"
-    "@atproto/lexicon" "^0.2.2"
-    "@atproto/syntax" "^0.1.2"
-    "@atproto/xrpc" "^0.3.2"
+    "@atproto/common-web" "^0.2.3"
+    "@atproto/lexicon" "^0.3.0"
+    "@atproto/syntax" "^0.1.4"
+    "@atproto/xrpc" "^0.4.0"
     multiformats "^9.9.0"
     tlds "^1.234.0"
     typed-emitter "^2.1.0"
+    zod "^3.21.4"
 
-"@atproto/common-web@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@atproto/common-web/-/common-web-0.2.1.tgz#97412cb241321fc6c56a2b8c0b2416b3240caf50"
-  integrity sha512-5AoDKkKz7JhXSiicjhPihA/MJMlSuTQ9Aed9fflPuoTuT6C3aXbxaUZEcqqipSwlCfGpOzPmJmWJjMWWsYr2ew==
+"@atproto/common-web@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@atproto/common-web/-/common-web-0.2.3.tgz#c44c1e177ae8309d5116347d49850209e8e478cc"
+  integrity sha512-k9VKGYUqjsRlI3wS31XyCbeb2U7ddS4X/eFgzos2CE5rIbk/uQGyKH+0Jcn1JIwRkvI1BemyNuUVrS8Ok3wiuw==
   dependencies:
     graphemer "^1.4.0"
     multiformats "^9.9.0"
     uint8arrays "3.0.0"
     zod "^3.21.4"
 
-"@atproto/lexicon@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@atproto/lexicon/-/lexicon-0.2.2.tgz#938a39482ff41c6a908f4ad43274adba595f3643"
-  integrity sha512-CvmjaSDavHMOJTuNYE8VjYhL7TVxBYV8QSWh2jHCpzfmj02DvVD9UBIfnoVv67POJkEtWXddjoV9beaIbaq/Xg==
+"@atproto/lexicon@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@atproto/lexicon/-/lexicon-0.3.0.tgz#dce33e686789aeddca89980a2661922ffa92552c"
+  integrity sha512-0yxHcgfdIrs1Dlg0uFe53NL65kiz+AlkQhAvcEOiU7CKZxUI0Iwae9FCmP0+3ptcGMYD8X6OrZTHsfw/s4BglA==
   dependencies:
-    "@atproto/common-web" "^0.2.1"
-    "@atproto/syntax" "^0.1.2"
+    "@atproto/common-web" "^0.2.3"
+    "@atproto/syntax" "^0.1.4"
     iso-datestring-validator "^2.2.2"
     multiformats "^9.9.0"
     zod "^3.21.4"
 
-"@atproto/syntax@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@atproto/syntax/-/syntax-0.1.2.tgz#417366d36b53ecf29d9d1f6e35179b1f3feef95b"
-  integrity sha512-n6VSuccMGouwftCvZBq9WNwI0qYCMOH/lTHSV+/dT232lX7pIrqisOlErUSBoOJ49B1Wxy1DjeeBS26ap9SsGQ==
+"@atproto/syntax@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@atproto/syntax/-/syntax-0.1.4.tgz#f5569bb4e87f61407d42c37766cf0c2a83ce0b26"
+  integrity sha512-+18HKNJsMQfjlcn62Z9daK8wC/inuqEYXY2FHEd5cNnCt808x2lWLSHB32I6iYEib0d7XDdnaHimBFzWge/C1Q==
   dependencies:
-    "@atproto/common-web" "^0.2.1"
+    "@atproto/common-web" "^0.2.3"
 
-"@atproto/xrpc@^0.3.0", "@atproto/xrpc@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@atproto/xrpc/-/xrpc-0.3.2.tgz#432a364be4b3bf8660a088a07dadecac10209763"
-  integrity sha512-D9jGjcFnEMHuGQ56v6+78uX3RiytKLrA5ITLq6shy0Qj6Zvt5MqV+/cTFuNPKrNCrnWOtHFeRQwMqyGhNS9qZQ==
+"@atproto/xrpc@0.4.0", "@atproto/xrpc@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@atproto/xrpc/-/xrpc-0.4.0.tgz#8911fabcc7d34e140ef03d90d41b763116fc813a"
+  integrity sha512-R73eC1bQyigsKDx7h8Wk8ah7812d24fZV8RAnjkdzfecWMyDBFbJEG5MCC1AEtkGz4YbfwAHMOQe2J1Av9z0RA==
   dependencies:
-    "@atproto/lexicon" "^0.2.2"
+    "@atproto/lexicon" "^0.3.0"
     zod "^3.21.4"
 
 "@babel/code-frame@^7.0.0":
@@ -287,10 +288,10 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.3.tgz#dd249cef80c6fff2ba6a0d4e5beca913e04e25f8"
   integrity sha512-ZYFzrvyWUNhaPomn80dsMNgMeXxNWZBdkuG/hWlUvXvbdUH8ZERNBGXnU87McuGcWDsyzX2aChCv/SVN348k3A==
 
-"@types/node@20.8.9":
-  version "20.8.9"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.8.9.tgz#646390b4fab269abce59c308fc286dcd818a2b08"
-  integrity sha512-UzykFsT3FhHb1h7yD4CA4YhBHq545JC0YnEz41xkipN88eKQtL6rSgocL5tbAP6Ola9Izm/Aw4Ora8He4x0BHg==
+"@types/node@20.9.0":
+  version "20.9.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.9.0.tgz#bfcdc230583aeb891cf51e73cfdaacdd8deae298"
+  integrity sha512-nekiGu2NDb1BcVofVcEKMIwzlx4NjHlcjhoxxKBNLtz15Y1z7MYf549DFvkHSId02Ax6kGwWntIBPC3l/JZcmw==
   dependencies:
     undici-types "~5.26.4"
 
@@ -459,10 +460,10 @@ asynckit@^0.4.0:
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==
 
-axios@1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.0.tgz#f1e5292f26b2fd5c2e66876adc5b06cdbd7d2102"
-  integrity sha512-EZ1DYihju9pwVB+jg67ogm+Tmqc6JmhamRN6I4Zt8DfZu5lbcQGw3ozH9lFejSJgs/ibaef3A9PMXPLeefFGJg==
+axios@1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.1.tgz#76550d644bf0a2d469a01f9244db6753208397d7"
+  integrity sha512-vfBmhDpKafglh0EldBEbVuoe7DyAavGSLWhuSm5ZSEKQnHhBf0xAAwybbNH1IkrJNGnS/VG4I5yxig1pCEXE4g==
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"
@@ -2523,10 +2524,10 @@ tsutils@^3.21.0:
   dependencies:
     tslib "^1.8.1"
 
-tsx@3.14.0:
-  version "3.14.0"
-  resolved "https://registry.yarnpkg.com/tsx/-/tsx-3.14.0.tgz#be6e2176b6f210fe8f48124fb6e22e0f075e927b"
-  integrity sha512-xHtFaKtHxM9LOklMmJdI3BEnQq/D5F73Of2E1GDrITi9sgoVkvIsrQUTY1G8FlmGtA+awCI4EBlTRRYxkL2sRg==
+tsx@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/tsx/-/tsx-4.0.0.tgz#08675c880204de55cfd6a4216f5f52aa899432db"
+  integrity sha512-jd3C5kw9tR68gtvqHUYo/2IwxaA46/CyKvcVQ4DsKRAPb19/vWgl7zF9mYNjFRY6KcGKiwne41RU91ll31IggQ==
   dependencies:
     esbuild "~0.18.20"
     get-tsconfig "^4.7.2"
