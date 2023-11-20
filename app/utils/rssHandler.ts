@@ -4,6 +4,7 @@ import axios from "axios";
 import queue from "./queueHandler";
 import db from "./dbHandler";
 import og from "open-graph-scraper";
+import {decode} from 'html-entities';
 
 let reader: any = null;
 let lastDate: string = "";
@@ -173,7 +174,7 @@ async function start() {
             imageAlt: imageAlt,
             type: config.embedType,
           };
-          if (embed.title && config.titleClearHTML) embed.title = removeHTMLTags(embed.title);
+          if (embed.title && config.titleClearHTML) embed.title = decodeHTML(removeHTMLTags(embed.title));
         }
       } else {
         console.log(
@@ -196,13 +197,13 @@ async function start() {
           type: config.embedType,
         };
 
-        if (embed.title && config.titleClearHTML) embed.title = removeHTMLTags(embed.title);
+        if (embed.title && config.titleClearHTML) embed.title = decodeHTML(removeHTMLTags(embed.title));
       }
     }
 
     if (new Date(useDate) <= new Date(lastDate)) return;
 
-    if (item.title && config.titleClearHTML) item.title = removeHTMLTags(item.title);
+    if (item.title && config.titleClearHTML) item.title = decodeHTML(removeHTMLTags(item.title));
 
     await queue.writeQueue({
       content: parsed.text,
@@ -310,4 +311,8 @@ function removeHTMLTags(htmlString: string) {
     .replaceAll("&nbsp;", " ")
     .trim()
     .replace(/  +/g, " ");
+}
+
+function decodeHTML(htmlString: string) {
+  return decode(htmlString);
 }
