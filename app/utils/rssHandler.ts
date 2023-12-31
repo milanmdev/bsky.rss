@@ -314,5 +314,7 @@ function removeHTMLTags(htmlString: string) {
 }
 
 function decodeHTML(htmlString: string) {
-  return decode(htmlString);
+  // From my tests, some HTML strings needs to be double-decoded.
+  // Ex.: &amp;#233; -> &#233; -> é
+  return decode(decode(htmlString));
 }
