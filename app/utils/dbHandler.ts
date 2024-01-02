@@ -21,6 +21,29 @@ async function writeDate(date: Date) {
   return date;
 }
 
+async function readPersistData() {
+  if (!fs.existsSync(__dirname + "/../../data/persist.json")) {
+    fs.writeFileSync(
+      __dirname + "/../../data/persist.json",
+      JSON.stringify({}),
+      "utf8"
+    );
+    return {};
+  } else {
+    let data = fs.readFileSync(__dirname + "/../../data/persist.json", "utf8");
+    return JSON.parse(data);
+  }
+}
+
+async function writePersistDate(persistData: any) {
+  fs.writeFileSync(
+    __dirname + "/../../data/persist.json",
+    JSON.stringify(persistData),
+    "utf8"
+  );
+  return persistData;
+}
+
 async function initConfig() {
   try {
     let data = fs.readFileSync(__dirname + "/../../data/config.json", "utf8");
@@ -92,4 +115,14 @@ async function cleanupOldValues() {
 const getHoursDiffBetweenDates = (dateInitial: Date, dateFinal: Date) =>
   (dateFinal.getTime() - dateInitial.getTime()) / (1000 * 3600);
 
-export default { readLast, writeDate, readConfig, initConfig, valueExists, writeValue, cleanupOldValues };
+export default {
+  readLast,
+  writeDate,
+  readConfig,
+  initConfig,
+  writePersistDate,
+  readPersistData,
+  valueExists,
+  writeValue, 
+  cleanupOldValues,
+};
