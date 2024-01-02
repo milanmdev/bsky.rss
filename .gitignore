@@ -132,3 +132,5 @@ dist
 data/last.txt
 data/config.json
 data/persist.json
+
+package-lock.json
