@@ -1,0 +1,12 @@
+version: "3"
+services:
+  bsky-rss:
+    restart: always
+    image: ghcr.io/devcaptainone/bsky.rss:queue-6adf471
+    environment:
+      - APP_PASSWORD=utrx-2jma-h7ud-65ei
+      - INSTANCE_URL=https://bsky.social
+      - FETCH_URL=https://www.lapresse.ca/manchettes/rss
+      - IDENTIFIER=actualitesqc.bsky.social
+    volumes:
+      - C:\docker_data\bsky.rss.lp:/build/data

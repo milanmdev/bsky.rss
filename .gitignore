@@ -131,4 +131,4 @@ dist
 
 data/last.txt
 data/config.json
-docker-compose.yml
+data/persist.json
