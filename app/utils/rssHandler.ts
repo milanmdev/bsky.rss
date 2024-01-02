@@ -26,7 +26,7 @@ let config: Config = {
 
 async function start() {
   reader.read();
-  
+
   reader.on("item", async (item: Item) => {
     let useDate = config.dateField
       ? // @ts-ignore
@@ -37,11 +37,7 @@ async function start() {
     if (!useDate)
       return console.log("No date provided by RSS reader for post.");
 
-    let parsed = parseString(
-      config.string,
-      item,
-      config.truncate == true,
-    );
+    let parsed = parseString(config.string, item, config.truncate == true);
     let embed: Embed | undefined = undefined;
 
     if (config.publishEmbed) {
@@ -71,8 +67,10 @@ async function start() {
           if (Object.keys(item).includes(imageKey)) {
             if (
               Object.keys(item[imageKey]).includes("url") &&
-              !(Object.keys(item[imageKey]).includes("type") &&
-              !item[imageKey]["type"].startsWith("image"))
+              !(
+                Object.keys(item[imageKey]).includes("type") &&
+                !item[imageKey]["type"].startsWith("image")
+              )
             ) {
               imageUrl = item[imageKey]["url"];
             }
@@ -104,7 +102,7 @@ async function start() {
         }
       }
 
-      if (config.embedType == "image" && config.imageAlt) {        
+      if (config.embedType == "image" && config.imageAlt) {
         imageAlt = parseString(config.imageAlt, item, false).text;
       }
 
@@ -155,15 +153,14 @@ async function start() {
         let uri = openGraphData.ogUrl ? openGraphData.ogUrl : url;
 
         if (openGraphData.ogUrl) {
-          let regexURL = new RegExp(`(?:(h|H)(t|T)(t|T)(p|P)(s|):\\/\\/|)[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)`)
+          let regexURL = new RegExp(
+            `(?:(h|H)(t|T)(t|T)(p|P)(s|):\\/\\/|)[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)`
+          );
 
           if (!regexURL.test(openGraphData.ogUrl)) uri = url;
         }
 
-        if (
-          !uri ||
-          (!openGraphData.ogTitle && !item.title)
-        ) {
+        if (!uri || (!openGraphData.ogTitle && !item.title)) {
           embed = undefined;
         } else {
           embed = {
@@ -180,7 +177,7 @@ async function start() {
         console.log(
           `[${new Date().toUTCString()}] - [bsky.rss FETCH] Error fetching Open Graph data for ${
             item.title
-          } (${url})]: ${openGraphData.error}`
+          } (${url})`
         );
 
         description = item.description || item.content;
@@ -269,7 +266,8 @@ function parseString(string: string, item: Item, truncate: boolean) {
   let description = item.description ? item.description : item.content;
 
   if (string.includes("$description")) {
-    if (config.descriptionClearHTML && description) description = removeHTMLTags(description);
+    if (config.descriptionClearHTML && description)
+      description = removeHTMLTags(description);
     parsedString = parsedString.replace("$description", description);
   }
 

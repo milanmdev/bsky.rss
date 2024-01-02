@@ -97,14 +97,14 @@ Here's an example of the `config.json` file:
 - `runInterval`: The interval (in seconds) to run the RSS poster. By default (and recommended), this is set to `60` seconds.
 - `dateField`: The field to use for the date of the RSS post. This can be any field that is available in the RSS feed. If not set, it will default to pubDate and/or date.
 - `imageField`: The field to use for fetching the image of the RSS post. This can be any field that is available in the RSS feed. If not set, the poster will fetch the Open Graph data of the URL provided by the RSS post and use the image from there.
-- `forceDescriptionEmbed`: Force the description of the embed to be the description of the RSS post.
+- `forceDescriptionEmbed`: Force the description of the embed to be the description of the RSS post (as opposed to using Open Graph data).
 - `descriptionClearHTML`: Remove HTML from the description of the Open Graph description and RSS-provided description (to make it more readable).
 - `ogUserAgent`: The user agent to use when fetching the Open Graph data of the URL provided by the RSS post. By default, this is set to `bsky.rss/1.0 (Open Graph Scraper)`.
 - `imageAlt`: Alt text for the uploaded image if the `embedType` is set to `image`. Can be any variable (+ string) used in the `string` configuration (e.g. `$title`).
 - `removeDuplicate`: Instead of using the last date to track which items needs to be published, it uses a small DB to tracks duplicates.
 - `titleClearHTML`: Remove HTML from the title of the post (to make it more readable).
 
-More examples of the `config.json` and environment variables can be found in the `examples` directory. The `examples` directory also contains a `docker-compose.yml` file that you can use to set up the RSS poster using Docker.
+A `docker-compose.yml` file can be found in the root directory as `docker-compose.example.yml`, which you can use to set up the RSS poster using Docker.
 
 # License
 
