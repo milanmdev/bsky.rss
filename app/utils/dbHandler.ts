@@ -122,7 +122,7 @@ export default {
   initConfig,
   writePersistDate,
   readPersistData,
-  valueExists,
+  valueExists, 
   writeValue, 
   cleanupOldValues,
 };
