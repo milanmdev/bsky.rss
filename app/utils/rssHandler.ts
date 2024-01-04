@@ -4,6 +4,8 @@ import axios from "axios";
 import queue from "./queueHandler";
 import db from "./dbHandler";
 import og from "open-graph-scraper";
+import {decode} from 'html-entities';
+
 let reader: any = null;
 let lastDate: string = "";
 
@@ -18,6 +20,8 @@ let config: Config = {
   ogUserAgent: "bsky.rss/1.0 (Open Graph Scraper)",
   descriptionClearHTML: true,
   forceDescriptionEmbed: false,
+  removeDuplicate: false,
+  titleClearHTML: false
 };
 
 async function start() {
@@ -33,10 +37,9 @@ async function start() {
     if (!useDate)
       return console.log("No date provided by RSS reader for post.");
 
-    if (new Date(useDate) <= new Date(lastDate)) return;
-
     let parsed = parseString(config.string, item, config.truncate == true);
     let embed: Embed | undefined = undefined;
+    let title: string | undefined = undefined;
 
     if (config.publishEmbed) {
       if (!item.link)
@@ -47,6 +50,13 @@ async function start() {
       if (typeof item.link === "object") url = item.link.href;
       else url = item.link;
 
+      if (config.removeDuplicate){
+        if (await db.valueExists(url)) return;
+        else await db.writeValue(url);
+      } else {
+        if (new Date(useDate) <= new Date(lastDate)) return;
+      }
+  
       let image: Buffer | undefined = undefined;
       let description: string | undefined = undefined;
       let imageAlt: string | undefined = undefined;
@@ -186,9 +196,17 @@ async function start() {
       }
     }
 
+    if (new Date(useDate) <= new Date(lastDate)) return;
+
+    title = item.title;
+
+    if (title && config.titleClearHTML) {
+      title = decodeHTML(removeHTMLTags(title));
+    }
+
     await queue.writeQueue({
       content: parsed.text,
-      title: item.title,
+      title: title,
       embed: config.publishEmbed ? embed : undefined,
       languages: config.languages ? config.languages : undefined,
       date: useDate,
@@ -235,7 +253,13 @@ function parseString(string: string, item: Item, truncate: boolean) {
   let parsedString = string;
   if (string.includes("$title")) {
     if (!item.title) throw new Error("No title provided from RSS reader.");
-    parsedString = parsedString.replace("$title", item.title);
+
+    if (config.titleClearHTML) {
+      parsedString = parsedString.replace("$title", decodeHTML(removeHTMLTags(item.title)));
+    }
+    else {
+      parsedString = parsedString.replace("$title", item.title);
+    }   
   }
 
   if (string.includes("$link")) {
@@ -293,4 +317,10 @@ function removeHTMLTags(htmlString: string) {
     .replaceAll("&nbsp;", " ")
     .trim()
     .replace(/  +/g, " ");
+}
+
+function decodeHTML(htmlString: string) {
+  // From my tests, some HTML strings needs to be double-decoded.
+  // Ex.: &amp;#233; -> &#233; -> é
+  return decode(decode(htmlString));
 }

@@ -11,6 +11,8 @@ interface Config {
   descriptionClearHTML?: boolean;
   forceDescriptionEmbed?: boolean;
   imageAlt?: string;
+  removeDuplicate?: boolean;
+  titleClearHTML?: boolean;
 }
 
 interface Item {
