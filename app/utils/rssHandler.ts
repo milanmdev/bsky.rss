@@ -39,6 +39,7 @@ async function start() {
 
     let parsed = parseString(config.string, item, config.truncate == true);
     let embed: Embed | undefined = undefined;
+    let title: string | undefined = undefined;
 
     if (config.publishEmbed) {
       if (!item.link)
@@ -171,7 +172,6 @@ async function start() {
             imageAlt: imageAlt,
             type: config.embedType,
           };
-          if (embed.title && config.titleClearHTML) embed.title = decodeHTML(removeHTMLTags(embed.title));
         }
       } else {
         console.log(
@@ -193,18 +193,20 @@ async function start() {
           imageAlt: imageAlt,
           type: config.embedType,
         };
-
-        if (embed.title && config.titleClearHTML) embed.title = decodeHTML(removeHTMLTags(embed.title));
       }
     }
 
     if (new Date(useDate) <= new Date(lastDate)) return;
 
-    if (item.title && config.titleClearHTML) item.title = decodeHTML(removeHTMLTags(item.title));
+    title = item.title;
+
+    if (title && config.titleClearHTML) {
+      title = decodeHTML(removeHTMLTags(title));
+    }
 
     await queue.writeQueue({
       content: parsed.text,
-      title: item.title,
+      title: title,
       embed: config.publishEmbed ? embed : undefined,
       languages: config.languages ? config.languages : undefined,
       date: useDate,
@@ -251,7 +253,13 @@ function parseString(string: string, item: Item, truncate: boolean) {
   let parsedString = string;
   if (string.includes("$title")) {
     if (!item.title) throw new Error("No title provided from RSS reader.");
-    parsedString = parsedString.replace("$title", item.title);
+
+    if (config.titleClearHTML) {
+      parsedString = parsedString.replace("$title", decodeHTML(removeHTMLTags(item.title)));
+    }
+    else {
+      parsedString = parsedString.replace("$title", item.title);
+    }   
   }
 
   if (string.includes("$link")) {
