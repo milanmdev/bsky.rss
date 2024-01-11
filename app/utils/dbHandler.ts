@@ -69,12 +69,12 @@ async function valueExists(value: string) {
     return false;
   } else {
     let fileContent = fs.readFileSync(__dirname + "/../../data/db.txt", "utf8");
-    return (fileContent.includes(value));
+    return fileContent.includes(value);
   }
 }
 
 async function writeValue(value: string) {
-  let currentDate =  new Date();
+  let currentDate = new Date();
   fs.appendFileSync(
     __dirname + "/../../data/db.txt",
     currentDate.toISOString() + "|" + value + "\n",
@@ -85,11 +85,19 @@ async function writeValue(value: string) {
 
 // Automatically cleanup old values from the file after 96 hours
 async function cleanupOldValues() {
-  let currentDate =  new Date();
-  let oldFileContent = fs.readFileSync(__dirname + "/../../data/db.txt", "utf8");
+  if (!fs.existsSync(__dirname + "/../../data/db.txt")) {
+    fs.writeFileSync(__dirname + "/../../data/db.txt", "", "utf8");
+    return false;
+  }
+
+  let currentDate = new Date();
+  let oldFileContent = fs.readFileSync(
+    __dirname + "/../../data/db.txt",
+    "utf8"
+  );
   let newFileContent = "";
 
-  let fcLines: string[] = oldFileContent.split("\n")
+  let fcLines: string[] = oldFileContent.split("\n");
   if (fcLines != undefined) {
     for (var i in fcLines) {
       let lineItems: string[] = (fcLines[i] || "").split("|");
@@ -104,11 +112,7 @@ async function cleanupOldValues() {
     }
   }
 
-  fs.writeFileSync(
-    __dirname + "/../../data/db.txt",
-    newFileContent,
-    "utf8"
-  );
+  fs.writeFileSync(__dirname + "/../../data/db.txt", newFileContent, "utf8");
   return true;
 }
 
@@ -122,7 +126,7 @@ export default {
   initConfig,
   writePersistDate,
   readPersistData,
-  valueExists, 
-  writeValue, 
+  valueExists,
+  writeValue,
   cleanupOldValues,
 };

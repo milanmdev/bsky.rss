@@ -101,7 +101,7 @@ Here's an example of the `config.json` file:
 - `descriptionClearHTML`: Remove HTML from the description of the Open Graph description and RSS-provided description (to make it more readable).
 - `ogUserAgent`: The user agent to use when fetching the Open Graph data of the URL provided by the RSS post. By default, this is set to `bsky.rss/1.0 (Open Graph Scraper)`.
 - `imageAlt`: Alt text for the uploaded image if the `embedType` is set to `image`. Can be any variable (+ string) used in the `string` configuration (e.g. `$title`).
-- `removeDuplicate`: Instead of using the last date to track which items needs to be published, use a text-based database to track duplicate items.
+- `removeDuplicate`: Instead of using the last date to track which items need to be published, use a text-based database to track duplicate items.
 - `titleClearHTML`: Remove HTML from the title of the post (to make it more readable).
 
 A `docker-compose.yml` file can be found in the root directory as `docker-compose.example.yml`, which you can use to set up the RSS poster using Docker.

@@ -20,7 +20,7 @@ let config: Config = {
   forceDescriptionEmbed: false,
   imageAlt: "",
   removeDuplicate: false,
-  titleClearHTML: false
+  titleClearHTML: false,
 };
 
 async function start() {
@@ -94,7 +94,7 @@ async function runQueue() {
               config.runInterval
             } seconds`
           );
-          db.cleanupOldValues();
+          if (config.removeDuplicate) db.cleanupOldValues();
         }
       }
     }

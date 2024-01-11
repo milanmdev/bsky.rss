@@ -13,24 +13,25 @@
     "dev": "tsx --watch ./app/index.ts"
   },
   "dependencies": {
-    "@atproto/api": "0.6.23",
-    "@atproto/xrpc": "0.4.0",
-    "axios": "1.6.1",
+    "@atproto/api": "0.8.0",
+    "@atproto/xrpc": "0.4.1",
+    "axios": "1.6.5",
     "dotenv": "^16.3.1",
     "feedsub": "^0.7.8",
+    "html-entities": "2.4.0",
     "open-graph-scraper": "6.3.2",
-    "sharp": "^0.32.4",
-    "html-entities": "2.4.0"    
+    "sharp": "0.33.1"
   },
   "devDependencies": {
-    "@types/node": "20.9.0",
+    "@types/node": "20.11.0",
     "gts": "5.2.0",
-    "tsx": "4.0.0",
-    "typescript": "^5.2.2",
+    "tsx": "4.7.0",
+    "typescript": "5.3.3",
     "underscore-cli": "^0.2.19"
   },
   "typeRoots": [
     "./node_modules/@types",
     "./app/types"
-  ]
+  ],
+  "packageManager": "yarn@4.0.2"
 }
