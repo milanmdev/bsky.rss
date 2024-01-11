@@ -19,6 +19,8 @@ let config: Config = {
   descriptionClearHTML: true,
   forceDescriptionEmbed: false,
   imageAlt: "",
+  removeDuplicate: false,
+  titleClearHTML: false
 };
 
 async function start() {
@@ -92,6 +94,7 @@ async function runQueue() {
               config.runInterval
             } seconds`
           );
+          db.cleanupOldValues();
         }
       }
     }

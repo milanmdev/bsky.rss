@@ -132,3 +132,6 @@ dist
 data/last.txt
 data/config.json
 data/persist.json
+
+package-lock.json
+docker-compose.yml
