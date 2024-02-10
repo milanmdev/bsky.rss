@@ -3,14 +3,14 @@
   "publishEmbed": true,
   "embedType": "card",
   "languages": ["en"],
+  "ogUserAgent": "",
   "truncate": true,
   "runInterval": 60,
   "dateField": "",
   "imageField": "",
-  "forceDescriptionEmbed": false,
-  "descriptionClearHTML": false,
-  "ogUserAgent": "",
   "imageAlt": "$title",
+  "forceDescriptionEmbed": false,
   "removeDuplicate": false,
+  "descriptionClearHTML": false,
   "titleClearHTML": false
 }
