@@ -2,8 +2,8 @@
 
 A configurable RSS poster for Bluesky
 
-[!IMPORTANT]
-Version 2 introduces many new features as well as changes to the configuration of the app. Consult the [migration guide](documentation/v1-to-v2.md) for more information.
+> [!IMPORTANT]  
+> Version 2 introduces many new features as well as changes to the configuration of the app. Consult the [migration guide](documentation/v1-to-v2.md) for more information.
 
 # Setup
 
