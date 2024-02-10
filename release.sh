@@ -12,7 +12,7 @@ then
 fi
 
 # Read package.json version
-versionInit=$(cat ./package.json | yarn run -s underscore select '.version')
+versionInit=$(cat ./package.json | yarn run underscore select '.version')
 versionNoQuote=${versionInit//\"/}
 version=$(echo $versionNoQuote | sed 's/[][]//g')
 
