@@ -51,6 +51,7 @@ async function createLimitTimer(timeoutSeconds: number = 30) {
 async function runQueue() {
   if (queueRunning) return;
   queueSnapshot = [...queue];
+  if (queueSnapshot.length === 0) return queueSnapshot;
   console.log(
     `[${new Date().toUTCString()}] - [bsky.rss QUEUE] Running queue with ${
       queueSnapshot.length
