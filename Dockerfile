@@ -7,6 +7,6 @@ WORKDIR /build
 COPY package.json yarn.lock ./
 COPY .yarn ./.yarn
 COPY .yarnrc.yml ./
-RUN yarn install --frozen-lockfile
+RUN yarn install --immutable
 COPY . .
 CMD yarn start
