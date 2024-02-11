@@ -2,6 +2,9 @@
 
 A configurable RSS poster for Bluesky
 
+> [!IMPORTANT]  
+> Version 2 introduces many new features as well as changes to the configuration of the app. Consult the [migration guide](documentation/v1-to-v2.md) for more information.
+
 # Setup
 
 ## Docker
@@ -62,8 +65,8 @@ Here's an outline of the environment variables:
 
 ## Configuration File
 
-- If you setup the RSS poster using **Docker**, create the `config.json` file in your data directory that you mounted in the compose file.
-- If you setup the RSS poster **manually**, rename the `config.example.json` file in the `data` directory to `config.json`.
+- If you set up the RSS poster using **Docker**, create the `config.json` file in your data directory that you mounted in the compose file.
+- If you set up the RSS poster **manually**, rename the `config.example.json` file in the `data` directory to `config.json`.
 
 Here's an example of the `config.json` file:
 
@@ -71,21 +74,40 @@ Here's an example of the `config.json` file:
 {
   "string": "$title - $link",
   "publishEmbed": true,
+  "embedType": "card",
   "languages": ["en"],
+  "ogUserAgent": "",
   "truncate": true,
-  "dateField": ""
+  "runInterval": 60,
+  "dateField": "",
+  "imageField": "",
+  "imageAlt": "$title",
+  "forceDescriptionEmbed": false,
+  "removeDuplicate": false,
+  "descriptionClearHTML": false,
+  "titleClearHTML": false
 }
 ```
 
 - `string`: The string to post to Bluesky. You can use the following variables in the string:
   - `$title`: The title of the RSS post
-  - `$link`: The link of the RSS post
+  - `$link`: The link to the RSS post
   - `$description`: The description of the RSS post
 - `publishEmbed`: Whether to publish the post as an embed or not. If set to `true`, the post will be published as an embed with the title, description (if available), and link to the RSS post.
+- `embedType`: Type of embed. If set to `card`, the post will be published with an Open Graph/link card. If set to `image` an image will be uploaded.
 - `languages`: The languages to set the posts to. This can be an array of `ISO 639-1` language codes. If not set, it will default to `en`.
+- `ogUserAgent`: The user agent to use when fetching the Open Graph data of the URL provided by the RSS post. By default, this is set to `bsky.rss/1.0 (Open Graph Scraper)`.
 - `truncate`: Whether or not to truncate the body of the post if it is over 300 characters. By default, this is set to `true`.
+- `runInterval`: The interval (in seconds) to run the RSS poster. By default (and recommended), this is set to `60` seconds.
+- `dateField`: The field to use for the date of the RSS post. This can be any field that is available in the RSS feed. If not set, it will default to pubDate and/or date.
+- `imageField`: The field to use for fetching the image of the RSS post. This can be any field that is available in the RSS feed. If not set, the poster will fetch the Open Graph data of the URL provided by the RSS post and use the image from there.
+- `imageAlt`: Alt text for the uploaded image if the `embedType` is set to `image`. Can be any variable (+ string) used in the `string` configuration (e.g. `$title`).
+- `forceDescriptionEmbed`: Force the description of the embed to be the description of the RSS post (as opposed to using Open Graph data).
+- `removeDuplicate`: Instead of using the last date to track which items need to be published, use a text-based database to track duplicate items.
+- `descriptionClearHTML`: Remove HTML from the description of the Open Graph description and RSS-provided description (to make it more readable).
+- `titleClearHTML`: Remove HTML from the title of the post (to make it more readable).
 
-More examples of the `config.json` and environment variables can be found in the `examples` directory. The `examples` directory also contains a `docker-compose.yml` file that you can use to setup the RSS poster using Docker.
+A `docker-compose.yml` file can be found in the root directory as `docker-compose.example.yml`, which you can use to set up the RSS poster using Docker.
 
 # License
 

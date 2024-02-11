@@ -1,5 +1,7 @@
 .env
 data
-examples
 node_modules
 docker-compose.example.yml
+
+.yarn/cache
+.yarn/install-state.gz
