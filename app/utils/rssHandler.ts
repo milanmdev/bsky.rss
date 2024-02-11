@@ -1,47 +1,28 @@
 import FeedSub from "feedsub";
 import sharp from "sharp";
 import axios from "axios";
-import bsky from "./bskyHandler";
+import queue from "./queueHandler";
 import db from "./dbHandler";
 import og from "open-graph-scraper";
+import {decode} from 'html-entities';
+
 let reader: any = null;
 let lastDate: string = "";
-
-interface Config {
-  string: string;
-  publishEmbed?: boolean;
-  languages?: string[];
-  truncate?: boolean;
-  dateField?: string;
-}
 
 let config: Config = {
   string: "",
   publishEmbed: false,
   languages: ["en"],
   truncate: true,
+  runInterval: 60,
+  dateField: "",
+  imageField: "",
+  ogUserAgent: "bsky.rss/1.0 (Open Graph Scraper)",
+  descriptionClearHTML: true,
+  forceDescriptionEmbed: false,
+  removeDuplicate: false,
+  titleClearHTML: false
 };
-
-interface Item {
-  title: string;
-  link: {
-    href: string;
-  };
-  published?: string;
-  pubdate?: string;
-  description: string;
-}
-
-interface ParseResult {
-  text: string;
-}
-
-interface Embed {
-  uri: string;
-  title: string;
-  description?: string;
-  image?: Buffer;
-}
 
 async function start() {
   reader.read();
@@ -56,18 +37,10 @@ async function start() {
     if (!useDate)
       return console.log("No date provided by RSS reader for post.");
 
-    if (new Date(useDate) <= new Date(lastDate)) return;
-
-    console.log(
-      `[${new Date().toUTCString()}] - [bsky.rss] Posting new item (${
-        item.title
-      })`
-    );
-
-    // @ts-ignore
-    db.writeDate(new Date(useDate));
-    let parsed = parseString(config.string, item);
+    let parsed = parseString(config.string, item, config.truncate == true);
     let embed: Embed | undefined = undefined;
+    let title: string | undefined = undefined;
+
     if (config.publishEmbed) {
       if (!item.link)
         throw new Error(
@@ -77,12 +50,68 @@ async function start() {
       if (typeof item.link === "object") url = item.link.href;
       else url = item.link;
 
+      if (config.removeDuplicate){
+        if (await db.valueExists(url)) return;
+        else await db.writeValue(url);
+      } else {
+        if (new Date(useDate) <= new Date(lastDate)) return;
+      }
+  
+      let image: Buffer | undefined = undefined;
+      let description: string | undefined = undefined;
+      let imageAlt: string | undefined = undefined;
+
+      if (config.imageField != "" && config.imageField != undefined) {
+        let imageUrl: string = "";
+        let imageKey: string | undefined = config.imageField;
+        if (imageKey != "" && imageKey != undefined) {
+          if (Object.keys(item).includes(imageKey)) {
+            if (
+              Object.keys(item[imageKey]).includes("url") &&
+              !(
+                Object.keys(item[imageKey]).includes("type") &&
+                !item[imageKey]["type"].startsWith("image")
+              )
+            ) {
+              imageUrl = item[imageKey]["url"];
+            }
+          }
+        }
+
+        if (imageUrl != "") {
+          image = await fetchImage(imageUrl);
+
+          if (image == undefined) {
+            console.log(
+              `[${new Date().toUTCString()}] - [bsky.rss FETCH] Error fetching image for ${
+                item.title
+              } (${imageUrl})`
+            );
+          }
+        }
+      }
+
+      if (config.forceDescriptionEmbed) {
+        description = item.description
+          ? item.description
+          : item.content
+          ? item.content
+          : undefined;
+
+        if (description && config.descriptionClearHTML) {
+          description = removeHTMLTags(description);
+        }
+      }
+
+      if (config.embedType == "image" && config.imageAlt) {
+        imageAlt = parseString(config.imageAlt, item, false).text;
+      }
+
       let openGraphData: any = await og({
         url,
         fetchOptions: {
           headers: {
-            "user-agent":
-              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
+            "user-agent": config.ogUserAgent,
           },
         },
       })
@@ -90,47 +119,97 @@ async function start() {
         .catch(() => ({
           error: true,
         }));
+
       if (!openGraphData.error) {
-        let image: Buffer | undefined = undefined;
-        if (openGraphData.ogImage && openGraphData.ogImage[0]) {
-          let fetchBuffer = await axios.get(openGraphData.ogImage[0].url, {
-            responseType: "arraybuffer",
-          });
-          image = await sharp(fetchBuffer.data)
-            .resize(800, null, {
-              fit: "inside",
-              withoutEnlargement: true,
-            })
-            .jpeg({
-              quality: 80,
-              progressive: true,
-            })
-            .toBuffer();
+        if (image == undefined && openGraphData.ogImage) {
+          let imageUrl: string = openGraphData.ogImage[0].url;
+
+          if (imageUrl != "" && imageUrl != undefined) {
+            image = await fetchImage(imageUrl);
+
+            if (image == undefined) {
+              console.log(
+                `[${new Date().toUTCString()}] - [bsky.rss FETCH] Error fetching image for ${
+                  item.title
+                } (${imageUrl})`
+              );
+            }
+          }
+
+          if (description == undefined) {
+            description = openGraphData.ogDescription
+              ? openGraphData.ogDescription
+              : item.description
+              ? item.description
+              : item.content
+              ? item.content
+              : undefined;
+          }
         }
 
-        if (
-          (!openGraphData.ogUrl && !url) ||
-          (!openGraphData.ogTitle && !item.title) ||
-          (!openGraphData.ogDescription && !item.description)
-        ) {
+        if (description != undefined && config.descriptionClearHTML) {
+          description = removeHTMLTags(description);
+        }
+
+        let uri = openGraphData.ogUrl ? openGraphData.ogUrl : url;
+
+        if (openGraphData.ogUrl) {
+          let regexURL = new RegExp(
+            `(?:(h|H)(t|T)(t|T)(p|P)(s|):\\/\\/|)[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)`
+          );
+
+          if (!regexURL.test(openGraphData.ogUrl)) uri = url;
+        }
+
+        if (!uri || (!openGraphData.ogTitle && !item.title)) {
           embed = undefined;
         } else {
           embed = {
-            uri: openGraphData.ogUrl ? openGraphData.ogUrl : url,
+            uri: uri,
             title: openGraphData.ogTitle ? openGraphData.ogTitle : item.title,
-            description: openGraphData.ogDescription
-              ? openGraphData.ogDescription
-              : item.description,
-            image,
+            description: description,
+            image: image,
+            imageAlt: imageAlt,
+            type: config.embedType,
           };
         }
+      } else {
+        console.log(
+          `[${new Date().toUTCString()}] - [bsky.rss FETCH] Error fetching Open Graph data for ${
+            item.title
+          } (${url})`
+        );
+
+        description = item.description || item.content;
+        if (description && config.descriptionClearHTML) {
+          description = removeHTMLTags(description);
+        }
+
+        embed = {
+          uri: url,
+          title: item.title,
+          description: description,
+          image: image,
+          imageAlt: imageAlt,
+          type: config.embedType,
+        };
       }
     }
 
-    await bsky.post({
+    if (new Date(useDate) <= new Date(lastDate)) return;
+
+    title = item.title;
+
+    if (title && config.titleClearHTML) {
+      title = decodeHTML(removeHTMLTags(title));
+    }
+
+    await queue.writeQueue({
       content: parsed.text,
+      title: title,
       embed: config.publishEmbed ? embed : undefined,
       languages: config.languages ? config.languages : undefined,
+      date: useDate,
     });
   });
 }
@@ -166,7 +245,7 @@ export default {
   launch,
 };
 
-function parseString(string: string, item: Item) {
+function parseString(string: string, item: Item, truncate: boolean) {
   let result: ParseResult = {
     text: "",
   };
@@ -174,7 +253,13 @@ function parseString(string: string, item: Item) {
   let parsedString = string;
   if (string.includes("$title")) {
     if (!item.title) throw new Error("No title provided from RSS reader.");
-    parsedString = parsedString.replace("$title", item.title);
+
+    if (config.titleClearHTML) {
+      parsedString = parsedString.replace("$title", decodeHTML(removeHTMLTags(item.title)));
+    }
+    else {
+      parsedString = parsedString.replace("$title", item.title);
+    }   
   }
 
   if (string.includes("$link")) {
@@ -186,15 +271,56 @@ function parseString(string: string, item: Item) {
     }
   }
 
-  if (string.includes("$description") || item.description) {
-    if (string.includes("$description")) {
-      parsedString = parsedString.replace("$description", item.description);
-    }
+  let description = item.description ? item.description : item.content;
+
+  if (string.includes("$description")) {
+    if (config.descriptionClearHTML && description)
+      description = removeHTMLTags(description);
+    parsedString = parsedString.replace("$description", description);
   }
 
-  if (parsedString.length > 300 && config.truncate === true) {
+  if (parsedString.length > 300 && truncate) {
     parsedString = parsedString.slice(0, 277) + "...";
   }
   result.text = parsedString;
   return result;
+}
+
+async function fetchImage(imageUrl: string) {
+  let image: Buffer | undefined = undefined;
+
+  try {
+    let fetchBuffer = await axios.get(imageUrl, {
+      headers: {
+        "User-Agent": config.ogUserAgent,
+      },
+      responseType: "arraybuffer",
+    });
+    image = await sharp(fetchBuffer.data)
+      .resize(800, null, {
+        fit: "inside",
+        withoutEnlargement: true,
+      })
+      .jpeg({
+        quality: 80,
+        progressive: true,
+      })
+      .toBuffer();
+  } catch (e) {}
+
+  return image;
+}
+
+function removeHTMLTags(htmlString: string) {
+  return htmlString
+    ?.replace(/<\/?[^>]+(>|$)/g, " ")
+    .replaceAll("&nbsp;", " ")
+    .trim()
+    .replace(/  +/g, " ");
+}
+
+function decodeHTML(htmlString: string) {
+  // From my tests, some HTML strings needs to be double-decoded.
+  // Ex.: &amp;#233; -> &#233; -> é
+  return decode(decode(htmlString));
 }
