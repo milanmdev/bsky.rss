@@ -20,14 +20,14 @@ version=$(echo $versionNoQuote | sed 's/[][]//g')
 echo "Removing old images..."
 docker images | grep bsky.rss | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi ghcr.io/milanmdev/bsky.rss:{} --force
 
-if [[ $(echo git rev-parse --abbrev-ref HEAD) != main ]]
+if [[ $(echo git rev-parse --abbrev-ref HEAD) != "main" ]]
 then
     echo "Building \"$(git rev-parse --abbrev-ref HEAD)\" branch image..."
-    docker build . --platform linux/x86_64 -t ghcr.io/milanmdev/bsky.rss:$(git rev-parse --abbrev-ref HEAD)-$(git rev-parse --short HEAD)
+    docker build . --platform linux/x86_64 -t ghcr.io/milanmdev/bsky.rss:latest #$(git rev-parse --abbrev-ref HEAD)-$(git rev-parse --short HEAD)
 
     # Push the latest image
     echo "Pushing the image..."
-    docker push ghcr.io/milanmdev/bsky.rss:$(git rev-parse --abbrev-ref HEAD)-$(git rev-parse --short HEAD)
+    docker push ghcr.io/milanmdev/bsky.rss:latest #$(git rev-parse --abbrev-ref HEAD)-$(git rev-parse --short HEAD)
 else
     echo "Building \"main\" branch image..."
     docker build . --platform linux/x86_64 -t ghcr.io/milanmdev/bsky.rss:latest -t ghcr.io/milanmdev/bsky.rss:$version
