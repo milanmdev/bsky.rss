@@ -5,6 +5,8 @@ LABEL org.opencontainers.image.source "https://github.com/milanmdev/bsky.rss"
 
 WORKDIR /build
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY .yarn ./.yarn
+COPY .yarnrc.yml ./
+RUN yarn install --immutable
 COPY . .
 CMD yarn start
