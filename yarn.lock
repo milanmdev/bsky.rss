@@ -981,7 +981,7 @@ __metadata:
     feedsub: "npm:^0.7.8"
     gts: "npm:5.2.0"
     html-entities: "npm:2.4.0"
-    open-graph-scraper: "npm:6.3.4"
+    open-graph-scraper: "npm:6.4.0"
     sharp: "npm:0.33.2"
     tsx: "npm:4.7.1"
     typescript: "npm:5.3.3"
@@ -2260,7 +2260,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"iconv-lite@npm:^0.6.2":
+"iconv-lite@npm:^0.6.2, iconv-lite@npm:^0.6.3":
   version: 0.6.3
   resolution: "iconv-lite@npm:0.6.3"
   dependencies:
@@ -3080,15 +3080,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"open-graph-scraper@npm:6.3.4":
-  version: 6.3.4
-  resolution: "open-graph-scraper@npm:6.3.4"
+"open-graph-scraper@npm:6.4.0":
+  version: 6.4.0
+  resolution: "open-graph-scraper@npm:6.4.0"
   dependencies:
     chardet: "npm:^2.0.0"
     cheerio: "npm:^1.0.0-rc.12"
+    iconv-lite: "npm:^0.6.3"
     undici: "npm:^6.6.2"
     validator: "npm:^13.11.0"
-  checksum: 10c0/ec23131b653035f78b2b50972a9d55ce66893373f8b372455b134190496c6f3cdaa90895f0a6ff494b954d7a34e9ad760a3ebcd5fa193b74e56c64d5f78251b5
+  checksum: 10c0/19d8dda055e8c29c55911efe08efc7458a41e9b5c45e214ab06eafef71234159fe98b1eec8905f96a94395509f29221277b9dbaf35eab29ffccc673622608313
   languageName: node
   linkType: hard
 
