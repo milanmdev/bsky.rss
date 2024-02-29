@@ -13,7 +13,7 @@
     "dev": "tsx --watch ./app/index.ts"
   },
   "dependencies": {
-    "@atproto/api": "0.10.1",
+    "@atproto/api": "0.10.3",
     "@atproto/xrpc": "0.4.2",
     "axios": "1.6.7",
     "dotenv": "^16.4.2",
