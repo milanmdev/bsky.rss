@@ -980,7 +980,7 @@ __metadata:
     dotenv: "npm:^16.4.2"
     feedsub: "npm:^0.7.8"
     gts: "npm:5.2.0"
-    html-entities: "npm:2.4.0"
+    html-entities: "npm:2.5.0"
     open-graph-scraper: "npm:6.5.0"
     sharp: "npm:0.33.2"
     tsx: "npm:4.7.1"
@@ -2191,10 +2191,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-entities@npm:2.4.0":
-  version: 2.4.0
-  resolution: "html-entities@npm:2.4.0"
-  checksum: 10c0/42bbd5d91f451625d7e35aaed41c8cd110054c0d0970764cb58df467b3f27f20199e8cf7b4aebc8d4eeaf17a27c0d1fb165f2852db85de200995d0f009c9011d
+"html-entities@npm:2.5.0":
+  version: 2.5.0
+  resolution: "html-entities@npm:2.5.0"
+  checksum: 10c0/17f31d23f0334f44509740b8ae80a5e1d390a72e057746a3137e0a36cf945fb6acd5255aaf5f2512e65b85ff3077d8fa46eb7a0967ab8e25500dc4468096dd94
   languageName: node
   linkType: hard
 
