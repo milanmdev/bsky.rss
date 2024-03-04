@@ -13,17 +13,17 @@
     "dev": "tsx --watch ./app/index.ts"
   },
   "dependencies": {
-    "@atproto/api": "0.10.0",
-    "@atproto/xrpc": "0.4.1",
+    "@atproto/api": "0.10.4",
+    "@atproto/xrpc": "0.4.2",
     "axios": "1.6.7",
     "dotenv": "^16.4.2",
     "feedsub": "^0.7.8",
-    "html-entities": "2.4.0",
-    "open-graph-scraper": "6.4.0",
+    "html-entities": "2.5.0",
+    "open-graph-scraper": "6.5.0",
     "sharp": "0.33.2"
   },
   "devDependencies": {
-    "@types/node": "20.11.19",
+    "@types/node": "20.11.24",
     "gts": "5.2.0",
     "tsx": "4.7.1",
     "typescript": "5.3.3",

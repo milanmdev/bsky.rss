@@ -12,19 +12,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atproto/api@npm:0.10.0":
-  version: 0.10.0
-  resolution: "@atproto/api@npm:0.10.0"
+"@atproto/api@npm:0.10.4":
+  version: 0.10.4
+  resolution: "@atproto/api@npm:0.10.4"
   dependencies:
     "@atproto/common-web": "npm:^0.2.3"
-    "@atproto/lexicon": "npm:^0.3.1"
-    "@atproto/syntax": "npm:^0.1.5"
-    "@atproto/xrpc": "npm:^0.4.1"
+    "@atproto/lexicon": "npm:^0.3.2"
+    "@atproto/syntax": "npm:^0.2.0"
+    "@atproto/xrpc": "npm:^0.4.2"
     multiformats: "npm:^9.9.0"
     tlds: "npm:^1.234.0"
     typed-emitter: "npm:^2.1.0"
     zod: "npm:^3.21.4"
-  checksum: 10c0/6a1cdd7398a1b0917402ca1942be8df1084837a368109423bef65455d31eb739131e4f02d4fa66696bf95b5c5cc726c5ddc5fe5b2665e5649e78e485a8d69272
+  checksum: 10c0/6a31b48b4dbec2cfd7bbd1f8199380dcfc4fb359a313f151a8165e235d63cd24af47ada980c0bcac15fe35d18a84d8dbc61a3f3c3aeb3a36a88b83eb730d7fc6
   languageName: node
   linkType: hard
 
@@ -40,35 +40,35 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atproto/lexicon@npm:^0.3.1":
-  version: 0.3.1
-  resolution: "@atproto/lexicon@npm:0.3.1"
+"@atproto/lexicon@npm:^0.3.2":
+  version: 0.3.2
+  resolution: "@atproto/lexicon@npm:0.3.2"
   dependencies:
     "@atproto/common-web": "npm:^0.2.3"
-    "@atproto/syntax": "npm:^0.1.5"
+    "@atproto/syntax": "npm:^0.2.0"
     iso-datestring-validator: "npm:^2.2.2"
     multiformats: "npm:^9.9.0"
     zod: "npm:^3.21.4"
-  checksum: 10c0/64df7b518c27fba8d1dc331ad1769c50567d0e20e3ee0d81f0820d098ae9f9814ebc7f2f021a0cbf19b45e7947e5fd75d1a591c7f275ae33f310284d65a3f500
+  checksum: 10c0/6b9ed5685909d2238602b28175c8d13783452e58c8d8b7acddbb97b4115871a38e7cfe085edd2b4f920de05d14cbcfa99b49ea7a41d403f693adc1e93212e413
   languageName: node
   linkType: hard
 
-"@atproto/syntax@npm:^0.1.5":
-  version: 0.1.5
-  resolution: "@atproto/syntax@npm:0.1.5"
+"@atproto/syntax@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@atproto/syntax@npm:0.2.0"
   dependencies:
     "@atproto/common-web": "npm:^0.2.3"
-  checksum: 10c0/ac3d438be954c7f516f28f330179ec5cd6e0b38724135944ae5cb0052d14c54a249a40aa1c0f098a4a49855b392f4f9281788573ed2d20bfb0f9347732ad8e38
+  checksum: 10c0/66ca837994233ef8b619bd1bb51efc441a01dc63af79ca8bab40a3c6e5e4f5fcbbacea5053952a877c44ae719e01031371f396ac4813821ce1642d41e9d7dcbd
   languageName: node
   linkType: hard
 
-"@atproto/xrpc@npm:0.4.1, @atproto/xrpc@npm:^0.4.1":
-  version: 0.4.1
-  resolution: "@atproto/xrpc@npm:0.4.1"
+"@atproto/xrpc@npm:0.4.2, @atproto/xrpc@npm:^0.4.2":
+  version: 0.4.2
+  resolution: "@atproto/xrpc@npm:0.4.2"
   dependencies:
-    "@atproto/lexicon": "npm:^0.3.1"
+    "@atproto/lexicon": "npm:^0.3.2"
     zod: "npm:^3.21.4"
-  checksum: 10c0/9eed348153b841dd76a5c083080b2b396dc1490a3d14af150b11ebd4b08dde0dff2e4220a53130b20d3d0ad216f4b6d8b5fef67e4261192b928a27035b6e8939
+  checksum: 10c0/9d6637791b06cd69c508f62fa0685e808c2261ca42cdffa59457bfd6b9791ba6ec0a75d52ed383e5fb2569a117f4f20e2730a69c2193826b52a1a50fe9276fe6
   languageName: node
   linkType: hard
 
@@ -617,12 +617,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.11.19":
-  version: 20.11.19
-  resolution: "@types/node@npm:20.11.19"
+"@types/node@npm:20.11.24":
+  version: 20.11.24
+  resolution: "@types/node@npm:20.11.24"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 10c0/f451ef0a1d78f29c57bad7b77e49ebec945f2a6d0d7a89851d7e185ee9fe7ad94d651c0dfbcb7858c9fa791310c8b40a881e2260f56bd3c1b7e7ae92723373ae
+  checksum: 10c0/5a62225eb4797b41e6953f9c08c4611d607b5422ddd153312fc81ed6ed37115228ae27e3e3caa1a3bf52d88310306a196ba1cfbd8b2ec918a20f64d80dfa22c9
   languageName: node
   linkType: hard
 
@@ -973,15 +973,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bsky.rss@workspace:."
   dependencies:
-    "@atproto/api": "npm:0.10.0"
-    "@atproto/xrpc": "npm:0.4.1"
-    "@types/node": "npm:20.11.19"
+    "@atproto/api": "npm:0.10.4"
+    "@atproto/xrpc": "npm:0.4.2"
+    "@types/node": "npm:20.11.24"
     axios: "npm:1.6.7"
     dotenv: "npm:^16.4.2"
     feedsub: "npm:^0.7.8"
     gts: "npm:5.2.0"
-    html-entities: "npm:2.4.0"
-    open-graph-scraper: "npm:6.4.0"
+    html-entities: "npm:2.5.0"
+    open-graph-scraper: "npm:6.5.0"
     sharp: "npm:0.33.2"
     tsx: "npm:4.7.1"
     typescript: "npm:5.3.3"
@@ -2191,10 +2191,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-entities@npm:2.4.0":
-  version: 2.4.0
-  resolution: "html-entities@npm:2.4.0"
-  checksum: 10c0/42bbd5d91f451625d7e35aaed41c8cd110054c0d0970764cb58df467b3f27f20199e8cf7b4aebc8d4eeaf17a27c0d1fb165f2852db85de200995d0f009c9011d
+"html-entities@npm:2.5.0":
+  version: 2.5.0
+  resolution: "html-entities@npm:2.5.0"
+  checksum: 10c0/17f31d23f0334f44509740b8ae80a5e1d390a72e057746a3137e0a36cf945fb6acd5255aaf5f2512e65b85ff3077d8fa46eb7a0967ab8e25500dc4468096dd94
   languageName: node
   linkType: hard
 
@@ -3080,16 +3080,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"open-graph-scraper@npm:6.4.0":
-  version: 6.4.0
-  resolution: "open-graph-scraper@npm:6.4.0"
+"open-graph-scraper@npm:6.5.0":
+  version: 6.5.0
+  resolution: "open-graph-scraper@npm:6.5.0"
   dependencies:
     chardet: "npm:^2.0.0"
     cheerio: "npm:^1.0.0-rc.12"
     iconv-lite: "npm:^0.6.3"
-    undici: "npm:^6.6.2"
+    undici: "npm:^6.7.0"
     validator: "npm:^13.11.0"
-  checksum: 10c0/19d8dda055e8c29c55911efe08efc7458a41e9b5c45e214ab06eafef71234159fe98b1eec8905f96a94395509f29221277b9dbaf35eab29ffccc673622608313
+  checksum: 10c0/355746cddbfa78f93c9251610a2723eb1e495da5c0104f570183dc64c019778a61bdcff1a18252b1d0a72b65129b75e06d4bb14b67e00c6c3a9275a08e8e004d
   languageName: node
   linkType: hard
 
@@ -4092,12 +4092,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:^6.6.2":
-  version: 6.6.2
-  resolution: "undici@npm:6.6.2"
+"undici@npm:^6.7.0":
+  version: 6.7.0
+  resolution: "undici@npm:6.7.0"
   dependencies:
     "@fastify/busboy": "npm:^2.0.0"
-  checksum: 10c0/c8c8a436059b13603f67ed4d917b4ba6d9ef282ac55c932c4790ee1a1c8cad1369da3c11b6e0b9df5a95ed1849cb98fa2f2310f6d0f9331dd359286c912497d2
+  checksum: 10c0/929e7e78e1baf1a93085d83401784077f365dc27e7e7606c444c7ad95a6da7d029d873300c74ef91b5de0d9a0747a031f6bdbf799436c18e4964301f36da1bf6
   languageName: node
   linkType: hard
 
