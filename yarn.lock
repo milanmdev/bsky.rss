@@ -12,9 +12,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atproto/api@npm:0.11.1":
-  version: 0.11.1
-  resolution: "@atproto/api@npm:0.11.1"
+"@atproto/api@npm:0.11.2":
+  version: 0.11.2
+  resolution: "@atproto/api@npm:0.11.2"
   dependencies:
     "@atproto/common-web": "npm:^0.2.4"
     "@atproto/lexicon": "npm:^0.3.3"
@@ -24,7 +24,7 @@ __metadata:
     tlds: "npm:^1.234.0"
     typed-emitter: "npm:^2.1.0"
     zod: "npm:^3.21.4"
-  checksum: 10c0/2cd2d475c1d45681c3b6040c941e1adc57bbf3ffb3dacae22bc7c66e63bd6a93470d1104213572e845c3daac7383e0e9437e8326842f03fcf8d2709cbe27f598
+  checksum: 10c0/d38ebc7889f8b04786fb891e447beb1e46b5a9a460c2797257992a13c31eda36fff75392ca85f179c7eb5a1febb9b01038ba622ac116dd9c413e39d3c55a9162
   languageName: node
   linkType: hard
 
@@ -973,7 +973,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bsky.rss@workspace:."
   dependencies:
-    "@atproto/api": "npm:0.11.1"
+    "@atproto/api": "npm:0.11.2"
     "@atproto/xrpc": "npm:0.4.3"
     "@types/node": "npm:20.11.28"
     axios: "npm:1.6.8"
