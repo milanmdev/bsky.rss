@@ -40,6 +40,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atproto/common-web@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "@atproto/common-web@npm:0.3.0"
+  dependencies:
+    graphemer: "npm:^1.4.0"
+    multiformats: "npm:^9.9.0"
+    uint8arrays: "npm:3.0.0"
+    zod: "npm:^3.21.4"
+  checksum: 10c0/eff88bc4ce6a5edf1998d92469bd503a337c1576625d7d914b2d611b98a083fb83cee94c56b4c71e385a431fae1f9e69fda9ce4b64f0795f935ed7796f993ce8
+  languageName: node
+  linkType: hard
+
 "@atproto/lexicon@npm:^0.3.3":
   version: 0.3.3
   resolution: "@atproto/lexicon@npm:0.3.3"
@@ -53,6 +65,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atproto/lexicon@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "@atproto/lexicon@npm:0.4.0"
+  dependencies:
+    "@atproto/common-web": "npm:^0.3.0"
+    "@atproto/syntax": "npm:^0.3.0"
+    iso-datestring-validator: "npm:^2.2.2"
+    multiformats: "npm:^9.9.0"
+    zod: "npm:^3.21.4"
+  checksum: 10c0/c65aba074df156639ddf505c177920cd97aec1f6f916ff9e441b5203c6255e216649bca14a6fe8b0f9803d15e0df2654697c00c08f47ed250efcf6b089b7f730
+  languageName: node
+  linkType: hard
+
 "@atproto/syntax@npm:^0.2.1":
   version: 0.2.1
   resolution: "@atproto/syntax@npm:0.2.1"
@@ -62,7 +87,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atproto/xrpc@npm:0.4.3, @atproto/xrpc@npm:^0.4.3":
+"@atproto/syntax@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "@atproto/syntax@npm:0.3.0"
+  checksum: 10c0/9deed9b6fe393adf22d7ca2a5972e54510c9cc678d27306e383501a70c80770ed3c2c413b9603ab0162ef26079b27ccce8927b122531525c6468f5052f1a6c43
+  languageName: node
+  linkType: hard
+
+"@atproto/xrpc@npm:0.5.0":
+  version: 0.5.0
+  resolution: "@atproto/xrpc@npm:0.5.0"
+  dependencies:
+    "@atproto/lexicon": "npm:^0.4.0"
+    zod: "npm:^3.21.4"
+  checksum: 10c0/29705ffa6e1fc67eac70f0f67a52f31946ff37d2825a23a43ef2fc17fb3249a39525e9852212bf3d41c09647e645bca5161d29a9f6562011183854c252c8b199
+  languageName: node
+  linkType: hard
+
+"@atproto/xrpc@npm:^0.4.3":
   version: 0.4.3
   resolution: "@atproto/xrpc@npm:0.4.3"
   dependencies:
@@ -974,7 +1016,7 @@ __metadata:
   resolution: "bsky.rss@workspace:."
   dependencies:
     "@atproto/api": "npm:0.11.2"
-    "@atproto/xrpc": "npm:0.4.3"
+    "@atproto/xrpc": "npm:0.5.0"
     "@types/node": "npm:20.11.28"
     axios: "npm:1.6.8"
     dotenv: "npm:^16.4.2"
