@@ -109,6 +109,9 @@ Here's an example of the `config.json` file:
 
 A `docker-compose.yml` file can be found in the root directory as `docker-compose.example.yml`, which you can use to set up the RSS poster using Docker.
 
+# Helpers
+a few scripts to manage bots and apply changes to a fleet of bots [bsky.rss-helper](https://github.com/rmdes/bsky-rss-helper)
+
 # License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
