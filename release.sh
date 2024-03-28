@@ -26,7 +26,7 @@ if [[ "$branch" != "main" ]]; then
     docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/milanmdev/bsky.rss:$(git rev-parse --abbrev-ref HEAD)-$(git rev-parse --short HEAD) --push .
 else
     echo "Building & pushing \"main\" branch image..."
-    docker buildx build --platform linux/amd64,linux/arm64, -t ghcr.io/milanmdev/bsky.rss:lates -t ghcr.io/milanmdev/bsky.rss:$version --push .
+    docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/milanmdev/bsky.rss:latest -t ghcr.io/milanmdev/bsky.rss:$version --push .
 fi
 
 # Remove the builder
