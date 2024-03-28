@@ -23,7 +23,7 @@ docker images | grep bsky.rss | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker
 
 if [[ "$branch" != "main" ]]; then
     echo "Building \"$(git rev-parse --abbrev-ref HEAD)\" branch image..."
-    docker build . --platform linux/x86_64 -t ghcr.io/milanmdev/bsky.rss:$(git rev-parse --abbrev-ref HEAD)-$(git rev-parse --short HEAD)
+    docker buildx build --platform linux/amd64,linux/arm64,linux/386,linux/arm/v7,linux/arm/v6 -t ghcr.io/milanmdev/bsky.rss:$(git rev-parse --abbrev-ref HEAD)-$(git rev-parse --short HEAD) --push .
 
     echo "main"
 
@@ -32,7 +32,7 @@ if [[ "$branch" != "main" ]]; then
     docker push ghcr.io/milanmdev/bsky.rss:$(git rev-parse --abbrev-ref HEAD)-$(git rev-parse --short HEAD)
 else
     echo "Building \"main\" branch image..."
-    docker build . --platform linux/x86_64 -t ghcr.io/milanmdev/bsky.rss:latest -t ghcr.io/milanmdev/bsky.rss:$version
+    docker buildx build --platform linux/amd64,linux/arm64,linux/386,linux/arm/v7,linux/arm/v6 -t ghcr.io/milanmdev/bsky.rss:latest -t ghcr.io/milanmdev/bsky.rss:$version --push .
 
     # Push the latest image
     echo "Pushing the images..."
