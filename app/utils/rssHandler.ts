@@ -1,10 +1,10 @@
 import FeedSub from "feedsub";
-import sharp from "sharp";
+import jimp from "jimp";
 import axios from "axios";
 import queue from "./queueHandler";
 import db from "./dbHandler";
 import og from "open-graph-scraper";
-import {decode} from 'html-entities';
+import { decode } from "html-entities";
 
 let reader: any = null;
 let lastDate: string = "";
@@ -21,7 +21,7 @@ let config: Config = {
   descriptionClearHTML: true,
   forceDescriptionEmbed: false,
   removeDuplicate: false,
-  titleClearHTML: false
+  titleClearHTML: false,
 };
 
 async function start() {
@@ -32,8 +32,8 @@ async function start() {
       ? // @ts-ignore
         item[config.dateField]
       : item.pubdate
-      ? item.pubdate
-      : item.published;
+        ? item.pubdate
+        : item.published;
     if (!useDate)
       return console.log("No date provided by RSS reader for post.");
 
@@ -50,13 +50,13 @@ async function start() {
       if (typeof item.link === "object") url = item.link.href;
       else url = item.link;
 
-      if (config.removeDuplicate){
+      if (config.removeDuplicate) {
         if (await db.valueExists(url)) return;
         else await db.writeValue(url);
       } else {
         if (new Date(useDate) <= new Date(lastDate)) return;
       }
-  
+
       let image: Buffer | undefined = undefined;
       let description: string | undefined = undefined;
       let imageAlt: string | undefined = undefined;
@@ -95,8 +95,8 @@ async function start() {
         description = item.description
           ? item.description
           : item.content
-          ? item.content
-          : undefined;
+            ? item.content
+            : undefined;
 
         if (description && config.descriptionClearHTML) {
           description = removeHTMLTags(description);
@@ -140,10 +140,10 @@ async function start() {
             description = openGraphData.ogDescription
               ? openGraphData.ogDescription
               : item.description
-              ? item.description
-              : item.content
-              ? item.content
-              : undefined;
+                ? item.description
+                : item.content
+                  ? item.content
+                  : undefined;
           }
         }
 
@@ -255,11 +255,13 @@ function parseString(string: string, item: Item, truncate: boolean) {
     if (!item.title) throw new Error("No title provided from RSS reader.");
 
     if (config.titleClearHTML) {
-      parsedString = parsedString.replace("$title", decodeHTML(removeHTMLTags(item.title)));
-    }
-    else {
+      parsedString = parsedString.replace(
+        "$title",
+        decodeHTML(removeHTMLTags(item.title))
+      );
+    } else {
       parsedString = parsedString.replace("$title", item.title);
-    }   
+    }
   }
 
   if (string.includes("$link")) {
@@ -296,16 +298,7 @@ async function fetchImage(imageUrl: string) {
       },
       responseType: "arraybuffer",
     });
-    image = await sharp(fetchBuffer.data)
-      .resize(800, null, {
-        fit: "inside",
-        withoutEnlargement: true,
-      })
-      .jpeg({
-        quality: 80,
-        progressive: true,
-      })
-      .toBuffer();
+    image = await resizeImageToBuffer(fetchBuffer.data);
   } catch (e) {}
 
   return image;
@@ -323,4 +316,18 @@ function decodeHTML(htmlString: string) {
   // From my tests, some HTML strings needs to be double-decoded.
   // Ex.: &amp;#233; -> &#233; -> é
   return decode(decode(htmlString));
+}
+
+async function resizeImageToBuffer(bufferData: Buffer) {
+  try {
+    const image = await jimp.read(bufferData);
+    const resizedImage = await image
+      .resize(800, jimp.AUTO) // null equivalent to Jimp.AUTO, Jimp.AUTO maintains aspect ratio
+      .quality(80) // Setting JPEG quality
+      .getBufferAsync(jimp.MIME_JPEG); // Getting the buffer as JPEG
+
+    return resizedImage;
+  } catch (error) {
+    throw error;
+  }
 }

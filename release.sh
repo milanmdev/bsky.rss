@@ -17,24 +17,18 @@ versionNoQuote=${versionInit//\"/}
 version=$(echo $versionNoQuote | sed 's/[][]//g')
 branch="$(git rev-parse --abbrev-ref HEAD)"
 
-# Removing old images
-echo "Removing old images..."
-docker images | grep bsky.rss | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi ghcr.io/milanmdev/bsky.rss:{} --force
+# Create builder
+echo "Creating a new BuildKit builder"
+docker buildx create --name multibuild --bootstrap --use
 
 if [[ "$branch" != "main" ]]; then
-    echo "Building \"$(git rev-parse --abbrev-ref HEAD)\" branch image..."
-    docker build . --platform linux/x86_64 -t ghcr.io/milanmdev/bsky.rss:$(git rev-parse --abbrev-ref HEAD)-$(git rev-parse --short HEAD)
-
-    echo "main"
-
-    # Push the latest image
-    echo "Pushing the image..."
-    docker push ghcr.io/milanmdev/bsky.rss:$(git rev-parse --abbrev-ref HEAD)-$(git rev-parse --short HEAD)
+    echo "Building & pushing \"$(git rev-parse --abbrev-ref HEAD)\" branch image..."
+    docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/milanmdev/bsky.rss:$(git rev-parse --abbrev-ref HEAD)-$(git rev-parse --short HEAD) --push .
 else
-    echo "Building \"main\" branch image..."
-    docker build . --platform linux/x86_64 -t ghcr.io/milanmdev/bsky.rss:latest -t ghcr.io/milanmdev/bsky.rss:$version
-
-    # Push the latest image
-    echo "Pushing the images..."
-    docker push ghcr.io/milanmdev/bsky.rss:$version && docker push ghcr.io/milanmdev/bsky.rss:latest
+    echo "Building & pushing \"main\" branch image..."
+    docker buildx build --platform linux/amd64,linux/arm64, -t ghcr.io/milanmdev/bsky.rss:lates -t ghcr.io/milanmdev/bsky.rss:$version --push .
 fi
+
+# Remove the builder
+echo "Removing the builder"
+docker buildx rm multibuild
