@@ -1,6 +1,6 @@
 {
   "name": "bsky.rss",
-  "version": "2.0.6",
+  "version": "2.1.0",
   "description": "A configurable RSS poster for Bluesky",
   "main": "index.js",
   "repository": "https://github.com/milanmdev/bsky.rss.git",
@@ -19,8 +19,8 @@
     "dotenv": "^16.4.2",
     "feedsub": "^0.7.8",
     "html-entities": "2.5.2",
-    "open-graph-scraper": "6.5.0",
-    "sharp": "0.33.3"
+    "jimp": "^0.22.12",
+    "open-graph-scraper": "6.5.0"
   },
   "devDependencies": {
     "@types/node": "20.11.30",
