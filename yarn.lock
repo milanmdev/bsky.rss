@@ -1197,7 +1197,7 @@ __metadata:
     gts: "npm:5.3.0"
     html-entities: "npm:2.5.2"
     jimp: "npm:^0.22.12"
-    open-graph-scraper: "npm:6.5.1"
+    open-graph-scraper: "npm:6.5.2"
     tsx: "npm:4.11.0"
     typescript: "npm:5.4.5"
     underscore-cli: "npm:^0.2.19"
@@ -3300,16 +3300,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"open-graph-scraper@npm:6.5.1":
-  version: 6.5.1
-  resolution: "open-graph-scraper@npm:6.5.1"
+"open-graph-scraper@npm:6.5.2":
+  version: 6.5.2
+  resolution: "open-graph-scraper@npm:6.5.2"
   dependencies:
     chardet: "npm:^2.0.0"
     cheerio: "npm:^1.0.0-rc.12"
     iconv-lite: "npm:^0.6.3"
-    undici: "npm:^6.11.1"
-    validator: "npm:^13.11.0"
-  checksum: 10c0/060d1fd68fc69e6b7b7a9a1c0278164cef8145270b1329463ab8c0e0fcc501040885af990f20d0a877537b9259ead318dff4f97bb30136d74fe922e4dcb302a3
+    undici: "npm:^6.18.2"
+    validator: "npm:^13.12.0"
+  checksum: 10c0/eaeb2f2d4170cac87bbed228ac0af809e4d2f284fc87d9d331950fdd1ca9efdccc9349c89f97e94c12bec82b30fc990ae0c3d588e3d76ae9985e3665cd0b1fb9
   languageName: node
   linkType: hard
 
@@ -4332,10 +4332,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:^6.11.1":
-  version: 6.11.1
-  resolution: "undici@npm:6.11.1"
-  checksum: 10c0/efac01b5e0a38325f26e0eb8ff557839bc49a9cd4b6e2ebaa4b7af94a519a02dea164ec8d701e6ab518a9cf851ea4af05c600fa5495cd85952901c3c48ddfea2
+"undici@npm:^6.18.2":
+  version: 6.18.2
+  resolution: "undici@npm:6.18.2"
+  checksum: 10c0/271df2f77f873e0df41fa92c4a1685ce1089372801e7a260ba62d79c8a03f5ebc4b35dbed36bbd653928bcac1d2150ecbe276388c86bfb8c9708e3780846a304
   languageName: node
   linkType: hard
 
@@ -4392,10 +4392,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"validator@npm:^13.11.0":
-  version: 13.11.0
-  resolution: "validator@npm:13.11.0"
-  checksum: 10c0/0107da3add5a4ebc6391dac103c55f6d8ed055bbcc29a4c9cbf89eacfc39ba102a5618c470bdc33c6487d30847771a892134a8c791f06ef0962dd4b7a60ae0f5
+"validator@npm:^13.12.0":
+  version: 13.12.0
+  resolution: "validator@npm:13.12.0"
+  checksum: 10c0/21d48a7947c9e8498790550f56cd7971e0e3d724c73388226b109c1bac2728f4f88caddfc2f7ed4b076f9b0d004316263ac786a17e9c4edf075741200718cd32
   languageName: node
   linkType: hard
 
