@@ -1198,7 +1198,7 @@ __metadata:
     html-entities: "npm:2.5.2"
     jimp: "npm:^0.22.12"
     open-graph-scraper: "npm:6.5.2"
-    tsx: "npm:4.15.1"
+    tsx: "npm:4.15.2"
     typescript: "npm:5.4.5"
     underscore-cli: "npm:^0.2.19"
   languageName: unknown
@@ -4199,9 +4199,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsx@npm:4.15.1":
-  version: 4.15.1
-  resolution: "tsx@npm:4.15.1"
+"tsx@npm:4.15.2":
+  version: 4.15.2
+  resolution: "tsx@npm:4.15.2"
   dependencies:
     esbuild: "npm:~0.21.4"
     fsevents: "npm:~2.3.3"
@@ -4211,7 +4211,7 @@ __metadata:
       optional: true
   bin:
     tsx: dist/cli.mjs
-  checksum: 10c0/ae361b98ba4b99cab3faa5d448a80d6c44c2a88768c1dea11ccf7c444ccd2253ae2914744a5cdcb7aa5f6a3a18a2cb933623ae467b9b0b767c103ee913b0fdd1
+  checksum: 10c0/6349ac29c13b567ece91d38e239606c0a8655ddbbdfab7250c04d7f9d5c447ff28f8dc7db62eaa16cafaff9cb5194c2a511d618cbfd4909e76cc54f07bc22424
   languageName: node
   linkType: hard
 
