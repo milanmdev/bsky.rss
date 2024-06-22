@@ -820,12 +820,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.14.7":
-  version: 20.14.7
-  resolution: "@types/node@npm:20.14.7"
+"@types/node@npm:20.14.8":
+  version: 20.14.8
+  resolution: "@types/node@npm:20.14.8"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 10c0/6211ffe86f769a58617e3bdca58610256021ef54bd99d2c442ee6109196cd6ee8e0bcd1cfac0e39bf4bb353f8900fa5fae540485a03816bd91ad1f86a0e18512
+  checksum: 10c0/06d4643fa3b179b41fe19f9c75c240278ca1f7a313b3b837bc36ea119499c7ad77f06bbe72694ac04aa91ec77fe747baa09b889f4c435450c1724a26bd55f160
   languageName: node
   linkType: hard
 
@@ -1190,7 +1190,7 @@ __metadata:
   dependencies:
     "@atproto/api": "npm:0.12.21"
     "@atproto/xrpc": "npm:0.5.0"
-    "@types/node": "npm:20.14.7"
+    "@types/node": "npm:20.14.8"
     axios: "npm:1.7.2"
     dotenv: "npm:^16.4.2"
     feedsub: "npm:^0.7.8"
@@ -4325,11 +4325,11 @@ __metadata:
 
 "typescript@patch:typescript@npm%3A5.5.2#optional!builtin<compat/typescript>":
   version: 5.5.2
-  resolution: "typescript@patch:typescript@npm%3A5.5.2#optional!builtin<compat/typescript>::version=5.5.2&hash=b45daf"
+  resolution: "typescript@patch:typescript@npm%3A5.5.2#optional!builtin<compat/typescript>::version=5.5.2&hash=379a07"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/6721ac8933a70c252d7b640b345792e103d881811ff660355617c1836526dbb71c2044e2e77a8823fb3570b469f33276875a4cab6d3c4de4ae7d7ee1c3074ae4
+  checksum: 10c0/a7b7ede75dc7fc32a76d0d0af6b91f5fbd8620890d84c906f663d8783bf3de6d7bd50f0430b8bb55eac88a38934af847ff709e7156e5138b95ae94cbd5f73e5b
   languageName: node
   linkType: hard
 
