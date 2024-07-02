@@ -12,17 +12,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atproto/api@npm:0.12.22":
-  version: 0.12.22
-  resolution: "@atproto/api@npm:0.12.22"
+"@atproto/api@npm:0.12.23":
+  version: 0.12.23
+  resolution: "@atproto/api@npm:0.12.23"
   dependencies:
     "@atproto/common-web": "npm:^0.3.0"
     "@atproto/lexicon": "npm:^0.4.0"
     "@atproto/syntax": "npm:^0.3.0"
     "@atproto/xrpc": "npm:^0.5.0"
+    await-lock: "npm:^2.2.2"
     multiformats: "npm:^9.9.0"
     tlds: "npm:^1.234.0"
-  checksum: 10c0/34e3cf3fac6e8fa6abb73b4ceabd5881913f543b399b9a722e956180693ce4c32ec974ecd898e312fa5e65b29e221c9b59aa86f7b4280e126d7cb27d5a7110a1
+  checksum: 10c0/2d1a1c99839353512882fff94ee1b1f31e91c8b00e69867fba178a7cf845da15b22808e0c2eaa63e9324e662458768239d36e4e9328b6a73400d98b7d26d1fac
   languageName: node
   linkType: hard
 
@@ -1117,6 +1118,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"await-lock@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "await-lock@npm:2.2.2"
+  checksum: 10c0/bedf00dad44c6325a655bf3bd523ab9e1ce41023da6a8c379990c76ac1d942ac7e5301627ab84ba37917ab5247506ba429b7f6e4bf77074093f255571b9ad5ee
+  languageName: node
+  linkType: hard
+
 "axios@npm:1.7.2":
   version: 1.7.2
   resolution: "axios@npm:1.7.2"
@@ -1188,7 +1196,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bsky.rss@workspace:."
   dependencies:
-    "@atproto/api": "npm:0.12.22"
+    "@atproto/api": "npm:0.12.23"
     "@atproto/xrpc": "npm:0.5.0"
     "@types/node": "npm:20.14.9"
     axios: "npm:1.7.2"
