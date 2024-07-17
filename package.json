@@ -20,7 +20,7 @@
     "feedsub": "^0.7.8",
     "html-entities": "2.5.2",
     "jimp": "^0.22.12",
-    "open-graph-scraper": "6.6.2"
+    "open-graph-scraper": "6.6.3"
   },
   "devDependencies": {
     "@types/node": "20.14.11",
