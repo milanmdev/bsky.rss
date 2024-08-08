@@ -25,7 +25,7 @@
   "devDependencies": {
     "@types/node": "20.14.14",
     "gts": "5.3.1",
-    "tsx": "4.16.5",
+    "tsx": "4.17.0",
     "typescript": "5.5.4",
     "underscore-cli": "^0.2.19"
   },
