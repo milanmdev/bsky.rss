@@ -1212,7 +1212,7 @@ __metadata:
     gts: "npm:5.3.1"
     html-entities: "npm:2.5.2"
     jimp: "npm:^0.22.12"
-    open-graph-scraper: "npm:6.7.2"
+    open-graph-scraper: "npm:6.8.0"
     tsx: "npm:4.17.0"
     typescript: "npm:5.5.4"
     underscore-cli: "npm:^0.2.19"
@@ -3372,15 +3372,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"open-graph-scraper@npm:6.7.2":
-  version: 6.7.2
-  resolution: "open-graph-scraper@npm:6.7.2"
+"open-graph-scraper@npm:6.8.0":
+  version: 6.8.0
+  resolution: "open-graph-scraper@npm:6.8.0"
   dependencies:
     chardet: "npm:^2.0.0"
     cheerio: "npm:^1.0.0-rc.12"
     iconv-lite: "npm:^0.6.3"
-    undici: "npm:^6.19.5"
-  checksum: 10c0/90b95b1f1687510d101e7900ed6cb82efffb67a251c869c282ca30c1792d28ec35370b738613518234e093ccfc9ec95cee2c2c41587ee869cad6e0ab053f7f8c
+    undici: "npm:^6.19.7"
+  checksum: 10c0/ff045651b203a3544c0f8bd52175fc7c4b0b82413496669225a0e35fa5d710686f33e883398f118ff2691c08924af70a609be88e29064561e60736fb39a88712
   languageName: node
   linkType: hard
 
@@ -4403,10 +4403,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:^6.19.5":
-  version: 6.19.5
-  resolution: "undici@npm:6.19.5"
-  checksum: 10c0/ee2c0a62f3e4333bad8b20e8218c8dea4a5b4f5c8589a92897a7aeb5b321f4118bd5eea2591a4add90b6c7d8049eabd8020725b44f9a1ba0fa1f92a71ed14b14
+"undici@npm:^6.19.7":
+  version: 6.19.7
+  resolution: "undici@npm:6.19.7"
+  checksum: 10c0/801d1e66d5bccdd3fcc9ecf1c95b83a593e4867b89e21ed725e35bd4d572b3d3ce1d7feab2a4f2046f65923de70bfafb69ac148c633d1ab30a948d6fec24475a
   languageName: node
   linkType: hard
 
