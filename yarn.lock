@@ -60,17 +60,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atproto/xrpc@npm:0.6.1":
-  version: 0.6.1
-  resolution: "@atproto/xrpc@npm:0.6.1"
-  dependencies:
-    "@atproto/lexicon": "npm:^0.4.1"
-    zod: "npm:^3.23.8"
-  checksum: 10c0/fb5e91343682f38b9184af7fbbe544eba90fa8c7c76a5a4598c33f77e4a9f8a44e0ba203b56a93c7494fd1782157e9c82d50fb0b81fbc1262b014438f339f2ad
-  languageName: node
-  linkType: hard
-
-"@atproto/xrpc@npm:^0.6.2":
+"@atproto/xrpc@npm:0.6.2, @atproto/xrpc@npm:^0.6.2":
   version: 0.6.2
   resolution: "@atproto/xrpc@npm:0.6.2"
   dependencies:
@@ -1215,7 +1205,7 @@ __metadata:
   resolution: "bsky.rss@workspace:."
   dependencies:
     "@atproto/api": "npm:0.13.7"
-    "@atproto/xrpc": "npm:0.6.1"
+    "@atproto/xrpc": "npm:0.6.2"
     "@types/node": "npm:20.16.5"
     axios: "npm:1.7.7"
     dotenv: "npm:^16.4.2"
