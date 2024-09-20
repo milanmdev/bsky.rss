@@ -1213,7 +1213,7 @@ __metadata:
     gts: "npm:5.3.1"
     html-entities: "npm:2.5.2"
     jimp: "npm:^0.22.12"
-    open-graph-scraper: "npm:6.8.1"
+    open-graph-scraper: "npm:6.8.2"
     tsx: "npm:4.19.1"
     typescript: "npm:5.6.2"
     underscore-cli: "npm:^0.2.19"
@@ -3373,15 +3373,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"open-graph-scraper@npm:6.8.1":
-  version: 6.8.1
-  resolution: "open-graph-scraper@npm:6.8.1"
+"open-graph-scraper@npm:6.8.2":
+  version: 6.8.2
+  resolution: "open-graph-scraper@npm:6.8.2"
   dependencies:
     chardet: "npm:^2.0.0"
     cheerio: "npm:^1.0.0-rc.12"
     iconv-lite: "npm:^0.6.3"
     undici: "npm:^6.19.8"
-  checksum: 10c0/ff447b6607d2d05b59f26efae72c68575a7d4002c0d912a6ac28dab099195aeb740370ec716178fcf5329d282ee0e52f135b586445b02024a529037f7b459573
+  checksum: 10c0/d59cf08734c76180e1a2624a8b69d3f0b7e275355d4bf783ca117fd4d9863f0585de25b81384a29d15b6d4e57e6d31e6b6fc93bec5bd1770c98b655edeaa3f32
   languageName: node
   linkType: hard
 
