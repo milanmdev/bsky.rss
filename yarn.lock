@@ -1210,7 +1210,7 @@ __metadata:
     axios: "npm:1.7.7"
     dotenv: "npm:^16.4.2"
     feedsub: "npm:^0.7.8"
-    gts: "npm:6.0.0"
+    gts: "npm:6.0.1"
     html-entities: "npm:2.5.2"
     jimp: "npm:^0.22.12"
     open-graph-scraper: "npm:6.8.2"
@@ -2372,9 +2372,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gts@npm:6.0.0":
-  version: 6.0.0
-  resolution: "gts@npm:6.0.0"
+"gts@npm:6.0.1":
+  version: 6.0.1
+  resolution: "gts@npm:6.0.1"
   dependencies:
     "@typescript-eslint/eslint-plugin": "npm:5.62.0"
     "@typescript-eslint/parser": "npm:5.62.0"
@@ -2392,10 +2392,10 @@ __metadata:
     rimraf: "npm:3.0.2"
     write-file-atomic: "npm:^4.0.0"
   peerDependencies:
-    typescript: ">=5.6.3"
+    typescript: ">=5"
   bin:
     gts: build/src/cli.js
-  checksum: 10c0/bc1cafdd61edd652df757a632a96d9f052e345a618f3e4ff212f43b97a9683928591d55a7997fa67e2d1ccc4080720b819da6b3d2189a3307ad9f942936161cf
+  checksum: 10c0/38d70ea5f9ed7c30588bd7658294ee81f8930110f379c6eb1519dd2f82b51975ce2cf001760169681b8f6d1acd125c5770171f0c9a085d07c171f5ffe6d14dc8
   languageName: node
   linkType: hard
 
