@@ -1210,7 +1210,7 @@ __metadata:
     axios: "npm:1.7.7"
     dotenv: "npm:^16.4.2"
     feedsub: "npm:^0.7.8"
-    gts: "npm:6.0.1"
+    gts: "npm:6.0.2"
     html-entities: "npm:2.5.2"
     jimp: "npm:^0.22.12"
     open-graph-scraper: "npm:6.8.2"
@@ -2372,9 +2372,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gts@npm:6.0.1":
-  version: 6.0.1
-  resolution: "gts@npm:6.0.1"
+"gts@npm:6.0.2":
+  version: 6.0.2
+  resolution: "gts@npm:6.0.2"
   dependencies:
     "@typescript-eslint/eslint-plugin": "npm:5.62.0"
     "@typescript-eslint/parser": "npm:5.62.0"
@@ -2395,7 +2395,7 @@ __metadata:
     typescript: ">=5"
   bin:
     gts: build/src/cli.js
-  checksum: 10c0/38d70ea5f9ed7c30588bd7658294ee81f8930110f379c6eb1519dd2f82b51975ce2cf001760169681b8f6d1acd125c5770171f0c9a085d07c171f5ffe6d14dc8
+  checksum: 10c0/7fc23afa2b7aeefe7a6eb1258899de9ecf6f32224bdce2cf072313dd2744e3b3e47c6be46d414df5745fb1d772f8975718b96db6ea373bea16099369305bae52
   languageName: node
   linkType: hard
 
