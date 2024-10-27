@@ -10,6 +10,11 @@ then
     echo "Yarn could not be found"
     exit
 fi
+if ! command -v git &> /dev/null
+then
+    echo "Git could not be found"
+    exit
+fi
 
 # Read package.json version
 versionInit=$(cat ./package.json | yarn run underscore select '.version')
