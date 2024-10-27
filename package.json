@@ -1,6 +1,6 @@
 {
   "name": "bsky.rss",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "A configurable RSS poster for Bluesky",
   "main": "index.js",
   "repository": "https://github.com/milanmdev/bsky.rss.git",
@@ -10,7 +10,8 @@
     "build:dev": "docker rmi -f bsky.rss && docker build . -t bsky.rss",
     "release": "sh release.sh",
     "start": "tsx ./app/index.ts",
-    "dev": "tsx --watch ./app/index.ts"
+    "dev": "tsx --watch ./app/index.ts",
+    "docker": "bash release.sh"
   },
   "dependencies": {
     "@atproto/api": "0.13.12",
