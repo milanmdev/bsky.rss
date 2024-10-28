@@ -15,6 +15,7 @@ let config: Config = {
   languages: ["en"],
   truncate: true,
   runInterval: 60,
+  publishDate: false,
   dateField: "",
   imageField: "",
   ogUserAgent: "bsky.rss/1.0 (Open Graph Scraper)",

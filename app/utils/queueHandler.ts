@@ -14,6 +14,7 @@ let config: Config = {
   truncate: true,
   runInterval: 60,
   dateField: "",
+  publishDate: false,
   imageField: "",
   ogUserAgent: "bsky.rss/1.0 (Open Graph Scraper)",
   descriptionClearHTML: true,
@@ -69,6 +70,7 @@ async function runQueue() {
         content: item.content,
         embed: item.embed,
         languages: item.languages,
+        date: config.publishDate ? item.date : undefined
       });
       // @ts-ignore
       if (post.ratelimit) {

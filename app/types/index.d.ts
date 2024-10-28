@@ -6,6 +6,7 @@ interface Config {
   truncate?: boolean;
   runInterval: number;
   dateField?: string;
+  publishDate?: boolean;
   imageField?: string;
   ogUserAgent: string;
   descriptionClearHTML?: boolean;
