@@ -111,17 +111,13 @@ async function post({
     }
   }
 
-  if (!date) {
-    date = new Date();
-  }
-
   const record = {
     $type: "app.bsky.feed.post",
     text: bskyText.text,
     facets: bskyText.facets,
     embed: embed_data,
     langs: languages,
-    createdAt: date.toISOString(),
+    createdAt: date ? date.toISOString() : new Date().toISOString(),
   };
 
   let post: any;

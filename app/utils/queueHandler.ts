@@ -70,7 +70,7 @@ async function runQueue() {
         content: item.content,
         embed: item.embed,
         languages: item.languages,
-        date: config.publishDate ? item.date : undefined
+        date: config.publishDate ? new Date(item.date) : undefined
       });
       // @ts-ignore
       if (post.ratelimit) {
