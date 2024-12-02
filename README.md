@@ -101,7 +101,7 @@ Here's an example of the `config.json` file:
 - `truncate`: Whether or not to truncate the body of the post if it is over 300 characters. By default, this is set to `true`.
 - `runInterval`: The interval (in seconds) to run the RSS poster. By default (and recommended), this is set to `60` seconds.
 - `dateField`: The field to use for the date of the RSS post. This can be any field that is available in the RSS feed. If not set, it will default to pubDate and/or date.
-- `publishDate`: Whether to use the RSS post date as the createdAt date. By default, this is set to `false`.
+- `publishDate`: Whether or not to use the RSS item's date for the Bluesky post's `createdAt`. When `false`, the current date is used. When `true`, the item's date is used. By default, this is set to `false`.
 - `imageField`: The field to use for fetching the image of the RSS post. This can be any field that is available in the RSS feed. If not set, the poster will fetch the Open Graph data of the URL provided by the RSS post and use the image from there.
 - `imageAlt`: Alt text for the uploaded image if the `embedType` is set to `image`. Can be any variable (+ string) used in the `string` configuration (e.g. `$title`).
 - `forceDescriptionEmbed`: Force the description of the embed to be the description of the RSS post (as opposed to using Open Graph data).
