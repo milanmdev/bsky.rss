@@ -20,6 +20,7 @@ The configuration file has many new options in version 2. Here's the contents of
   "truncate": true,
   "runInterval": 60,
   "dateField": "",
+  "publishDate": false,
   "imageField": "",
   "imageAlt": "$title",
   "forceDescriptionEmbed": false,

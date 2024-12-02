@@ -59,10 +59,12 @@ async function post({
   content,
   embed,
   languages,
+  date,
 }: {
   content: string;
   embed?: any;
   languages?: string[];
+  date?: Date;
 }) {
   if (!bskyAgent) throw new Error("Bluesky agent not initialized.");
 
@@ -115,7 +117,7 @@ async function post({
     facets: bskyText.facets,
     embed: embed_data,
     langs: languages,
-    createdAt: new Date().toISOString(),
+    createdAt: date ? date.toISOString() : new Date().toISOString(),
   };
 
   let post: any;
