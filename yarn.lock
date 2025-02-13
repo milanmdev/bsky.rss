@@ -53,6 +53,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atproto/lexicon@npm:^0.4.7":
+  version: 0.4.7
+  resolution: "@atproto/lexicon@npm:0.4.7"
+  dependencies:
+    "@atproto/common-web": "npm:^0.4.0"
+    "@atproto/syntax": "npm:^0.3.3"
+    iso-datestring-validator: "npm:^2.2.2"
+    multiformats: "npm:^9.9.0"
+    zod: "npm:^3.23.8"
+  checksum: 10c0/9c75cb821e2524354f3cd2d5cf6cbcd37ce7b61d267ad205add70f00d08f58ca2e1cf8738974d5fdf52ef0437f3b4ab64bfde40a64730c261d1e52a812181427
+  languageName: node
+  linkType: hard
+
 "@atproto/syntax@npm:^0.3.2":
   version: 0.3.2
   resolution: "@atproto/syntax@npm:0.3.2"
@@ -60,7 +73,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atproto/xrpc@npm:0.6.8, @atproto/xrpc@npm:^0.6.8":
+"@atproto/syntax@npm:^0.3.3":
+  version: 0.3.3
+  resolution: "@atproto/syntax@npm:0.3.3"
+  checksum: 10c0/89a47402086d19ee79b9ae6ade25f28f4c0945f9c88355c5d7462a4bb857bf51a50b1ab84d57257a749e650cc49e55dba5dde7f05bc4c2dcbd5948606843e34b
+  languageName: node
+  linkType: hard
+
+"@atproto/xrpc@npm:0.6.9":
+  version: 0.6.9
+  resolution: "@atproto/xrpc@npm:0.6.9"
+  dependencies:
+    "@atproto/lexicon": "npm:^0.4.7"
+    zod: "npm:^3.23.8"
+  checksum: 10c0/8a00bb9451a197b61b6dc0cc0b0f713da77b53c8ed3644c8c5540d8d6a1da2ae71502f12074e0375be771fa697282cf69b5332b1ec8e65b7f7a06e69f4f6fb94
+  languageName: node
+  linkType: hard
+
+"@atproto/xrpc@npm:^0.6.8":
   version: 0.6.8
   resolution: "@atproto/xrpc@npm:0.6.8"
   dependencies:
@@ -1205,7 +1235,7 @@ __metadata:
   resolution: "bsky.rss@workspace:."
   dependencies:
     "@atproto/api": "npm:0.13.35"
-    "@atproto/xrpc": "npm:0.6.8"
+    "@atproto/xrpc": "npm:0.6.9"
     "@types/node": "npm:22.13.2"
     axios: "npm:1.7.9"
     dotenv: "npm:^16.4.2"
