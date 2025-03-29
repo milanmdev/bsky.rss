@@ -1218,7 +1218,7 @@ __metadata:
     dotenv: "npm:^16.4.2"
     feedsub: "npm:^0.7.8"
     gts: "npm:6.0.2"
-    html-entities: "npm:2.5.3"
+    html-entities: "npm:2.5.5"
     jimp: "npm:^0.22.12"
     open-graph-scraper: "npm:6.9.0"
     tsx: "npm:4.19.3"
@@ -2462,10 +2462,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-entities@npm:2.5.3":
-  version: 2.5.3
-  resolution: "html-entities@npm:2.5.3"
-  checksum: 10c0/313b0550926b56ccb46c0df4db63e743e565f222e6a8bc97d848d8c9bb51a2c0ff3c724856675032b5c2a9a757c9ab68019956c52e60dd9836d554cdde5bbbc3
+"html-entities@npm:2.5.5":
+  version: 2.5.5
+  resolution: "html-entities@npm:2.5.5"
+  checksum: 10c0/90ccba645c0375faefe03fc3c2e1c64cf31c57a79434883ea3c31f6095bfb09887f10ca9e169fbdfc9c6027984160330437bc84ff1d3be54193c73d89f18f82f
   languageName: node
   linkType: hard
 
