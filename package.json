@@ -24,7 +24,7 @@
     "open-graph-scraper": "6.9.0"
   },
   "devDependencies": {
-    "@types/node": "22.13.14",
+    "@types/node": "22.13.16",
     "gts": "6.0.2",
     "tsx": "4.19.3",
     "typescript": "5.8.2",
