@@ -28,18 +28,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atproto/common-web@npm:^0.4.0":
-  version: 0.4.0
-  resolution: "@atproto/common-web@npm:0.4.0"
-  dependencies:
-    graphemer: "npm:^1.4.0"
-    multiformats: "npm:^9.9.0"
-    uint8arrays: "npm:3.0.0"
-    zod: "npm:^3.23.8"
-  checksum: 10c0/136c3d7ca600f73261f8ddeec5e0a542ac8affc1afc6c449612b3777f647bd67354c47d3746366f12a9bfefa51e438e661010d99b025b733bee6305898aa491a
-  languageName: node
-  linkType: hard
-
 "@atproto/common-web@npm:^0.4.1":
   version: 0.4.1
   resolution: "@atproto/common-web@npm:0.4.1"
@@ -65,19 +53,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atproto/lexicon@npm:^0.4.9":
-  version: 0.4.9
-  resolution: "@atproto/lexicon@npm:0.4.9"
-  dependencies:
-    "@atproto/common-web": "npm:^0.4.0"
-    "@atproto/syntax": "npm:^0.4.0"
-    iso-datestring-validator: "npm:^2.2.2"
-    multiformats: "npm:^9.9.0"
-    zod: "npm:^3.23.8"
-  checksum: 10c0/20b2d0e029d00b33fe31e486ea09276c730494379a041432dfdd1311df6ee24f247e5513f826fd9bdd4e4e45bcac7a17bb180efa1aa23fae9cfb685a99a90205
-  languageName: node
-  linkType: hard
-
 "@atproto/syntax@npm:^0.4.0":
   version: 0.4.0
   resolution: "@atproto/syntax@npm:0.4.0"
@@ -85,17 +60,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atproto/xrpc@npm:0.6.11":
-  version: 0.6.11
-  resolution: "@atproto/xrpc@npm:0.6.11"
-  dependencies:
-    "@atproto/lexicon": "npm:^0.4.9"
-    zod: "npm:^3.23.8"
-  checksum: 10c0/70d0b6cb569632b3a5ddb609ac5260fa32f5dc1c51a471e68cf12588f9d5a2580f2d935f07626c834299e01cdbc7ddb3b613f9b716ff271e0e4d1851c023ff6b
-  languageName: node
-  linkType: hard
-
-"@atproto/xrpc@npm:^0.6.12":
+"@atproto/xrpc@npm:0.6.12, @atproto/xrpc@npm:^0.6.12":
   version: 0.6.12
   resolution: "@atproto/xrpc@npm:0.6.12"
   dependencies:
@@ -1247,7 +1212,7 @@ __metadata:
   resolution: "bsky.rss@workspace:."
   dependencies:
     "@atproto/api": "npm:0.14.19"
-    "@atproto/xrpc": "npm:0.6.11"
+    "@atproto/xrpc": "npm:0.6.12"
     "@types/node": "npm:22.14.0"
     axios: "npm:1.8.4"
     dotenv: "npm:^16.4.2"
