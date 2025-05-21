@@ -96,6 +96,7 @@ async function runQueue() {
         if (config.adaptiveSpacing && queueSnapshot.length > 0) {
           const remaining = queueSnapshot.length;
           const delaySec = computeDelay(remaining + 1);
+
           if (delaySec > 0) {
             console.log(
               `[${new Date().toUTCString()}] - [bsky.rss QUEUE] Waiting ${delaySec} seconds before next post`
