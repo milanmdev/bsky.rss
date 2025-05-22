@@ -22,6 +22,10 @@ let config: Config = {
   imageAlt: "",
   removeDuplicate: false,
   titleClearHTML: false,
+  adaptiveSpacing: false,
+  spacingWindow: 600,
+  minSpacing: 1,
+  maxSpacing: 60,
 };
 
 async function start() {
@@ -89,6 +93,16 @@ async function runQueue() {
           })`
         );
         db.writeDate(new Date(item.date));
+        if (config.adaptiveSpacing && queueSnapshot.length > 0) {
+          const remaining = queueSnapshot.length;
+          const delaySec = computeDelay(remaining + 1);
+          if (delaySec > 0) {
+            console.log(
+              `[${new Date().toUTCString()}] - [bsky.rss QUEUE] Waiting ${delaySec} seconds before next post`
+            );
+            await sleep(delaySec * 1000);
+          }
+        }
         if (i === queueSnapshot.length - 1) {
           queueRunning = false;
           queueSnapshot = [];
@@ -119,6 +133,23 @@ async function writeQueue({
   );
   queue.push({ content, embed, languages, title, date });
   return queue;
+}
+
+function clamp(x: number, lo: number, hi: number) {
+  return Math.max(lo, Math.min(hi, x));
+}
+
+function computeDelay(q: number) {
+  if (!config.adaptiveSpacing) return 0;
+  if (q <= 1) return 0;
+  const window = config.spacingWindow || 600;
+  const min = config.minSpacing || 1;
+  const max = config.maxSpacing || 60;
+  return clamp(window / q, min, max);
+}
+
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 export default { writeQueue, start };
