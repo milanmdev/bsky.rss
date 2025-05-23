@@ -5,6 +5,7 @@ let queue: QueueItems[] = [];
 let rateLimited: boolean = false;
 let queueRunning: boolean = false;
 let queueSnapshot: QueueItems[] = [];
+let lastPostTimestamp = 0;
 
 let config: Config = {
   string: "",
@@ -70,6 +71,17 @@ async function runQueue() {
       queue.splice(i, 1);
       queueSnapshot.splice(i, 1);
       i--;
+      if (config.minSpacing && lastPostTimestamp) {
+        const elapsed = Date.now() - lastPostTimestamp;
+        const waitMs = config.minSpacing * 1000 - elapsed;
+        if (waitMs > 0) {
+          const waitSec = Math.ceil(waitMs / 1000);
+          console.log(
+            `[${new Date().toUTCString()}] - [bsky.rss QUEUE] Waiting ${waitSec} seconds before next post`
+          );
+          await sleep(waitMs);
+        }
+      }
       let post = await bsky.post({
         content: item.content,
         embed: item.embed,
@@ -93,6 +105,7 @@ async function runQueue() {
           })`
         );
         db.writeDate(new Date(item.date));
+        lastPostTimestamp = Date.now();
         if (config.adaptiveSpacing && queueSnapshot.length > 0) {
           const remaining = queueSnapshot.length;
           const delaySec = computeDelay(remaining + 1);
