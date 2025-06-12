@@ -1,7 +1,7 @@
 {
   "extends": "gts/tsconfig-google",
   "compilerOptions": {
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "outDir": "lib",
     "removeComments": true,
     "target": "ES6",
@@ -18,7 +18,8 @@
     "noImplicitReturns": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "skipLibCheck": true
   },
   "include": ["./**/*.ts"],
   "exclude": ["node_modules/**/*"]
