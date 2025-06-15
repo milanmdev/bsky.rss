@@ -14,6 +14,10 @@ interface Config {
   imageAlt?: string;
   removeDuplicate?: boolean;
   titleClearHTML?: boolean;
+  adaptiveSpacing?: boolean;
+  spacingWindow?: number;
+  minSpacing?: number;
+  maxSpacing?: number;
 }
 
 interface Item {
