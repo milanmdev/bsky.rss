@@ -17,7 +17,7 @@
     "@atproto/api": "0.15.19",
     "@atproto/xrpc": "0.7.0",
     "axios": "1.10.0",
-    "dotenv": "^16.4.2",
+    "dotenv": "^17.0.0",
     "feedsub": "^0.7.8",
     "html-entities": "2.6.0",
     "jimp": "^0.22.12",
