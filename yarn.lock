@@ -836,12 +836,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:22.15.33":
-  version: 22.15.33
-  resolution: "@types/node@npm:22.15.33"
+"@types/node@npm:22.16.0":
+  version: 22.16.0
+  resolution: "@types/node@npm:22.16.0"
   dependencies:
     undici-types: "npm:~6.21.0"
-  checksum: 10c0/ee040c29c891aa37fffc27d04a8529318c391356346933646b7692eaf62236831ad532f6ebaf43ebd6a2ef1f0f091860d8a0a83a4e3c5a4f66d37aa1b2c99f31
+  checksum: 10c0/6219b521062f6c38d4d85ebd25807bd7f2bc703a5acba24e2c6716938d9d6cefd6fafd7b5156f61580eb58a0d82e8921751b778655675389631d813e5f261c03
   languageName: node
   linkType: hard
 
@@ -1213,7 +1213,7 @@ __metadata:
   dependencies:
     "@atproto/api": "npm:0.15.21"
     "@atproto/xrpc": "npm:0.7.0"
-    "@types/node": "npm:22.15.33"
+    "@types/node": "npm:22.16.0"
     axios: "npm:1.10.0"
     dotenv: "npm:^17.0.0"
     feedsub: "npm:^0.7.8"
