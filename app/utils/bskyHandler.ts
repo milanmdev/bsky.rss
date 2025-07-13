@@ -122,7 +122,7 @@ async function post({
 
   let post: any;
   try {
-    post = await bskyAgent.post(record);
+    post = await bskyAgent.post(record as any);
   } catch (error: any) {
     // if (error instanceof XRPCError) {
     if (error.constructor.name == XRPCError.name) {
