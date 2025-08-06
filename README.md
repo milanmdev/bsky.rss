@@ -86,7 +86,11 @@ Here's an example of the `config.json` file:
   "forceDescriptionEmbed": false,
   "removeDuplicate": false,
   "descriptionClearHTML": false,
-  "titleClearHTML": false
+  "titleClearHTML": false,
+  "adaptiveSpacing": false,
+  "spacingWindow": 600,
+  "minSpacing": 1,
+  "maxSpacing": 60
 }
 ```
 
@@ -108,6 +112,10 @@ Here's an example of the `config.json` file:
 - `removeDuplicate`: Instead of using the last date to track which items need to be published, use a text-based database to track duplicate items.
 - `descriptionClearHTML`: Remove HTML from the description of the Open Graph description and RSS-provided description (to make it more readable).
 - `titleClearHTML`: Remove HTML from the title of the post (to make it more readable).
+- `adaptiveSpacing`: Enable adaptive spacing between posts based on the queue size.
+- `spacingWindow`: Time window (in seconds) used when calculating adaptive spacing.
+- `minSpacing`: Minimum number of seconds between posts when adaptive spacing is enabled.
+- `maxSpacing`: Maximum number of seconds between posts when adaptive spacing is enabled.
 
 A `docker-compose.yml` file can be found in the root directory as `docker-compose.example.yml`, which you can use to set up the RSS poster using Docker.
 

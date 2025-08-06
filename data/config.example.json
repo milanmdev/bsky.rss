@@ -13,5 +13,9 @@
   "forceDescriptionEmbed": false,
   "removeDuplicate": false,
   "descriptionClearHTML": false,
-  "titleClearHTML": false
+  "titleClearHTML": false,
+  "adaptiveSpacing": false,
+  "spacingWindow": 600,
+  "minSpacing": 1,
+  "maxSpacing": 60
 }
