@@ -34,5 +34,5 @@
     "./node_modules/@types",
     "./app/types"
   ],
-  "packageManager": "yarn@4.9.4"
+  "packageManager": "yarn@4.10.0"
 }
