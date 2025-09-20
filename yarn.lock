@@ -28,18 +28,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atproto/common-web@npm:^0.4.2":
-  version: 0.4.2
-  resolution: "@atproto/common-web@npm:0.4.2"
-  dependencies:
-    graphemer: "npm:^1.4.0"
-    multiformats: "npm:^9.9.0"
-    uint8arrays: "npm:3.0.0"
-    zod: "npm:^3.23.8"
-  checksum: 10c0/c0c23f68af22b4e118331c2c0032a493810699e4b39788f3de330b4963c6adc96d7576dba07a8c498bf317d8428fd7d3eee0c6d6a5cdf8ccf25d8fd8991b4941
-  languageName: node
-  linkType: hard
-
 "@atproto/common-web@npm:^0.4.3":
   version: 0.4.3
   resolution: "@atproto/common-web@npm:0.4.3"
@@ -49,19 +37,6 @@ __metadata:
     uint8arrays: "npm:3.0.0"
     zod: "npm:^3.23.8"
   checksum: 10c0/ce887b8f9cb58ef2b49867bc7dc0b7fc0112cb4f93a540da6f4156133a269b354711db6c8c05d64b03af258af9dc7bcf2f20a62c1fc9e2c7a1eb07d73e51018a
-  languageName: node
-  linkType: hard
-
-"@atproto/lexicon@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "@atproto/lexicon@npm:0.5.0"
-  dependencies:
-    "@atproto/common-web": "npm:^0.4.2"
-    "@atproto/syntax": "npm:^0.4.1"
-    iso-datestring-validator: "npm:^2.2.2"
-    multiformats: "npm:^9.9.0"
-    zod: "npm:^3.23.8"
-  checksum: 10c0/6f81e50748c4ed88f9b76c931ee381d7441f05b23643f8420545a2807b680fc3c9edec971c22ec8d4a88e231e5a76050546fcac1c50395843d71bf54567568bd
   languageName: node
   linkType: hard
 
@@ -85,17 +60,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atproto/xrpc@npm:0.7.4":
-  version: 0.7.4
-  resolution: "@atproto/xrpc@npm:0.7.4"
-  dependencies:
-    "@atproto/lexicon": "npm:^0.5.0"
-    zod: "npm:^3.23.8"
-  checksum: 10c0/35dd94bee28f8043defa6bd73c14d1387fa82b5cdecf697fbcf72b6f0679276b5ac3cf5850c8c06a616effe0d86788573137c7e8896d160d52149ee5a500e181
-  languageName: node
-  linkType: hard
-
-"@atproto/xrpc@npm:^0.7.5":
+"@atproto/xrpc@npm:0.7.5, @atproto/xrpc@npm:^0.7.5":
   version: 0.7.5
   resolution: "@atproto/xrpc@npm:0.7.5"
   dependencies:
@@ -1247,7 +1212,7 @@ __metadata:
   resolution: "bsky.rss@workspace:."
   dependencies:
     "@atproto/api": "npm:0.16.9"
-    "@atproto/xrpc": "npm:0.7.4"
+    "@atproto/xrpc": "npm:0.7.5"
     "@types/node": "npm:22.18.6"
     axios: "npm:1.11.0"
     dotenv: "npm:^17.0.0"
