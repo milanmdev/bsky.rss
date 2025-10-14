@@ -14,7 +14,7 @@
     "docker": "bash release.sh"
   },
   "dependencies": {
-    "@atproto/api": "0.17.2",
+    "@atproto/api": "0.17.3",
     "@atproto/xrpc": "0.7.5",
     "axios": "1.12.2",
     "dotenv": "^17.0.0",
