@@ -12,23 +12,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atproto/api@npm:0.18.3":
-  version: 0.18.3
-  resolution: "@atproto/api@npm:0.18.3"
+"@atproto/api@npm:0.18.4":
+  version: 0.18.4
+  resolution: "@atproto/api@npm:0.18.4"
   dependencies:
-    "@atproto/common-web": "npm:^0.4.5"
+    "@atproto/common-web": "npm:^0.4.6"
     "@atproto/lexicon": "npm:^0.5.2"
-    "@atproto/syntax": "npm:^0.4.1"
+    "@atproto/syntax": "npm:^0.4.2"
     "@atproto/xrpc": "npm:^0.7.6"
     await-lock: "npm:^2.2.2"
     multiformats: "npm:^9.9.0"
     tlds: "npm:^1.234.0"
     zod: "npm:^3.23.8"
-  checksum: 10c0/5f72a9ed53a8e09ad908a1f8a6622f96a0d576a4bcbe364fac1200363a81a9ddee32c1fe93462e0d1aae3d8801c397e64b8c192e40cbea58af28fbfebf9fe86e
+  checksum: 10c0/9d40c11b1e7596e7f175a896783297547cf47dd9388259e7c417f4c76e817ee2517cee1685d12a9b58f95d46e6a21ff403f7d366cd461b21c7f1d95d5e4e6103
   languageName: node
   linkType: hard
 
-"@atproto/common-web@npm:^0.4.4, @atproto/common-web@npm:^0.4.5":
+"@atproto/common-web@npm:^0.4.4":
   version: 0.4.5
   resolution: "@atproto/common-web@npm:0.4.5"
   dependencies:
@@ -36,6 +36,17 @@ __metadata:
     "@atproto/lex-json": "npm:0.0.1"
     zod: "npm:^3.23.8"
   checksum: 10c0/a9f424607d731ab05b4d233d6ae7d36826b772079bdf49d43e62613b60e22042353702dcd88c08f60ad2e2da074d4d07d9e87106bcc6858394541e24cb61676c
+  languageName: node
+  linkType: hard
+
+"@atproto/common-web@npm:^0.4.6":
+  version: 0.4.6
+  resolution: "@atproto/common-web@npm:0.4.6"
+  dependencies:
+    "@atproto/lex-data": "npm:0.0.2"
+    "@atproto/lex-json": "npm:0.0.2"
+    zod: "npm:^3.23.8"
+  checksum: 10c0/5db94f80eee942176be795718fd3fd4de68f20e10990d1578881b21a972dbabdfe7497764a8c6dd71cf10476fc52c29398914c83fea5693cd13d79e70c50354b
   languageName: node
   linkType: hard
 
@@ -52,6 +63,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atproto/lex-data@npm:0.0.2":
+  version: 0.0.2
+  resolution: "@atproto/lex-data@npm:0.0.2"
+  dependencies:
+    "@atproto/syntax": "npm:0.4.2"
+    multiformats: "npm:^9.9.0"
+    tslib: "npm:^2.8.1"
+    uint8arrays: "npm:3.0.0"
+    unicode-segmenter: "npm:^0.14.0"
+  checksum: 10c0/205bb6e1a09f7c1541967f32563fa9a7b454acba17d35475ba781ebd1d63dc5582401526ce55e10dc5018fc6e5600897b5c8096f488314303930811800796683
+  languageName: node
+  linkType: hard
+
 "@atproto/lex-json@npm:0.0.1":
   version: 0.0.1
   resolution: "@atproto/lex-json@npm:0.0.1"
@@ -59,6 +83,16 @@ __metadata:
     "@atproto/lex-data": "npm:0.0.1"
     tslib: "npm:^2.8.1"
   checksum: 10c0/158ed9c596463bedf14f30448df36c11be05ee5ace21c33a591db4158ce009944436dc030bac5b5dd2a61a7bbcbe23d203b141d807dc6ef6237aa849af437807
+  languageName: node
+  linkType: hard
+
+"@atproto/lex-json@npm:0.0.2":
+  version: 0.0.2
+  resolution: "@atproto/lex-json@npm:0.0.2"
+  dependencies:
+    "@atproto/lex-data": "npm:0.0.2"
+    tslib: "npm:^2.8.1"
+  checksum: 10c0/dbee90c5ef55e7b516aabc024d0ba52d277f69314f496ecdc410395e7eafdb02c97c13c615723aa76c37893de2445c084162088d5373a9670383019b2d45e39c
   languageName: node
   linkType: hard
 
@@ -79,6 +113,13 @@ __metadata:
   version: 0.4.1
   resolution: "@atproto/syntax@npm:0.4.1"
   checksum: 10c0/111d85c29d3a90c9706aa1bd169ab147dd21bb43d13c1ae039d7d08e25b9ff168b441f47da3c34d5f8aa9347fa42432aab0459ee79bd1347b9a811a743631b2e
+  languageName: node
+  linkType: hard
+
+"@atproto/syntax@npm:0.4.2, @atproto/syntax@npm:^0.4.2":
+  version: 0.4.2
+  resolution: "@atproto/syntax@npm:0.4.2"
+  checksum: 10c0/55f47be66eb72ec6a3ed7a5918889f90e0a5a24919c4fb0e11aff21fe6e0f14339b943e7a2506abf31fff03a3939beea2a7e2be35cd6900b4f8fdc396c9959f1
   languageName: node
   linkType: hard
 
@@ -1233,7 +1274,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bsky.rss@workspace:."
   dependencies:
-    "@atproto/api": "npm:0.18.3"
+    "@atproto/api": "npm:0.18.4"
     "@atproto/xrpc": "npm:0.7.6"
     "@types/node": "npm:24.10.1"
     axios: "npm:1.13.2"
