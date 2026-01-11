@@ -23,6 +23,10 @@ let config: Config = {
   forceDescriptionEmbed: false,
   removeDuplicate: false,
   titleClearHTML: false,
+  adaptiveSpacing: false,
+  spacingWindow: 600,
+  minSpacing: 1,
+  maxSpacing: 60,
 };
 
 async function start() {
