@@ -42,7 +42,7 @@ async function start() {
 }
 
 async function createLimitTimer(timeoutSeconds: number = 30) {
-  if (!rateLimited) return;
+  if (rateLimited) return; // Already rate limited, don't create another timer
   rateLimited = true;
   setTimeout(() => {
     rateLimited = false;
