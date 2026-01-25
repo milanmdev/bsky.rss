@@ -16,7 +16,7 @@
   "dependencies": {
     "@atproto/api": "0.18.16",
     "@atproto/xrpc": "0.7.7",
-    "axios": "1.13.2",
+    "axios": "1.13.3",
     "dotenv": "^17.0.0",
     "feedsub": "^0.7.8",
     "html-entities": "2.6.0",
