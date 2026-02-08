@@ -987,12 +987,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:24.10.10":
-  version: 24.10.10
-  resolution: "@types/node@npm:24.10.10"
+"@types/node@npm:24.10.12":
+  version: 24.10.12
+  resolution: "@types/node@npm:24.10.12"
   dependencies:
     undici-types: "npm:~7.16.0"
-  checksum: 10c0/ae6871069373cf9ea2f9f9c6d42af6d0a66a213f8688c1b4ced6466cbcdd0f926e4603480a454b1df330feb1243d2ac50749895eddf5667e25e6873d3f8b9488
+  checksum: 10c0/fa39b88c8d82a2cec41544bee3426c4b78a13cc3c5ccf6fcb6c9528a68466ffcc73772833c612c7bb7e5fe1bc8e38002d1d543152e43b20b0600096cf6f210d1
   languageName: node
   linkType: hard
 
@@ -1348,7 +1348,7 @@ __metadata:
   dependencies:
     "@atproto/api": "npm:0.18.20"
     "@atproto/xrpc": "npm:0.7.7"
-    "@types/node": "npm:24.10.10"
+    "@types/node": "npm:24.10.12"
     axios: "npm:1.13.4"
     dotenv: "npm:^17.0.0"
     feedsub: "npm:^0.7.8"
