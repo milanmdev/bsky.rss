@@ -23,6 +23,10 @@ let config: Config = {
   forceDescriptionEmbed: false,
   removeDuplicate: false,
   titleClearHTML: false,
+  adaptiveSpacing: false,
+  spacingWindow: 600,
+  minSpacing: 1,
+  maxSpacing: 60,
 };
 
 async function start() {
@@ -108,11 +112,18 @@ async function start() {
         imageAlt = parseString(config.imageAlt, item, false).text;
       }
 
+      const defaultUserAgent =
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
+      const userAgent = config.ogUserAgent || defaultUserAgent;
+
       let openGraphData: any = await og({
         url,
+        timeout: 10000,
         fetchOptions: {
           headers: {
-            "user-agent": config.ogUserAgent,
+            "user-agent": userAgent,
+            accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "accept-language": "en-US,en;q=0.9",
           },
         },
       })
@@ -152,14 +163,16 @@ async function start() {
           description = removeHTMLTags(description);
         }
 
-        let uri = openGraphData.ogUrl ? openGraphData.ogUrl : url;
+        let uri = openGraphData.ogUrl
+          ? fixMalformedUrl(openGraphData.ogUrl)
+          : url;
 
         if (openGraphData.ogUrl) {
           let regexURL = new RegExp(
-            `(?:(h|H)(t|T)(t|T)(p|P)(s|):\\/\\/|)[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)`
+            `^(h|H)(t|T)(t|T)(p|P)(s|S)?:\\/\\/[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)`
           );
 
-          if (!regexURL.test(openGraphData.ogUrl)) uri = url;
+          if (!regexURL.test(uri)) uri = url;
         }
 
         if (!uri || (!openGraphData.ogTitle && !item.title)) {
@@ -317,6 +330,14 @@ function decodeHTML(htmlString: string) {
   // From my tests, some HTML strings needs to be double-decoded.
   // Ex.: &amp;#233; -> &#233; -> é
   return decode(decode(htmlString));
+}
+
+function fixMalformedUrl(urlString: string): string {
+  // Fix malformed protocols like "https//" or "http//" (missing colon)
+  // These get treated as relative URLs and cause concatenation bugs
+  return urlString
+    .replace(/^https\/\//i, "https://")
+    .replace(/^http\/\//i, "http://");
 }
 
 async function resizeImageToBuffer(bufferData: Buffer) {
