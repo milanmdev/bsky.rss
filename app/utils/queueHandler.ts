@@ -5,6 +5,7 @@ let queue: QueueItems[] = [];
 let rateLimited: boolean = false;
 let queueRunning: boolean = false;
 let queueSnapshot: QueueItems[] = [];
+let lastPostTimestamp = 0;
 
 let config: Config = {
   string: "",
@@ -22,6 +23,10 @@ let config: Config = {
   imageAlt: "",
   removeDuplicate: false,
   titleClearHTML: false,
+  adaptiveSpacing: false,
+  spacingWindow: 600,
+  minSpacing: 1,
+  maxSpacing: 60,
 };
 
 async function start() {
@@ -37,7 +42,7 @@ async function start() {
 }
 
 async function createLimitTimer(timeoutSeconds: number = 30) {
-  if (!rateLimited) return;
+  if (rateLimited) return; // Already rate limited, don't create another timer
   rateLimited = true;
   setTimeout(() => {
     rateLimited = false;
@@ -66,6 +71,17 @@ async function runQueue() {
       queue.splice(i, 1);
       queueSnapshot.splice(i, 1);
       i--;
+      if (config.minSpacing && lastPostTimestamp) {
+        const elapsed = Date.now() - lastPostTimestamp;
+        const waitMs = config.minSpacing * 1000 - elapsed;
+        if (waitMs > 0) {
+          const waitSec = Math.ceil(waitMs / 1000);
+          console.log(
+            `[${new Date().toUTCString()}] - [bsky.rss QUEUE] Waiting ${waitSec} seconds before next post`
+          );
+          await sleep(waitMs);
+        }
+      }
       let post = await bsky.post({
         content: item.content,
         embed: item.embed,
@@ -89,6 +105,18 @@ async function runQueue() {
           })`
         );
         db.writeDate(new Date(item.date));
+        lastPostTimestamp = Date.now();
+        if (config.adaptiveSpacing && queueSnapshot.length > 0) {
+          const remaining = queueSnapshot.length;
+          const delaySec = computeDelay(remaining + 1);
+
+          if (delaySec > 0) {
+            console.log(
+              `[${new Date().toUTCString()}] - [bsky.rss QUEUE] Waiting ${delaySec} seconds before next post`
+            );
+            await sleep(delaySec * 1000);
+          }
+        }
         if (i === queueSnapshot.length - 1) {
           queueRunning = false;
           queueSnapshot = [];
@@ -119,6 +147,23 @@ async function writeQueue({
   );
   queue.push({ content, embed, languages, title, date });
   return queue;
+}
+
+function clamp(x: number, lo: number, hi: number) {
+  return Math.max(lo, Math.min(hi, x));
+}
+
+function computeDelay(q: number) {
+  if (!config.adaptiveSpacing) return 0;
+  if (q <= 1) return 0;
+  const window = config.spacingWindow || 600;
+  const min = config.minSpacing || 1;
+  const max = config.maxSpacing || 60;
+  return clamp(window / q, min, max);
+}
+
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 export default { writeQueue, start };
