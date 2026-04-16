@@ -12,19 +12,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atproto/api@npm:0.19.8":
-  version: 0.19.8
-  resolution: "@atproto/api@npm:0.19.8"
+"@atproto/api@npm:0.19.9":
+  version: 0.19.9
+  resolution: "@atproto/api@npm:0.19.9"
   dependencies:
-    "@atproto/common-web": "npm:^0.4.20"
+    "@atproto/common-web": "npm:^0.4.21"
     "@atproto/lexicon": "npm:^0.6.2"
-    "@atproto/syntax": "npm:^0.5.3"
+    "@atproto/syntax": "npm:^0.5.4"
     "@atproto/xrpc": "npm:^0.7.7"
     await-lock: "npm:^2.2.2"
     multiformats: "npm:^9.9.0"
     tlds: "npm:^1.234.0"
     zod: "npm:^3.23.8"
-  checksum: 10c0/78d42f907c94b77c2d5236edae2019d10ac47eb2770cb70d8cbf03cd91b78dd5226389f63c98570669e8c1fe3fdebb51379f277b47467179dd4dc6446eedf5c9
+  checksum: 10c0/2abfa241ff5ec4fa198fed063fc592062f55d33eb62ac9b911f92ca19907e0410a49e551d82a624b0d4fcec23474f0d561ea4669b53602d0ecf97f3c636f1e36
   languageName: node
   linkType: hard
 
@@ -40,15 +40,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atproto/common-web@npm:^0.4.20":
-  version: 0.4.20
-  resolution: "@atproto/common-web@npm:0.4.20"
+"@atproto/common-web@npm:^0.4.21":
+  version: 0.4.21
+  resolution: "@atproto/common-web@npm:0.4.21"
   dependencies:
     "@atproto/lex-data": "npm:^0.0.15"
-    "@atproto/lex-json": "npm:^0.0.15"
-    "@atproto/syntax": "npm:^0.5.3"
+    "@atproto/lex-json": "npm:^0.0.16"
+    "@atproto/syntax": "npm:^0.5.4"
     zod: "npm:^3.23.8"
-  checksum: 10c0/f328428548a4b5972605077536ea27c9ef8650c410dccb5ac2962eb6fc80c10c64288f748fca217c5ddcf709e535ca535184f81d448c0cb68931e6406cf3c2b8
+  checksum: 10c0/b3c8ff3ce89da6893e88e9d36642f42825352d62be9eb2a8caf49a324cef566bbe1430e146c0e5780ea6f2ffbfef0039d12ab07634e903af7d6e9a79691927ef
   languageName: node
   linkType: hard
 
@@ -120,13 +120,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atproto/lex-json@npm:^0.0.15":
-  version: 0.0.15
-  resolution: "@atproto/lex-json@npm:0.0.15"
+"@atproto/lex-json@npm:^0.0.16":
+  version: 0.0.16
+  resolution: "@atproto/lex-json@npm:0.0.16"
   dependencies:
     "@atproto/lex-data": "npm:^0.0.15"
     tslib: "npm:^2.8.1"
-  checksum: 10c0/7ae39b97e3eb46cb830ac934203d975b91048b44f8241b1b7852051bf851539945db20cdef7cae64568a7aaef5de916af98937821281d6bec769e4d700746c3f
+  checksum: 10c0/bc32f8af35983781f9ae1bee761b87b53a77f7d3a4eceb16cd41feb0ab9be61c92bf99173e6ae4718f400efe3fba7f8a2d649a2de1baa028a53efc478ebfbb34
   languageName: node
   linkType: hard
 
@@ -172,12 +172,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atproto/syntax@npm:^0.5.3":
-  version: 0.5.3
-  resolution: "@atproto/syntax@npm:0.5.3"
+"@atproto/syntax@npm:^0.5.4":
+  version: 0.5.4
+  resolution: "@atproto/syntax@npm:0.5.4"
   dependencies:
     tslib: "npm:^2.8.1"
-  checksum: 10c0/b07f05a87af8574a3478cde01813d785e373469544a92a9587aa1b7b0fd1a9418407bceae48af2acd421341719d9b3b96d144eae365032721f641c8d6a736403
+  checksum: 10c0/85268ad93c201a2e979acffb54cae206bffb8a30d7db227a89d9e1d5bc6b8f8a6228c25f1cfa07579f8a2b781c7a22110aa9e1e9e743b851fe256ca5bf4c47d5
   languageName: node
   linkType: hard
 
@@ -1355,7 +1355,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bsky.rss@workspace:."
   dependencies:
-    "@atproto/api": "npm:0.19.8"
+    "@atproto/api": "npm:0.19.9"
     "@atproto/xrpc": "npm:0.7.7"
     "@types/node": "npm:24.12.2"
     axios: "npm:1.15.0"
