@@ -27,7 +27,7 @@
     "@types/node": "24.12.2",
     "gts": "7.0.0",
     "tsx": "4.21.0",
-    "typescript": "6.0.2",
+    "typescript": "6.0.3",
     "underscore-cli": "^0.2.19"
   },
   "typeRoots": [
